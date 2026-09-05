@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar/navbar";
 import { Hero } from "@/components/hero/hero";
 import { ChoosePath } from "@/components/choose-path/choose-path";
 import { Programs } from "@/components/programs/programs";
+import { WhyAiCoding } from "@/components/why-ai-coding/why-ai-coding";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <ChoosePath />
       <Programs />
+      <WhyAiCoding />
     </main>
   );
 }
