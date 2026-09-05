@@ -1,0 +1,676 @@
+.visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+
+  --visual-glow-core: rgba(98, 232, 255, 0.18);
+  --visual-glow-mid: rgba(79, 140, 255, 0.16);
+  --visual-glow-edge: rgba(79, 140, 255, 0.06);
+  --visual-ambient-core: rgba(216, 244, 255, 0.14);
+  --visual-ambient-mid: rgba(79, 140, 255, 0.18);
+  --visual-core-highlight: rgba(216, 244, 255, 0.92);
+  --visual-core-fill: rgba(98, 232, 255, 0.42);
+  --visual-core-mid: rgba(79, 140, 255, 0.18);
+  --visual-core-base: rgba(7, 18, 40, 0.88);
+  --visual-core-border: rgba(136, 202, 255, 0.52);
+  --visual-ring-cyan: rgba(98, 232, 255, 0.32);
+  --visual-ring-blue: rgba(79, 140, 255, 0.36);
+  --visual-ring-violet: rgba(140, 162, 255, 0.28);
+  --visual-panel-border: rgba(116, 175, 255, 0.34);
+  --visual-panel-shine: rgba(216, 244, 255, 0.12);
+  --visual-panel-start: rgba(12, 31, 74, 0.94);
+  --visual-panel-end: rgba(5, 11, 30, 0.84);
+  --visual-panel-shadow: rgba(0, 0, 0, 0.24);
+  --visual-line-cyan: rgba(98, 232, 255, 0.9);
+  --visual-line-blue: rgba(79, 140, 255, 0.54);
+  --visual-line-violet: rgba(140, 162, 255, 0.82);
+  --visual-node-cyan: #62e8ff;
+  --visual-node-blue: #4f8cff;
+  --visual-node-ice: #d8f4ff;
+  --visual-card-bg: rgba(7, 17, 40, 0.5);
+  --visual-card-border: rgba(116, 175, 255, 0.2);
+  --visual-card-text: rgba(195, 217, 255, 0.72);
+  --visual-frame: rgba(102, 160, 255, 0.24);
+}
+
+:global([data-theme="light"]) .visual {
+  --visual-glow-core: rgba(0, 169, 199, 0.14);
+  --visual-glow-mid: rgba(36, 91, 219, 0.12);
+  --visual-glow-edge: rgba(36, 91, 219, 0.04);
+  --visual-ambient-core: rgba(255, 255, 255, 0.58);
+  --visual-ambient-mid: rgba(36, 91, 219, 0.11);
+  --visual-core-highlight: rgba(255, 255, 255, 0.98);
+  --visual-core-fill: rgba(0, 169, 199, 0.28);
+  --visual-core-mid: rgba(36, 91, 219, 0.16);
+  --visual-core-base: rgba(232, 241, 255, 0.94);
+  --visual-core-border: rgba(36, 91, 219, 0.35);
+  --visual-ring-cyan: rgba(0, 169, 199, 0.36);
+  --visual-ring-blue: rgba(36, 91, 219, 0.34);
+  --visual-ring-violet: rgba(92, 112, 214, 0.22);
+  --visual-panel-border: rgba(36, 91, 219, 0.22);
+  --visual-panel-shine: rgba(255, 255, 255, 0.76);
+  --visual-panel-start: rgba(255, 255, 255, 0.86);
+  --visual-panel-end: rgba(221, 234, 255, 0.72);
+  --visual-panel-shadow: rgba(25, 40, 70, 0.14);
+  --visual-line-cyan: rgba(0, 148, 178, 0.9);
+  --visual-line-blue: rgba(36, 91, 219, 0.56);
+  --visual-line-violet: rgba(92, 112, 214, 0.62);
+  --visual-node-cyan: #009fbd;
+  --visual-node-blue: #245bdb;
+  --visual-node-ice: #ffffff;
+  --visual-card-bg: rgba(255, 255, 255, 0.6);
+  --visual-card-border: rgba(36, 91, 219, 0.18);
+  --visual-card-text: rgba(31, 47, 82, 0.74);
+  --visual-frame: rgba(36, 91, 219, 0.2);
+}
+
+.visual canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  pointer-events: none;
+
+  z-index: 3;
+}
+
+.glow {
+  position: absolute;
+
+  width: 560px;
+  height: 560px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    var(--visual-glow-core) 0%,
+    var(--visual-glow-mid) 28%,
+    var(--visual-glow-edge) 52%,
+    transparent 72%
+  );
+
+  filter: blur(22px);
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+/* Layered 3D subject */
+
+.visual3d {
+  position: absolute;
+  inset: 4% 2% 3%;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.visual3d::before {
+  content: "";
+  position: absolute;
+
+  width: min(78%, 560px);
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle, var(--visual-ambient-core), transparent 34%),
+    radial-gradient(circle, var(--visual-ambient-mid), transparent 68%);
+
+  filter: blur(18px);
+  opacity: 0.9;
+}
+
+.cssEngine {
+  position: relative;
+  width: min(76%, 530px);
+  aspect-ratio: 1;
+
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-18deg);
+
+  animation: cssEngineFloat 7s ease-in-out infinite;
+}
+
+.cssCore {
+  position: absolute;
+  inset: 24%;
+
+  border-radius: 50%;
+  transform: translateZ(72px) rotateX(-58deg) rotateZ(18deg);
+
+  background:
+    radial-gradient(
+      circle at 38% 30%,
+      var(--visual-core-highlight),
+      transparent 12%
+    ),
+    radial-gradient(
+      circle,
+      var(--visual-core-fill),
+      var(--visual-core-mid) 56%,
+      var(--visual-core-base) 70%
+    );
+
+  border: 1px solid var(--visual-core-border);
+
+  box-shadow:
+    0 0 34px rgba(98, 232, 255, 0.34),
+    0 0 92px rgba(79, 140, 255, 0.24),
+    inset 0 0 42px rgba(98, 232, 255, 0.16);
+
+  animation: cssCorePulse 3.6s ease-in-out infinite;
+}
+
+.cssCore::before,
+.cssCore::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+
+  border-radius: 50%;
+  border: 1px solid rgba(98, 232, 255, 0.26);
+}
+
+.cssCore::before {
+  transform: rotate(36deg) scaleX(0.68);
+}
+
+.cssCore::after {
+  transform: rotate(-54deg) scaleX(0.72);
+  border-color: rgba(79, 140, 255, 0.32);
+}
+
+.cssCoreInner {
+  position: absolute;
+  inset: 36%;
+
+  border-radius: 50%;
+
+  background: var(--visual-node-ice);
+  box-shadow:
+    0 0 18px rgba(216, 244, 255, 0.82),
+    0 0 46px rgba(98, 232, 255, 0.54);
+}
+
+.cssNode {
+  position: absolute;
+
+  width: 11px;
+  height: 11px;
+
+  border-radius: 50%;
+
+  background: var(--visual-node-cyan);
+  box-shadow:
+    0 0 12px rgba(98, 232, 255, 0.9),
+    0 0 26px rgba(98, 232, 255, 0.44);
+}
+
+.cssNodeOne {
+  top: 18%;
+  left: 47%;
+}
+
+.cssNodeTwo {
+  top: 38%;
+  right: 16%;
+}
+
+.cssNodeThree {
+  right: 27%;
+  bottom: 17%;
+}
+
+.cssNodeFour {
+  bottom: 27%;
+  left: 18%;
+}
+
+.cssNodeFive {
+  top: 34%;
+  left: 19%;
+  width: 8px;
+  height: 8px;
+  background: var(--visual-node-blue);
+}
+
+.cssPanel {
+  position: absolute;
+
+  width: 48%;
+  height: 25%;
+
+  padding: 5.5% 6%;
+
+  border: 1px solid var(--visual-panel-border);
+  border-radius: 10px;
+
+  background:
+    linear-gradient(135deg, var(--visual-panel-shine), transparent 32%),
+    linear-gradient(160deg, var(--visual-panel-start), var(--visual-panel-end));
+
+  box-shadow:
+    0 24px 48px var(--visual-panel-shadow),
+    0 0 38px rgba(79, 140, 255, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  transform-style: preserve-3d;
+}
+
+.cssPanel span {
+  display: block;
+
+  height: 5px;
+  margin-bottom: 11px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    var(--visual-line-cyan),
+    var(--visual-line-blue),
+    transparent
+  );
+
+  box-shadow: 0 0 12px rgba(98, 232, 255, 0.22);
+}
+
+.cssPanel span:nth-child(2n) {
+  width: 64%;
+  margin-left: 20%;
+  background: linear-gradient(90deg, var(--visual-line-violet), transparent);
+}
+
+.cssPanel span:nth-child(3n) {
+  width: 42%;
+  margin-left: 8%;
+}
+
+.cssPanelOne {
+  left: 0;
+  bottom: 18%;
+  transform: translateZ(30px) rotateZ(6deg);
+}
+
+.cssPanelTwo {
+  top: 14%;
+  right: 2%;
+  transform: translateZ(46px) rotateZ(-8deg);
+}
+
+.cssPanelThree {
+  left: 28%;
+  bottom: -2%;
+  width: 39%;
+  height: 20%;
+  transform: translateZ(18px) rotateZ(3deg);
+}
+
+.cssRing {
+  position: absolute;
+
+  width: min(72%, 520px);
+  aspect-ratio: 1;
+
+  border: 1px solid var(--visual-ring-cyan);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 26px rgba(98, 232, 255, 0.12),
+    inset 0 0 22px rgba(79, 140, 255, 0.08);
+
+  transform-style: preserve-3d;
+}
+
+.cssRing::after {
+  content: "";
+  position: absolute;
+
+  width: 9px;
+  height: 9px;
+
+  right: 15%;
+  top: 17%;
+
+  border-radius: 50%;
+  background: var(--visual-node-ice);
+
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--visual-node-ice) 88%, transparent),
+    0 0 26px rgba(98, 232, 255, 0.5);
+}
+
+.cssRingOne {
+  transform: rotateX(70deg) rotateZ(14deg);
+  animation: cssRingSpinOne 14s linear infinite;
+}
+
+.cssRingTwo {
+  width: min(62%, 450px);
+  transform: rotateY(66deg) rotateZ(-26deg);
+  border-color: var(--visual-ring-blue);
+  animation: cssRingSpinTwo 18s linear infinite reverse;
+}
+
+.cssRingThree {
+  width: min(52%, 380px);
+  transform: rotateX(34deg) rotateY(-58deg) rotateZ(44deg);
+  border-color: var(--visual-ring-violet);
+  animation: cssRingSpinThree 21s linear infinite;
+}
+
+/* Small floating information panels */
+
+.dataCard {
+  position: absolute;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 9px 13px;
+
+  border: 1px solid var(--visual-card-border);
+  border-radius: 8px;
+
+  background: var(--visual-card-bg);
+
+  backdrop-filter: blur(14px);
+
+  color: var(--visual-card-text);
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  pointer-events: none;
+}
+
+.dataCardTop {
+  top: 13%;
+  right: 7%;
+}
+
+.dataCardBottom {
+  bottom: 12%;
+  left: 8%;
+}
+
+.dataDot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #69dcff;
+
+  box-shadow:
+    0 0 8px rgba(105, 220, 255, 0.9),
+    0 0 18px rgba(105, 220, 255, 0.45);
+}
+
+.dataValue {
+  margin-left: 4px;
+
+  color: #7fdcff;
+
+  font-size: 13px;
+}
+
+/* Corner framing */
+
+.cornerTopLeft,
+.cornerBottomRight {
+  position: absolute;
+
+  width: 44px;
+  height: 44px;
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+.cornerTopLeft {
+  top: 8%;
+  left: 3%;
+
+  border-top: 1px solid var(--visual-frame);
+  border-left: 1px solid var(--visual-frame);
+}
+
+.cornerBottomRight {
+  right: 3%;
+  bottom: 8%;
+
+  border-right: 1px solid var(--visual-frame);
+  border-bottom: 1px solid var(--visual-frame);
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+  .visual {
+    min-height: 560px;
+  }
+
+  .visual3d {
+    inset: 0;
+  }
+
+  .cssEngine {
+    width: min(78%, 460px);
+  }
+
+  .cssRing {
+    width: min(72%, 430px);
+  }
+
+  .cssRingTwo {
+    width: min(62%, 370px);
+  }
+
+  .cssRingThree {
+    width: min(52%, 310px);
+  }
+
+  .dataCardTop {
+    top: 12%;
+    right: 4%;
+  }
+
+  .dataCardBottom {
+    bottom: 10%;
+    left: 4%;
+  }
+}
+
+@media (max-width: 800px) {
+  .visual {
+    min-height: 455px;
+  }
+
+  .visual3d {
+    inset: 0 2% 4%;
+  }
+
+  .visual3d::before {
+    width: min(72%, 430px);
+  }
+
+  .cssEngine {
+    width: min(70%, 410px);
+  }
+
+  .cssCore {
+    inset: 25%;
+  }
+
+  .cssPanel {
+    width: 44%;
+    height: 23%;
+  }
+
+  .cssPanelOne {
+    left: 5%;
+    bottom: 19%;
+  }
+
+  .cssPanelTwo {
+    top: 16%;
+    right: 6%;
+  }
+
+  .dataCardTop {
+    top: 10%;
+    right: 8%;
+  }
+
+  .dataCardBottom {
+    bottom: 10%;
+    left: 9%;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .visual {
+    min-height: clamp(340px, 72vw, 430px);
+  }
+
+  .visual3d {
+    inset: 0;
+  }
+
+  .glow {
+    width: min(90vw, 400px);
+    height: min(90vw, 400px);
+  }
+
+  .cssEngine {
+    width: min(78%, 350px);
+  }
+
+  .cssRing {
+    width: min(78%, 340px);
+  }
+
+  .cssRingTwo {
+    width: min(64%, 285px);
+  }
+
+  .cssPanel {
+    width: 42%;
+    height: 22%;
+  }
+
+  .cssPanelThree,
+  .cssRingThree {
+    display: none;
+  }
+
+  .dataCardTop {
+    top: 8%;
+    right: 3%;
+  }
+
+  .dataCardBottom {
+    bottom: 7%;
+    left: 3%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cssEngine,
+  .cssCore,
+  .cssRing {
+    animation: none;
+  }
+}
+
+@keyframes cssEngineFloat {
+  0%,
+  100% {
+    transform: rotateX(58deg) rotateZ(-18deg) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: rotateX(56deg) rotateZ(-15deg) translate3d(0, -10px, 22px);
+  }
+}
+
+@keyframes cssCorePulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    box-shadow:
+      0 0 34px rgba(98, 232, 255, 0.34),
+      0 0 92px rgba(79, 140, 255, 0.24),
+      inset 0 0 42px rgba(98, 232, 255, 0.16);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 44px rgba(98, 232, 255, 0.46),
+      0 0 118px rgba(79, 140, 255, 0.3),
+      inset 0 0 48px rgba(98, 232, 255, 0.24);
+  }
+}
+
+@keyframes cssRingSpinOne {
+  from {
+    transform: rotateX(70deg) rotateZ(14deg);
+  }
+
+  to {
+    transform: rotateX(70deg) rotateZ(374deg);
+  }
+}
+
+@keyframes cssRingSpinTwo {
+  from {
+    transform: rotateY(66deg) rotateZ(-26deg);
+  }
+
+  to {
+    transform: rotateY(66deg) rotateZ(-386deg);
+  }
+}
+
+@keyframes cssRingSpinThree {
+  from {
+    transform: rotateX(34deg) rotateY(-58deg) rotateZ(44deg);
+  }
+
+  to {
+    transform: rotateX(34deg) rotateY(-58deg) rotateZ(404deg);
+  }
+}

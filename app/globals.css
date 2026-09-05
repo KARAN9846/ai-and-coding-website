@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
+/* =========================================================
+   AI & CODING
+   Global Design Tokens
+   Primary Theme: Dark
+   Secondary Theme: Light
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --background: #050816;
+  --background-secondary: #080d24;
+
+  /* Surfaces */
+  --surface: #0d1430;
+  --surface-elevated: #111a3a;
+
+  /* Text */
+  --foreground: #f5f7ff;
+  --foreground-secondary: #aab4d0;
+  --foreground-muted: #707a96;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Brand */
+  --primary: #4f8cff;
+  --primary-hover: #6a9dff;
+
+  --cyan: #62e8ff;
+  --orange: #ff9f1c;
+  --yellow: #ffd166;
+
+  /* Status */
+  --success: #43d17a;
+
+  /* Effects */
+  --shadow-color: rgba(0, 0, 0, 0.35);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================================================
+   LIGHT THEME
+   ========================================================= */
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --background: #f6f8fc;
+  --background-secondary: #eef3fa;
+
+  /* Surfaces */
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+
+  /* Text */
+  --foreground: #0b1020;
+  --foreground-secondary: #5d6680;
+  --foreground-muted: #7d8498;
+
+  /* Borders */
+  --border: rgba(11, 16, 32, 0.09);
+  --border-strong: rgba(11, 16, 32, 0.15);
+
+  /* Brand */
+  --primary: #245bdb;
+  --primary-hover: #174bc4;
+
+  --cyan: #00a9c7;
+  --orange: #f58a00;
+  --yellow: #e2a900;
+
+  /* Status */
+  --success: #198754;
+
+  /* Effects */
+  --shadow-color: rgba(25, 40, 70, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-width: 0;
+  scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+
   background: var(--background);
   color: var(--foreground);
+
   font-family: Arial, Helvetica, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+main {
+  width: 100%;
+  min-width: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--primary);
+  color: #ffffff;
 }

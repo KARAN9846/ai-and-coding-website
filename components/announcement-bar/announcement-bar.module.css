@@ -1,0 +1,313 @@
+.bar {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 40px;
+
+  background: linear-gradient(
+    90deg,
+    var(--background-secondary) 0%,
+    var(--surface) 50%,
+    var(--background-secondary) 100%
+  );
+
+  border-bottom: 1px solid var(--border);
+
+  color: var(--foreground-secondary);
+
+  overflow: hidden;
+}
+
+/* Subtle animated light passing through the bar */
+.bar::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+
+  top: 0;
+  left: -20%;
+
+  width: 20%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 12%, transparent),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  animation: announcementShimmer 3s ease-in-out infinite;
+}
+
+.inner {
+  width: calc(100% - 48px);
+  max-width: 1440px;
+  min-height: 40px;
+
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.message {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  font-size: 12px;
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+
+  margin-right: 8px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+
+  border-radius: 999px;
+
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.statusDot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+
+  box-shadow: 0 0 8px color-mix(in srgb, var(--cyan) 70%, transparent);
+
+  animation: statusPulse 2.4s ease-in-out infinite;
+}
+
+.label {
+  color: var(--foreground);
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.separator {
+  margin-inline: 10px;
+
+  color: var(--foreground-muted);
+}
+
+.description {
+  color: var(--foreground-muted);
+}
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 7px;
+
+  color: var(--foreground);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+
+  transition:
+    color 180ms ease,
+    gap 180ms ease;
+}
+
+.action:hover {
+  color: var(--cyan);
+  gap: 10px;
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+
+  border-radius: 4px;
+}
+
+.arrow {
+  color: var(--primary);
+
+  transition: transform 180ms ease;
+}
+
+.action:hover .arrow {
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes announcementShimmer {
+  0% {
+    left: -20%;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  40% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .inner {
+    width: calc(100% - 32px);
+    max-width: 680px;
+  }
+
+  .description,
+  .separator {
+    display: none;
+  }
+
+  .message {
+    font-size: 11px;
+  }
+
+  .action {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .bar {
+    min-height: 36px;
+  }
+
+  .inner {
+    min-height: 36px;
+
+    width: calc(100% - 28px);
+    max-width: none;
+
+    gap: 12px;
+  }
+
+  .status {
+    width: 16px;
+    height: 16px;
+
+    margin-right: 7px;
+  }
+
+  .statusDot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .label {
+    font-size: 10px;
+    letter-spacing: 0.07em;
+  }
+
+  .action {
+    font-size: 10px;
+
+    gap: 5px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .inner {
+    width: calc(100% - 20px);
+  }
+
+  .label {
+    letter-spacing: 0.04em;
+  }
+
+  .action span:first-child {
+    display: none;
+  }
+
+  .action {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .bar::after,
+  .statusDot {
+    animation: none;
+  }
+
+  .action,
+  .arrow {
+    transition: none;
+  }
+}

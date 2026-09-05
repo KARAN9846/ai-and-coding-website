@@ -1,0 +1,1188 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: clamp(72px, 7vw, 98px) 0 clamp(78px, 7vw, 108px);
+  overflow: hidden;
+
+  --path-card-bg-top: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+  --path-card-bg-bottom: color-mix(in srgb, var(--background) 92%, var(--primary));
+  --path-card-border: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --path-card-border-hover: color-mix(in srgb, var(--primary) 36%, transparent);
+  --path-card-shadow: color-mix(in srgb, var(--shadow-color) 68%, transparent);
+  --path-card-glow: color-mix(in srgb, var(--primary) 12%, transparent);
+  --path-soft-light: color-mix(in srgb, var(--cyan) 10%, transparent);
+  --path-text-soft: color-mix(in srgb, var(--foreground) 64%, transparent);
+  --path-text-muted: color-mix(in srgb, var(--foreground) 48%, transparent);
+  --path-chip-bg: color-mix(in srgb, var(--foreground) 5%, transparent);
+  --path-chip-border: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --path-visual-opacity: 0.56;
+  --path-focus-shadow: color-mix(in srgb, var(--primary) 36%, transparent);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--primary) 8%, transparent),
+      transparent 34%
+    ),
+    var(--background);
+  color: var(--foreground);
+}
+
+:global([data-theme="light"]) .section {
+  --path-card-bg-top: rgba(255, 255, 255, 0.94);
+  --path-card-bg-bottom: color-mix(in srgb, #eaf2ff 76%, var(--surface));
+  --path-card-border: rgba(36, 91, 219, 0.13);
+  --path-card-border-hover: rgba(36, 91, 219, 0.3);
+  --path-card-shadow: rgba(25, 40, 70, 0.13);
+  --path-card-glow: rgba(36, 91, 219, 0.1);
+  --path-soft-light: rgba(0, 169, 199, 0.08);
+  --path-text-soft: rgba(11, 16, 32, 0.68);
+  --path-text-muted: rgba(11, 16, 32, 0.5);
+  --path-chip-bg: rgba(255, 255, 255, 0.55);
+  --path-chip-border: rgba(36, 91, 219, 0.14);
+  --path-visual-opacity: 0.5;
+  --path-focus-shadow: rgba(36, 91, 219, 0.28);
+}
+
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  width: clamp(320px, 44vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.section::before {
+  top: -14%;
+  left: max(-260px, -18vw);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  filter: blur(86px);
+}
+
+.section::after {
+  right: max(-230px, -15vw);
+  bottom: -16%;
+  background: color-mix(in srgb, var(--cyan) 6%, transparent);
+  filter: blur(92px);
+}
+
+.sectionGrid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px);
+  background-size: 74px 74px;
+  mask-image: radial-gradient(circle at 50% 30%, black, transparent 72%);
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.sectionParticle {
+  position: absolute;
+  z-index: -1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--cyan) 72%, transparent);
+  opacity: 0.48;
+  pointer-events: none;
+  animation: particleDrift 8s ease-in-out infinite;
+}
+
+.particleOne {
+  top: 21%;
+  left: 17%;
+}
+
+.particleTwo {
+  right: 18%;
+  bottom: 23%;
+  width: 4px;
+  height: 4px;
+  animation-delay: -3s;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - clamp(24px, 4vw, 48px));
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.heading {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto clamp(34px, 4.2vw, 46px);
+  text-align: center;
+  animation: sectionReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heading::before {
+  content: "";
+  position: absolute;
+  inset: -44px 12% auto;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--primary) 12%, transparent),
+    transparent 70%
+  );
+  filter: blur(28px);
+  opacity: 0.76;
+  pointer-events: none;
+}
+
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  color: var(--primary);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.22em;
+}
+
+.eyebrowLine {
+  position: relative;
+  width: 30px;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--primary) 42%, transparent);
+}
+
+.eyebrowLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: lineScan 3.8s ease-in-out infinite;
+}
+
+.heading h2 {
+  position: relative;
+  margin: 0;
+  font-size: clamp(2.45rem, 4.7vw, 4.35rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 750;
+}
+
+.heading h2 span {
+  color: var(--primary);
+  text-shadow: 0 0 28px color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.heading p {
+  position: relative;
+  max-width: 590px;
+  margin: 18px auto 0;
+  color: var(--path-text-soft);
+  font-size: 0.98rem;
+  line-height: 1.68;
+}
+
+.paths {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 1fr);
+  gap: clamp(16px, 2vw, 22px);
+  align-items: stretch;
+  perspective: 1200px;
+}
+
+.pathCard {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 500px;
+  overflow: hidden;
+  border: 1px solid var(--path-card-border);
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      color-mix(in srgb, var(--cyan) 11%, transparent),
+      transparent 30%
+    ),
+    linear-gradient(145deg, var(--path-card-bg-top), var(--path-card-bg-bottom));
+  box-shadow:
+    0 22px 70px var(--path-card-shadow),
+    inset 0 1px 0 color-mix(in srgb, white 9%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
+  transform:
+    translateY(0)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    background 360ms ease;
+  animation: cardReveal 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.skillsCard {
+  animation-delay: 110ms;
+}
+
+.pathCard::before,
+.pathCard::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.pathCard::before {
+  inset: 1px;
+  z-index: 1;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, white 12%, transparent),
+      transparent 24%,
+      transparent 72%,
+      color-mix(in srgb, var(--primary) 8%, transparent)
+    );
+  opacity: 0.72;
+}
+
+.pathCard::after {
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    color-mix(in srgb, var(--cyan) 16%, transparent),
+    transparent 34%
+  );
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+.pathCard:hover {
+  border-color: var(--path-card-border-hover);
+  box-shadow:
+    0 30px 90px color-mix(in srgb, var(--path-card-shadow) 78%, var(--primary)),
+    0 0 42px color-mix(in srgb, var(--primary) 9%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  transform:
+    translateY(-7px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y));
+}
+
+.pathCard:hover::after {
+  opacity: 1;
+}
+
+.pathCard:focus-within {
+  border-color: color-mix(in srgb, var(--cyan) 45%, transparent);
+  box-shadow:
+    0 0 0 3px var(--path-focus-shadow),
+    0 22px 70px var(--path-card-shadow),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+}
+
+.cardGlow {
+  position: absolute;
+  z-index: 0;
+  width: min(48%, 380px);
+  aspect-ratio: 1;
+  top: -22%;
+  right: -12%;
+  border-radius: 50%;
+  background: var(--path-card-glow);
+  filter: blur(64px);
+  opacity: 0.62;
+  transition:
+    transform 700ms ease,
+    opacity 500ms ease;
+}
+
+.pathCard:hover .cardGlow {
+  transform: scale(1.16);
+  opacity: 0.92;
+}
+
+.cardTop {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(22px, 2.4vw, 28px) clamp(22px, 2.6vw, 30px) 0;
+  transform: translateZ(24px);
+}
+
+.number {
+  color: var(--path-text-muted);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.17em;
+}
+
+.cardIcon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 24%, transparent);
+  border-radius: 12px;
+  color: var(--primary);
+  background:
+    radial-gradient(circle at 35% 20%, color-mix(in srgb, var(--cyan) 10%, transparent), transparent 55%),
+    color-mix(in srgb, var(--primary) 7%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+}
+
+.cardLabel {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 0.63rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+}
+
+.f2pContent,
+.skillsContent {
+  position: relative;
+  z-index: 4;
+  transform: translateZ(34px);
+}
+
+.f2pContent {
+  width: min(64%, 530px);
+  padding: clamp(32px, 3.2vw, 40px) clamp(22px, 2.6vw, 30px)
+    clamp(24px, 2.6vw, 30px);
+}
+
+.skillsContent {
+  width: 100%;
+  padding: clamp(28px, 2.8vw, 34px) clamp(22px, 2.6vw, 30px)
+    clamp(24px, 2.6vw, 30px);
+}
+
+.pathCard h3 {
+  margin: 0;
+  font-size: clamp(2.35rem, 3.65vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  font-weight: 750;
+}
+
+.pathCard h3 span {
+  display: block;
+  margin-top: 9px;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  font-size: 0.42em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.f2pContent > p,
+.skillsContent > p {
+  max-width: 520px;
+  margin: 20px 0 0;
+  color: var(--path-text-soft);
+  font-size: 0.92rem;
+  line-height: 1.68;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.techStack span,
+.skillCloud span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--path-chip-border);
+  border-radius: 999px;
+  background: var(--path-chip-bg);
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 5%, transparent);
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+.techStack span {
+  padding: 8px 11px;
+}
+
+.techStack svg,
+.skillCloud svg {
+  color: var(--primary);
+}
+
+.f2pJourney {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  gap: 14px;
+  margin-top: 30px;
+  padding-right: 8px;
+}
+
+.journeyLine {
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  right: 6px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--primary) 72%, transparent),
+    color-mix(in srgb, var(--primary) 14%, transparent)
+  );
+}
+
+.journeyItem {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.journeyItem strong {
+  display: grid;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--primary) 60%, transparent);
+  color: transparent;
+  font-size: 0;
+}
+
+.journeyItem span {
+  color: var(--path-text-muted);
+  font-size: 0.56rem;
+  line-height: 1.2;
+}
+
+.f2pVisual,
+.skillsVisual {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--path-visual-opacity);
+  transform: translateZ(10px);
+  transition:
+    opacity 420ms ease,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.f2pVisual {
+  width: min(42%, 315px);
+  aspect-ratio: 1;
+  right: clamp(14px, 3vw, 34px);
+  bottom: clamp(16px, 3vw, 30px);
+}
+
+.pathCard:hover .f2pVisual,
+.pathCard:hover .skillsVisual {
+  opacity: calc(var(--path-visual-opacity) + 0.14);
+  transform: translateZ(18px) scale(1.025);
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbitOne {
+  width: 68%;
+  height: 68%;
+  animation: rotate 20s linear infinite;
+}
+
+.orbitTwo {
+  width: 88%;
+  height: 46%;
+  transform: translate(-50%, -50%) rotate(55deg);
+  animation: rotateReverse 25s linear infinite;
+}
+
+.orbitThree {
+  width: 46%;
+  height: 88%;
+  transform: translate(-50%, -50%) rotate(-55deg);
+  animation: rotate 28s linear infinite;
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 25%;
+  min-width: 58px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 38%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, color-mix(in srgb, white 20%, transparent), transparent 52%),
+    color-mix(in srgb, var(--primary) 11%, var(--background));
+  box-shadow:
+    0 0 34px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 0 22px color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  transform: translate(-50%, -50%);
+}
+
+.node,
+.skillDot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--cyan) 68%, transparent);
+}
+
+.nodeOne {
+  top: 17%;
+  left: 49%;
+}
+
+.nodeTwo {
+  top: 47%;
+  right: 7%;
+}
+
+.nodeThree {
+  bottom: 14%;
+  left: 30%;
+}
+
+.nodeFour {
+  top: 32%;
+  left: 5%;
+}
+
+.skillCloud {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+  margin-top: 24px;
+}
+
+.skillCloud span {
+  padding: 8px 11px;
+}
+
+.skillCloud .skillMain {
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+  color: var(--primary);
+}
+
+.skillsVisual {
+  width: min(48%, 190px);
+  aspect-ratio: 1;
+  right: 18px;
+  bottom: 18px;
+}
+
+.skillsRing {
+  position: absolute;
+  inset: 13%;
+  border: 1px dashed color-mix(in srgb, var(--primary) 28%, transparent);
+  border-radius: 50%;
+  animation: rotate 26s linear infinite;
+}
+
+.skillsCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 34%;
+  min-width: 54px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 32%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--primary) 8%, var(--background));
+  color: var(--primary);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.dotOne {
+  top: 4%;
+  left: 48%;
+}
+
+.dotTwo {
+  top: 48%;
+  right: 3%;
+}
+
+.dotThree {
+  bottom: 5%;
+  left: 47%;
+}
+
+.dotFour {
+  top: 48%;
+  left: 3%;
+}
+
+.dotFive {
+  top: 19%;
+  right: 18%;
+}
+
+.skillsBottom {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  padding-right: min(36%, 150px);
+}
+
+.miniStats {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.miniStats strong {
+  color: var(--foreground);
+  font-size: 1.72rem;
+  letter-spacing: -0.04em;
+}
+
+.miniStats span {
+  color: var(--path-text-muted);
+  font-size: 0.67rem;
+  white-space: nowrap;
+}
+
+.cardLink {
+  display: inline-flex;
+  position: relative;
+  z-index: 5;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  margin-top: 22px;
+  color: var(--foreground);
+  font-size: 0.77rem;
+  font-weight: 750;
+  text-decoration: none;
+  transform: translateZ(40px);
+  transition:
+    color 220ms ease,
+    gap 260ms ease;
+}
+
+.skillsBottom .cardLink {
+  margin-top: 0;
+}
+
+.cardLink:hover {
+  color: color-mix(in srgb, var(--foreground) 86%, var(--cyan));
+  gap: 12px;
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 5px;
+  border-radius: 6px;
+}
+
+.cardLink svg {
+  color: var(--primary);
+  transition: transform 300ms ease;
+}
+
+.cardLink:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.bottomStatement {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  color: var(--path-text-muted);
+}
+
+.statementIcon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  border-radius: 10px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+}
+
+.bottomStatement p {
+  margin: 0;
+  font-size: 0.74rem;
+}
+
+.bottomStatement strong {
+  color: color-mix(in srgb, var(--foreground) 76%, transparent);
+}
+
+.statementLine {
+  height: 1px;
+  flex: 1;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotateReverse {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes particleDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.34;
+  }
+
+  50% {
+    transform: translate3d(16px, -18px, 0);
+    opacity: 0.72;
+  }
+}
+
+@keyframes lineScan {
+  0%,
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  42%,
+  58% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .paths {
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr);
+  }
+
+  .pathCard {
+    min-height: 485px;
+  }
+
+  .f2pContent {
+    width: 66%;
+  }
+
+  .f2pVisual {
+    width: min(39%, 270px);
+  }
+
+  .skillsBottom {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-right: min(32%, 120px);
+  }
+}
+
+@media (max-width: 980px) {
+  .section {
+    padding-block: 70px 92px;
+  }
+
+  .paths {
+    grid-template-columns: 1fr;
+  }
+
+  .pathCard {
+    min-height: 455px;
+  }
+
+  .f2pContent {
+    width: min(68%, 540px);
+  }
+
+  .skillsContent {
+    width: min(72%, 580px);
+  }
+
+  .f2pVisual {
+    width: min(34%, 280px);
+    right: 30px;
+    bottom: 28px;
+  }
+
+  .skillsVisual {
+    width: min(30%, 210px);
+    right: 32px;
+    bottom: 30px;
+  }
+
+  .skillsBottom {
+    max-width: 520px;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-block: 62px 78px;
+  }
+
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .heading {
+    margin-bottom: 32px;
+  }
+
+  .heading p {
+    font-size: 0.92rem;
+  }
+
+  .pathCard {
+    min-height: auto;
+    border-radius: 22px;
+  }
+
+  .cardTop {
+    padding: 20px 20px 0;
+  }
+
+  .cardIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  .f2pContent,
+  .skillsContent {
+    width: 100%;
+    padding: 28px 20px 24px;
+  }
+
+  .f2pContent {
+    padding-bottom: 158px;
+  }
+
+  .skillsContent {
+    padding-bottom: 132px;
+  }
+
+  .pathCard h3 {
+    font-size: clamp(2.45rem, 10vw, 3.8rem);
+  }
+
+  .f2pContent > p,
+  .skillsContent > p {
+    font-size: 0.88rem;
+  }
+
+  .techStack,
+  .skillCloud {
+    max-width: 100%;
+  }
+
+  .f2pJourney {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .journeyItem span {
+    font-size: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .f2pVisual {
+    width: min(58%, 270px);
+    right: 14px;
+    bottom: -16px;
+    opacity: 0.34;
+  }
+
+  .skillsVisual {
+    width: min(46%, 190px);
+    right: 16px;
+    bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .skillsBottom {
+    align-items: center;
+    flex-direction: row;
+    max-width: 100%;
+    padding-right: min(36%, 130px);
+    margin-top: 30px;
+  }
+
+  .bottomStatement {
+    align-items: flex-start;
+    margin-top: 26px;
+  }
+
+  .statementLine {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding-block: 54px 68px;
+  }
+
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  .heading {
+    margin-bottom: 26px;
+  }
+
+  .eyebrow {
+    gap: 9px;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+  }
+
+  .eyebrowLine {
+    width: 22px;
+  }
+
+  .heading h2 {
+    font-size: clamp(2.25rem, 11vw, 3.05rem);
+  }
+
+  .heading p {
+    margin-top: 15px;
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+
+  .pathCard {
+    border-radius: 20px;
+  }
+
+  .cardTop {
+    padding: 18px 17px 0;
+  }
+
+  .f2pContent,
+  .skillsContent {
+    padding-inline: 17px;
+  }
+
+  .f2pContent {
+    padding-bottom: 148px;
+  }
+
+  .skillsContent {
+    padding-bottom: 120px;
+  }
+
+  .pathCard h3 {
+    font-size: clamp(2.35rem, 13vw, 3.35rem);
+  }
+
+  .techStack span,
+  .skillCloud span {
+    padding: 7px 10px;
+    font-size: 0.66rem;
+  }
+
+  .f2pJourney {
+    gap: 5px;
+    margin-top: 26px;
+  }
+
+  .journeyLine {
+    left: 5px;
+    right: 5px;
+  }
+
+  .journeyItem {
+    gap: 8px;
+  }
+
+  .journeyItem span {
+    font-size: 0.47rem;
+  }
+
+  .f2pVisual {
+    width: min(68%, 235px);
+    right: -8px;
+    bottom: -22px;
+  }
+
+  .skillsVisual {
+    width: min(48%, 155px);
+    right: 10px;
+    bottom: 16px;
+    opacity: 0.26;
+  }
+
+  .skillsBottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: min(34%, 105px);
+  }
+
+  .miniStats strong {
+    font-size: 1.58rem;
+  }
+
+  .bottomStatement p {
+    font-size: 0.68rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    width: calc(100% - 16px);
+  }
+
+  .cardLabel {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .pathCard h3 {
+    font-size: clamp(2.12rem, 12.4vw, 2.85rem);
+  }
+
+  .techStack,
+  .skillCloud {
+    gap: 6px;
+  }
+
+  .techStack span,
+  .skillCloud span {
+    font-size: 0.62rem;
+  }
+
+  .journeyItem span {
+    font-size: 0.43rem;
+  }
+
+  .f2pVisual {
+    width: min(68%, 215px);
+  }
+
+  .skillsBottom {
+    padding-right: min(32%, 92px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionParticle,
+  .eyebrowLine::after,
+  .heading,
+  .pathCard,
+  .orbit,
+  .skillsRing {
+    animation: none;
+  }
+
+  .pathCard,
+  .cardGlow,
+  .cardLink,
+  .cardLink svg,
+  .f2pVisual,
+  .skillsVisual {
+    transition: none;
+  }
+
+  .pathCard,
+  .pathCard:hover {
+    transform: none;
+  }
+}

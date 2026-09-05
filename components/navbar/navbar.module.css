@@ -1,0 +1,1095 @@
+/* =========================================================
+   AI & CODING — NAVBAR V2
+   Premium / AI / Tech / Glass
+   ========================================================= */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  --navbar-height: 78px;
+
+  width: 100%;
+
+  transition:
+    background-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.navbar {
+  position: relative;
+
+  width: 100%;
+
+  border-bottom: 1px solid transparent;
+
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    backdrop-filter 300ms ease;
+}
+
+/* =========================================================
+   AMBIENT DESKTOP LIGHT
+   ========================================================= */
+
+.navbar::before {
+  content: "";
+
+  position: absolute;
+
+  top: -35px;
+  left: 8%;
+
+  width: 420px;
+  height: 100px;
+
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--primary) 13%, transparent),
+    transparent 70%
+  );
+
+  filter: blur(30px);
+
+  pointer-events: none;
+
+  opacity: 0.7;
+}
+
+/* Subtle top energy line */
+.navbar::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary) 30%, transparent) 20%,
+    color-mix(in srgb, var(--cyan) 65%, transparent) 50%,
+    color-mix(in srgb, var(--primary) 30%, transparent) 80%,
+    transparent 100%
+  );
+
+  opacity: 0.5;
+}
+
+/* =========================================================
+   SCROLLED STATE
+   ========================================================= */
+
+.scrolled .navbar {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--background) 82%, transparent),
+    color-mix(in srgb, var(--background) 92%, transparent)
+  );
+
+  border-bottom-color: color-mix(in srgb, var(--primary) 12%, var(--border));
+
+  box-shadow:
+    0 12px 45px var(--shadow-color),
+    0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+  position: relative;
+  z-index: 1002;
+  isolation: isolate;
+
+  width: calc(100% - clamp(20px, 3.2vw, 48px));
+  max-width: 1440px;
+
+  min-height: var(--navbar-height, 78px);
+
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: clamp(14px, 2.2vw, 32px);
+}
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 12px;
+
+  color: var(--foreground);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.brand:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 5px;
+
+  border-radius: 8px;
+}
+
+/* =========================================================
+   BRAND MARK
+   ========================================================= */
+
+.brandMark {
+  position: relative;
+
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 55%, var(--border));
+
+  border-radius: 10px;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in srgb, var(--cyan) 18%, transparent),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      color-mix(in srgb, var(--primary) 18%, transparent),
+      transparent 50%
+    ),
+    var(--surface);
+
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary) 7%, transparent),
+    0 0 22px color-mix(in srgb, var(--primary) 18%, transparent);
+
+  overflow: hidden;
+
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.brand:hover .brandMark {
+  transform: rotate(-3deg) scale(1.03);
+
+  border-color: color-mix(in srgb, var(--cyan) 65%, var(--border));
+
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--cyan) 12%, transparent),
+    0 0 30px color-mix(in srgb, var(--cyan) 24%, transparent);
+}
+
+/* orbital ring */
+.brandMark::before {
+  content: "";
+
+  position: absolute;
+
+  width: 21px;
+  height: 21px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 50%, transparent);
+
+  border-radius: 50%;
+
+  transform: rotate(35deg);
+}
+
+/* second orbital ring */
+.brandMark::after {
+  content: "";
+
+  position: absolute;
+
+  width: 11px;
+  height: 25px;
+
+  border: 1px solid color-mix(in srgb, var(--cyan) 50%, transparent);
+
+  border-radius: 50%;
+
+  transform: rotate(-35deg);
+}
+
+/* core */
+.brandMarkCore {
+  position: relative;
+  z-index: 3;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+
+  box-shadow:
+    0 0 5px var(--cyan),
+    0 0 12px color-mix(in srgb, var(--cyan) 75%, transparent);
+
+  animation: brandCorePulse 3s ease-in-out infinite;
+}
+
+.brandText {
+  font-size: 17px;
+  font-weight: 700;
+
+  letter-spacing: -0.035em;
+
+  white-space: nowrap;
+}
+
+.brandText span {
+  color: var(--primary);
+
+  text-shadow: 0 0 18px color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.desktopNavigation {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: clamp(10px, 1.3vw, 18px);
+
+  margin-left: auto;
+}
+
+/* =========================================================
+   NAVIGATION PILL
+   ========================================================= */
+
+.navLinks {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 3px;
+
+  padding: 5px;
+
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface) 78%, transparent),
+    color-mix(in srgb, var(--background-secondary) 58%, transparent)
+  );
+
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 5%, transparent),
+    0 8px 28px color-mix(in srgb, var(--shadow-color) 55%, transparent);
+
+  backdrop-filter: blur(12px);
+}
+
+/* =========================================================
+   NAV LINKS
+   ========================================================= */
+
+.navLink {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 0 clamp(7px, 0.85vw, 12px);
+
+  color: var(--foreground-muted);
+
+  font-size: 12px;
+  font-weight: 550;
+
+  letter-spacing: -0.005em;
+
+  border-radius: 9px;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.navLink:hover {
+  color: var(--foreground);
+
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 9%, transparent),
+    color-mix(in srgb, var(--cyan) 5%, transparent)
+  );
+
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--primary) 12%, transparent);
+
+  transform: translateY(-1px);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   ACTIVE LINK
+   ========================================================= */
+
+.navLink.active {
+  color: var(--foreground);
+
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 17%, transparent),
+    color-mix(in srgb, var(--cyan) 7%, transparent)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent),
+    0 0 18px color-mix(in srgb, var(--primary) 9%, transparent);
+}
+
+.navLink.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 3px;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+
+  box-shadow:
+    0 0 7px var(--cyan),
+    0 0 13px color-mix(in srgb, var(--cyan) 65%, transparent);
+
+  transform: translateX(-50%);
+
+  animation: navDotPulse 2.5s ease-in-out infinite;
+}
+
+/* Remove old underline behavior */
+.navLink:not(.active)::after {
+  content: none;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+/* =========================================================
+   THEME BUTTON
+   ========================================================= */
+
+.themeButton,
+.menuButton {
+  position: relative;
+
+  display: inline-grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+
+  border-radius: 11px;
+
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--surface-elevated) 90%, transparent),
+    color-mix(in srgb, var(--background-secondary) 75%, transparent)
+  );
+
+  color: var(--foreground-secondary);
+
+  cursor: pointer;
+
+  box-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--foreground) 5%, transparent);
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.themeButton:hover,
+.menuButton:hover {
+  color: var(--cyan);
+
+  border-color: color-mix(in srgb, var(--cyan) 32%, var(--border));
+
+  background: color-mix(in srgb, var(--cyan) 7%, var(--surface));
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 0 20px color-mix(in srgb, var(--cyan) 10%, transparent);
+}
+
+.themeButton:focus-visible,
+.menuButton:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.themeIcon {
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+}
+
+.themeButton:hover .themeIcon {
+  transform: rotate(12deg) scale(1.08);
+}
+
+[data-theme="dark"] .sunIcon {
+  display: none;
+}
+
+[data-theme="light"] .moonIcon {
+  display: none;
+}
+
+/* =========================================================
+   ENQUIRE BUTTON
+   ========================================================= */
+
+.enquireButton {
+  position: relative;
+
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 17px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 65%, transparent);
+
+  border-radius: 11px;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    #657cff 48%,
+    var(--cyan) 150%
+  );
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.005em;
+
+  box-shadow:
+    0 7px 25px color-mix(in srgb, var(--primary) 23%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  overflow: hidden;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+/* animated light sweep */
+.enquireButton::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -80%;
+
+  width: 55%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 550ms ease;
+}
+
+.enquireButton:hover::before {
+  left: 130%;
+}
+
+.enquireButton:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.07);
+
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--primary) 32%, transparent),
+    0 0 25px color-mix(in srgb, var(--cyan) 10%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.enquireButton:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.enquireButton svg {
+  position: relative;
+  z-index: 1;
+
+  transition: transform 180ms ease;
+}
+
+.enquireButton span {
+  position: relative;
+  z-index: 1;
+}
+
+.enquireButton:hover svg {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   MOBILE ACTIONS
+   ========================================================= */
+
+.mobileActions {
+  display: none;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobileMenu {
+  position: fixed;
+
+  top: var(--navbar-height, 70px);
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 1001;
+
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      color-mix(in srgb, var(--primary) 13%, transparent),
+      transparent 30%
+    ),
+    var(--background);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  transform: translateY(-12px);
+
+  transition:
+    opacity 240ms ease,
+    transform 300ms ease,
+    visibility 300ms ease;
+}
+
+.mobileMenuOpen {
+  visibility: visible;
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: translateY(0);
+}
+
+.mobileMenuInner {
+  width: calc(100% - 40px);
+  max-width: 680px;
+
+  min-height: 100%;
+
+  margin-inline: auto;
+
+  padding: 28px 0 max(32px, env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+
+  border-top: 1px solid var(--border);
+}
+
+.mobileLink {
+  display: grid;
+
+  grid-template-columns: 34px 1fr auto;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 66px;
+
+  border-bottom: 1px solid var(--border);
+
+  color: var(--foreground-secondary);
+
+  font-size: 25px;
+  font-weight: 550;
+
+  letter-spacing: -0.035em;
+
+  opacity: 0;
+
+  transform: translateY(12px);
+
+  transition:
+    color 180ms ease,
+    opacity 350ms ease,
+    transform 350ms ease;
+}
+
+.mobileMenuOpen .mobileLink {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  color: var(--foreground);
+}
+
+.mobileLink:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.mobileLinkActive {
+  color: var(--foreground);
+}
+
+.mobileLinkNumber {
+  color: var(--primary);
+
+  font-size: 10px;
+  font-weight: 650;
+
+  letter-spacing: 0.1em;
+}
+
+.mobileLink svg {
+  color: var(--foreground-muted);
+
+  transition: transform 180ms ease;
+}
+
+.mobileLink:hover svg {
+  transform: translateX(4px);
+}
+
+.mobileMenuFooter {
+  padding-top: 32px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.mobileEnquireButton {
+  min-height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 60%, transparent);
+
+  border-radius: 12px;
+
+  background: var(--primary);
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.mobileEnquireButton:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.06);
+}
+
+.mobileEnquireButton:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.mobileMenuFooter p {
+  margin: 0;
+
+  color: var(--foreground-muted);
+
+  font-size: 11px;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes brandCorePulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes navDotPulse {
+  0%,
+  100% {
+    opacity: 0.65;
+
+    box-shadow:
+      0 0 5px var(--cyan),
+      0 0 9px color-mix(in srgb, var(--cyan) 45%, transparent);
+  }
+
+  50% {
+    opacity: 1;
+
+    box-shadow:
+      0 0 8px var(--cyan),
+      0 0 17px color-mix(in srgb, var(--cyan) 75%, transparent);
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .header {
+    --navbar-height: 70px;
+  }
+  .container {
+    width: calc(100% - 32px);
+    max-width: 1000px;
+
+    min-height: 70px;
+  }
+
+  .desktopNavigation {
+    gap: 12px;
+  }
+
+  .navLinks {
+    gap: 1px;
+
+    padding: 4px;
+  }
+
+  .navLink {
+    min-height: 32px;
+
+    padding-inline: 7px;
+
+    font-size: 11px;
+  }
+
+  .enquireButton {
+    padding-inline: 13px;
+  }
+}
+
+@media (max-width: 980px) {
+  .navbar::before {
+    display: none;
+  }
+
+  .navbar {
+    background: var(--background);
+    border-bottom-color: var(--border);
+  }
+
+  .scrolled .navbar {
+    background: var(--background);
+    border-bottom-color: var(--border);
+
+    box-shadow:
+      0 10px 30px var(--shadow-color),
+      0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+
+  .desktopNavigation {
+    display: none;
+  }
+
+  .mobileActions {
+    display: flex;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .header {
+    --navbar-height: 64px;
+  }
+  .container {
+    width: calc(100% - clamp(24px, 5vw, 32px));
+    max-width: none;
+
+    min-height: 64px;
+  }
+
+  .mobileMenuInner {
+    width: calc(100% - clamp(24px, 5vw, 32px));
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .header {
+    --navbar-height: 60px;
+  }
+  .container {
+    width: calc(100% - 24px);
+
+    min-height: 60px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brandMark {
+    width: 27px;
+    height: 27px;
+
+    border-radius: 8px;
+  }
+
+  .brandText {
+    font-size: 15px;
+  }
+
+  .mobileActions {
+    flex-shrink: 0;
+    gap: 7px;
+  }
+
+  .themeButton,
+  .menuButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mobileMenuInner {
+    width: calc(100% - 24px);
+
+    padding-top: 20px;
+  }
+
+  .mobileLink {
+    min-height: 60px;
+
+    font-size: clamp(20px, 6vw, 22px);
+  }
+}
+
+@media (max-width: 390px) {
+  .brandText {
+    max-width: 96px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .themeButton,
+  .menuButton {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .header {
+    --navbar-height: 58px;
+  }
+  .container {
+    width: calc(100% - 16px);
+
+    min-height: 58px;
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
+  .brandText {
+    max-width: 88px;
+    font-size: 13.5px;
+  }
+
+  .brandMark {
+    width: 25px;
+    height: 25px;
+  }
+
+  .mobileLink {
+    grid-template-columns: 28px 1fr auto;
+    gap: 10px;
+    min-height: 56px;
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 330px) {
+  .brandText {
+    max-width: 78px;
+  }
+
+  .mobileActions {
+    gap: 6px;
+  }
+
+  .themeButton,
+  .menuButton {
+    width: 31px;
+    height: 31px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .navbar,
+  .themeButton,
+  .menuButton,
+  .navLink,
+  .enquireButton,
+  .mobileMenu,
+  .mobileLink,
+  .mobileEnquireButton,
+  .brand,
+  .brandMark {
+    transition: none;
+  }
+
+  .brandMarkCore,
+  .navLink.active::after {
+    animation: none;
+  }
+
+  .enquireButton::before {
+    display: none;
+  }
+}

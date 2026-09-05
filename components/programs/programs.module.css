@@ -1,0 +1,1349 @@
+.section {
+  position: relative;
+  padding: clamp(42px, 4vw, 58px) 0 130px;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* ========================================
+   SECTION HEADING
+======================================== */
+
+.heading {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.eyebrowLine {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.65;
+}
+
+.heading h2 {
+  margin: 0;
+
+  color: var(--foreground);
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.heading h2 span {
+  color: var(--primary);
+}
+
+.heading p {
+  max-width: 600px;
+  margin: 20px auto 0;
+
+  color: var(--muted-foreground);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ========================================
+   SHARED CARD
+======================================== */
+
+.programCard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      color-mix(in srgb, var(--cyan) 15%, transparent),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--primary) 8%, transparent),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      color-mix(in srgb, var(--cyan) 9%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 88%, transparent),
+      color-mix(in srgb, var(--background) 92%, var(--primary))
+    );
+  box-shadow:
+    0 22px 70px color-mix(in srgb, var(--shadow-color) 68%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 9%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
+
+  isolation: isolate;
+
+  transform: translateY(0) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    background 360ms ease;
+}
+
+/* =========================================
+   4C.6 — F2P MOUSE GLOW
+   ========================================= */
+
+.f2pCard::before,
+.f2pCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.f2pCard::before {
+  z-index: 0;
+
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, white 10%, transparent),
+    transparent 25%,
+    transparent 72%,
+    color-mix(in srgb, var(--primary) 7%, transparent)
+  );
+
+  opacity: 0.72;
+}
+
+.f2pCard::after {
+  z-index: 1;
+
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 12%, transparent),
+    transparent 68%
+  );
+
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+.f2pCard:hover::after {
+  opacity: 1;
+}
+
+.f2pCard:hover {
+  border-color: color-mix(in srgb, var(--primary) 36%, transparent);
+
+  box-shadow:
+    0 30px 90px color-mix(in srgb, var(--shadow-color) 78%, var(--primary)),
+    0 0 42px color-mix(in srgb, var(--primary) 9%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+
+  transform: translateY(-7px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+}
+
+.cardGlow {
+  position: absolute;
+  z-index: -1;
+
+  width: 360px;
+  height: 360px;
+
+  top: -180px;
+  right: -120px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 18%, transparent),
+    transparent 68%
+  );
+
+  pointer-events: none;
+
+  opacity: 0.65;
+  transition:
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms ease;
+}
+
+.f2pCard:hover .cardGlow {
+  transform: scale(1.16);
+  opacity: 0.92;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 24px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.cardLabel {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+/* ========================================
+   F2P FEATURED CARD
+======================================== */
+
+.f2pCard {
+  min-height: 470px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 3;
+
+  width: 54%;
+  padding: 48px 0 48px 50px;
+}
+
+.cardContent h3 {
+  display: flex;
+  flex-direction: column;
+
+  margin: 28px 0 18px;
+
+  color: var(--foreground);
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.cardContent h3 span {
+  margin-top: 12px;
+
+  color: var(--primary);
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.cardContent > p {
+  max-width: 520px;
+
+  margin: 0;
+
+  color: var(--muted-foreground);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ========================================
+   F2P PATH
+======================================== */
+
+.path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin-top: 28px;
+}
+
+.path span {
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.path i {
+  width: 18px;
+  height: 1px;
+
+  background: var(--border);
+}
+
+/* ========================================
+   TECHNOLOGY TAGS
+======================================== */
+
+.techTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 24px;
+}
+
+.techTags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 11px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ========================================
+   CARD LINK
+======================================== */
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 26px;
+
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    gap 180ms ease;
+}
+
+.cardLink:hover {
+  gap: 12px;
+  color: var(--primary);
+}
+
+.skillCard:hover .cardLink {
+  gap: 11px;
+  color: var(--primary);
+}
+
+/* ========================================
+   F2P TECHNOLOGY VISUAL
+======================================== */
+
+.f2pVisual {
+  position: absolute;
+  z-index: 1;
+
+  width: 48%;
+  height: 100%;
+
+  top: 0;
+  right: 0;
+
+  translate: var(--f2p-x, 0px) var(--f2p-y, 0px);
+  transition: translate 180ms ease-out;
+  will-change: translate;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   4C.4 — F2P HOVER POLISH
+   ========================================= */
+
+.f2pCard:hover .f2pVisual {
+  filter: saturate(1.08);
+}
+
+.f2pCard:hover .core {
+  filter: brightness(1.25);
+  box-shadow:
+    0 0 30px color-mix(in srgb, var(--primary) 40%, transparent),
+    0 0 70px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* =========================================
+   4C.5 — F2P CARD HOVER POLISH
+   ========================================= */
+
+.f2pCard {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.f2pCard:hover {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+
+  box-shadow:
+    0 24px 70px color-mix(in srgb, var(--primary) 8%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+/* ---------- ambient glow ---------- */
+
+.f2pVisual::before {
+  content: "";
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 360px;
+  height: 360px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 14%, transparent) 0%,
+    color-mix(in srgb, var(--primary) 5%, transparent) 38%,
+    transparent 72%
+  );
+
+  transform: translate(-50%, -50%);
+  filter: blur(8px);
+}
+
+/* ---------- orbital rings ---------- */
+
+.orbit {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+
+  border-radius: 50%;
+
+  transform-origin: center;
+
+  opacity: 0.85;
+}
+
+.orbitOne {
+  width: 250px;
+  height: 250px;
+  animation: f2pOrbitOne 18s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+.orbitTwo {
+  width: 330px;
+  height: 330px;
+  animation: f2pOrbitTwo 24s linear infinite;
+  transform: translate(-50%, -50%) rotate(55deg) scaleY(0.38);
+}
+
+.orbitThree {
+  width: 390px;
+  height: 390px;
+  animation: f2pOrbitThree 30s linear infinite;
+
+  transform: translate(-50%, -50%) rotate(-55deg) scaleY(0.38);
+}
+
+/* ---------- central core ---------- */
+
+.core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 96px;
+  height: 96px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 58%, var(--border));
+
+  border-radius: 50%;
+
+  color: var(--primary);
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in srgb, var(--primary) 16%, transparent),
+      transparent 55%
+    ),
+    color-mix(in srgb, var(--background) 86%, var(--primary) 14%);
+
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--primary) 3%, transparent),
+    0 0 45px color-mix(in srgb, var(--primary) 18%, transparent);
+
+  animation: f2pCorePulse 4s ease-in-out infinite;
+
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- orbital nodes ---------- */
+
+.node {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--primary) 7%, transparent),
+    0 0 18px color-mix(in srgb, var(--primary) 65%, transparent);
+  animation: f2pNodeFloat 4s ease-in-out infinite;
+}
+
+.nodeOne {
+  top: 24%;
+  left: 28%;
+  animation-delay: 0s;
+}
+
+.nodeTwo {
+  top: 27%;
+  right: 20%;
+  animation-delay: -1s;
+}
+
+.nodeThree {
+  bottom: 24%;
+  left: 23%;
+  animation-delay: -2s;
+}
+
+.nodeFour {
+  right: 25%;
+  bottom: 20%;
+  animation-delay: -3s;
+}
+
+/* ---------- technology nodes ---------- */
+
+.techIcon {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+
+  border-radius: 13px;
+
+  color: var(--foreground);
+
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--primary) 9%, transparent),
+    color-mix(in srgb, var(--background) 94%, transparent)
+  );
+
+  box-shadow: 0 12px 28px
+    color-mix(in srgb, var(--shadow-color) 12%, transparent);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  backdrop-filter: blur(10px);
+  animation: f2pBadgeFloat 5s ease-in-out infinite;
+}
+
+.techIcon svg {
+  color: var(--primary);
+  filter: drop-shadow(
+    0 0 8px color-mix(in srgb, var(--primary) 35%, transparent)
+  );
+  transition:
+    color 300ms ease,
+    filter 300ms ease,
+    transform 300ms ease;
+}
+
+.f2pCard:hover .techIcon svg {
+  color: var(--cyan);
+  filter: drop-shadow(
+    0 0 10px color-mix(in srgb, var(--cyan) 45%, transparent)
+  );
+}
+
+/* individual positions */
+
+.python {
+  top: 16%;
+  right: 28%;
+  animation-delay: 0s;
+}
+
+.java {
+  top: 42%;
+  right: 8%;
+  animation-delay: -1.25s;
+}
+
+.react {
+  right: 27%;
+  bottom: 17%;
+  animation-delay: -2.5s;
+}
+
+.sql {
+  bottom: 30%;
+  left: 12%;
+  animation-delay: -3.75s;
+}
+
+/* ========================================
+   SKILL DEVELOPMENT GRID
+======================================== */
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.skillCard {
+  min-height: 245px;
+  padding: 26px;
+
+  border-radius: 24px;
+
+  cursor: pointer;
+}
+
+.skillIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  margin-top: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  color: var(--primary);
+
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms ease,
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+/* ========================================
+   SKILL CARD HOVER
+======================================== */
+
+.skillCard {
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    background 320ms ease;
+}
+
+.skillCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      color-mix(in srgb, var(--primary) 13%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, white 6%, transparent),
+      transparent 45%
+    );
+
+  opacity: 0.7;
+
+  transition: opacity 320ms ease;
+}
+
+.skillCard:hover {
+  transform: translateY(-7px);
+
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+
+  box-shadow:
+    0 26px 70px color-mix(in srgb, var(--shadow-color) 55%, transparent),
+    0 0 35px color-mix(in srgb, var(--primary) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+}
+
+.skillCard:hover::before {
+  opacity: 1;
+}
+
+.skillCard:hover .skillIcon {
+  transform: translateY(-3px) scale(1.05);
+
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+
+  box-shadow: 0 0 24px color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.skillCard h3 {
+  display: flex;
+  flex-direction: column;
+
+  margin: 20px 0 10px;
+
+  color: var(--foreground);
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.skillCard h3 span {
+  margin-top: 5px;
+  color: var(--primary);
+}
+
+.skillCard p {
+  margin: 0;
+
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ========================================
+   AI TOOLS CARD
+======================================== */
+
+.aiCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  margin-top: 20px;
+  padding: 22px 26px;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  box-shadow:
+    0 18px 55px color-mix(in srgb, var(--shadow-color) 45%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 7%, transparent);
+
+  overflow: hidden;
+  isolation: isolate;
+
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    background 320ms ease;
+
+  cursor: pointer;
+  --ai-glow-strength: 16%;
+}
+
+.aiCard:hover {
+  transform: translateY(-6px);
+
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+
+  box-shadow:
+    0 25px 65px color-mix(in srgb, var(--shadow-color) 55%, transparent),
+    0 0 35px color-mix(in srgb, var(--primary) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+}
+
+.aiIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  color: var(--primary);
+
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms ease,
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.aiCard:hover .aiIcon {
+  transform: translateY(-2px) scale(1.06);
+
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+
+  box-shadow: 0 0 25px color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.aiCard .cardLink {
+  transition:
+    gap 300ms ease,
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.aiCard:hover .cardLink {
+  gap: 11px;
+  color: var(--primary);
+}
+
+.aiCard > div:nth-child(2) {
+  flex: 1;
+}
+
+.aiLabel {
+  color: var(--primary);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.aiCard h3 {
+  margin: 5px 0 4px;
+
+  color: var(--foreground);
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.aiCard p {
+  margin: 0;
+
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+/* ========================================
+   SECTION CTA
+======================================== */
+
+.sectionCta {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 42px;
+}
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 13px 19px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--foreground);
+  background: transparent;
+
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.viewAll:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 980px) {
+  .section {
+    padding: 100px 0 110px;
+  }
+
+  .container {
+    width: min(100% - 36px, 760px);
+  }
+
+  .f2pCard {
+    min-height: 520px;
+  }
+
+  .cardContent {
+    width: 62%;
+    padding-left: 34px;
+  }
+
+  .f2pVisual {
+    width: 48%;
+    opacity: 0.8;
+  }
+
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 640px) {
+  .section {
+    padding: 80px 0 90px;
+  }
+
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .heading {
+    margin-bottom: 38px;
+  }
+
+  .heading h2 {
+    font-size: 34px;
+  }
+
+  .heading p {
+    font-size: 14px;
+  }
+
+  .f2pCard {
+    min-height: 700px;
+    border-radius: 24px;
+  }
+
+  .cardContent {
+    width: 100%;
+    padding: 30px 24px;
+  }
+
+  .cardContent h3 {
+    font-size: 50px;
+  }
+
+  .cardContent h3 span {
+    font-size: 18px;
+  }
+
+  .path {
+    gap: 7px;
+  }
+
+  .path span {
+    font-size: 11px;
+  }
+
+  .path i {
+    width: 12px;
+  }
+
+  .f2pVisual {
+    width: 100%;
+    height: 230px;
+    top: auto;
+    right: 0;
+    bottom: 8px;
+    opacity: 0.72;
+  }
+
+  .orbitOne {
+    width: 130px;
+    height: 130px;
+  }
+
+  .orbitTwo {
+    width: 165px;
+    height: 165px;
+  }
+
+  .orbitThree {
+    width: 195px;
+    height: 195px;
+  }
+
+  .core {
+    width: 68px;
+    height: 68px;
+  }
+
+  .techIcon {
+    width: 34px;
+    height: 34px;
+  }
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .skillCard {
+    min-height: 220px;
+  }
+
+  .aiCard {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .aiCard > .cardLink {
+    margin-left: 68px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  .f2pCard {
+    min-height: 700px;
+  }
+
+  .cardContent {
+    padding: 26px 20px;
+  }
+
+  .cardContent h3 {
+    font-size: 46px;
+  }
+
+  .cardMeta {
+    gap: 8px;
+  }
+
+  .cardLabel {
+    font-size: 9px;
+  }
+
+  .f2pVisual {
+    height: 34%;
+  }
+
+  .aiCard {
+    padding: 20px;
+  }
+
+  .aiCard > .cardLink {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================
+   4B — F2P VISUAL MOTION
+   ========================================================= */
+
+@keyframes f2pOrbitOne {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes f2pOrbitTwo {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes f2pOrbitThree {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes f2pCorePulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+@keyframes f2pNodeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes f2pDotPulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+@keyframes f2pBadgeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* =========================================
+   4B — F2P VISUAL MOTION
+   STEP 1 — ORBIT ROTATION
+   ========================================= */
+
+@keyframes f2pOrbitOne {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes f2pOrbitTwo {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes f2pOrbitThree {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.orbitOne {
+  animation: f2pOrbitOne 24s linear infinite;
+}
+
+.orbitTwo {
+  animation: f2pOrbitTwo 30s linear infinite;
+}
+
+.orbitThree {
+  animation: f2pOrbitThree 36s linear infinite;
+}
+
+/* =========================================
+   4B — STEP 2: CORE PULSE
+   ========================================= */
+
+@keyframes f2pCorePulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.core {
+  animation: f2pCorePulse 4s ease-in-out infinite;
+}
+
+/* =========================================
+   4B — STEP 3: TECHNOLOGY BADGE FLOAT
+   ========================================= */
+
+@keyframes f2pTechFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.python,
+.java,
+.react,
+.sql {
+  animation: f2pTechFloat 4.5s ease-in-out infinite;
+}
+
+.java {
+  animation-delay: -1.1s;
+}
+
+.react {
+  animation-delay: -2.2s;
+}
+
+.sql {
+  animation-delay: -3.2s;
+}
+
+/* =========================================
+   4B — STEP 4: DATA DOT MOVEMENT
+   ========================================= */
+
+@keyframes f2pNodeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes f2pNodeFloatReverse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+.nodeOne,
+.nodeThree {
+  animation: f2pNodeFloat 4s ease-in-out infinite;
+}
+
+.nodeTwo,
+.nodeFour {
+  animation: f2pNodeFloatReverse 4.8s ease-in-out infinite;
+}
+
+/* =========================================
+   4B — REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitOne,
+  .orbitTwo,
+  .orbitThree,
+  .core,
+  .node,
+  .nodeOne,
+  .nodeTwo,
+  .nodeThree,
+  .nodeFour,
+  .techIcon,
+  .python,
+  .java,
+  .react,
+  .sql {
+    animation: none;
+  }
+}
