@@ -1,0 +1,714 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(38px, 5vw, 72px) 0 clamp(76px, 8vw, 116px);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 22%,
+      color-mix(in srgb, var(--primary) 7%, transparent),
+      transparent 34%
+    ),
+    var(--background);
+  color: var(--foreground);
+}
+
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  width: clamp(300px, 42vw, 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(88px);
+}
+
+.section::before {
+  top: 4%;
+  left: max(-250px, -14vw);
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+
+.section::after {
+  right: max(-230px, -12vw);
+  bottom: 2%;
+  background: color-mix(in srgb, var(--cyan) 6%, transparent);
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.panel {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1080px);
+  min-height: 390px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+  border-radius: 32px;
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 44%),
+      color-mix(in srgb, var(--cyan) 13%, transparent),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 78% 35%,
+      color-mix(in srgb, var(--primary) 13%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 86%, transparent),
+      color-mix(in srgb, var(--background) 92%, var(--primary))
+    );
+  box-shadow:
+    0 28px 86px color-mix(in srgb, var(--shadow-color) 66%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) 9%, transparent);
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    background 320ms ease;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, white 9%, transparent),
+      transparent 30%,
+      transparent 74%,
+      color-mix(in srgb, var(--primary) 8%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: auto, 70px 70px, 70px 70px;
+  mask-image: radial-gradient(circle at 55% 46%, black, transparent 76%);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.panel:hover {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  box-shadow:
+    0 32px 92px color-mix(in srgb, var(--shadow-color) 70%, transparent),
+    0 0 42px color-mix(in srgb, var(--primary) 8%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: clamp(50px, 6vw, 68px) 34px 26px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.eyebrowLine {
+  position: relative;
+  width: 28px;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+.eyebrowLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: enquiryLineScan 4.4s ease-in-out infinite;
+}
+
+.content h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  font-weight: 750;
+}
+
+.content p {
+  max-width: 610px;
+  margin: 20px auto 0;
+  color: color-mix(in srgb, var(--foreground) 68%, transparent);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.primaryCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  margin-top: 30px;
+  padding: 0 24px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, white 16%, transparent);
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      color-mix(in srgb, var(--cyan) 40%, var(--primary))
+    );
+  box-shadow:
+    0 18px 42px color-mix(in srgb, var(--primary) 28%, transparent),
+    0 0 28px color-mix(in srgb, var(--cyan) 10%, transparent);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.primaryCta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.32) 46%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 620ms ease;
+}
+
+.primaryCta span,
+.primaryCta svg {
+  position: relative;
+  z-index: 1;
+}
+
+.primaryCta svg {
+  transition: transform 220ms ease;
+}
+
+.primaryCta:hover {
+  filter: brightness(1.06);
+  box-shadow:
+    0 22px 48px color-mix(in srgb, var(--primary) 34%, transparent),
+    0 0 34px color-mix(in srgb, var(--cyan) 13%, transparent);
+  transform: translateY(-3px);
+}
+
+.primaryCta:hover::before {
+  transform: translateX(120%);
+}
+
+.primaryCta:hover svg {
+  transform: translateX(4px);
+}
+
+.primaryCta:focus-visible,
+.contact:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 5px;
+}
+
+.contacts {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: min(800px, calc(100% - 56px));
+  margin: 2px auto 30px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface-elevated) 66%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 7%, transparent);
+  text-align: left;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.contact:hover {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--primary) 7%, var(--surface-elevated));
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--shadow-color) 26%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 9%, transparent);
+  transform: translateY(-3px);
+}
+
+.contactIcon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-radius: 12px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.contact:hover .contactIcon {
+  color: var(--cyan);
+  border-color: color-mix(in srgb, var(--cyan) 32%, var(--border));
+  transform: translateY(-1px);
+}
+
+.contactLabel,
+.contactValue {
+  display: block;
+}
+
+.contactLabel {
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.contactValue {
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  color: color-mix(in srgb, var(--foreground) 62%, transparent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.visual {
+  position: absolute;
+  right: clamp(44px, 7vw, 120px);
+  bottom: clamp(72px, 7vw, 104px);
+  z-index: 1;
+  width: clamp(180px, 18vw, 250px);
+  aspect-ratio: 1;
+  opacity: 0.5;
+  pointer-events: none;
+  transform: translate3d(var(--visual-x, 0px), var(--visual-y, 0px), 0);
+  transition: transform 240ms ease-out;
+}
+
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--cyan) 11%, transparent),
+      transparent 66%
+    ),
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--primary) 14%, transparent),
+      transparent 72%
+    );
+  filter: blur(12px);
+  animation: enquiryAura 5.6s ease-in-out infinite;
+}
+
+.orbit {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border: 1px solid color-mix(in srgb, var(--primary) 26%, transparent);
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.orbitOne {
+  width: 68%;
+  height: 68%;
+  transform: translate(-50%, -50%);
+  animation: enquiryOrbit 26s linear infinite;
+}
+
+.orbitTwo {
+  width: 88%;
+  height: 48%;
+  transform: translate(-50%, -50%) rotate(54deg);
+  animation: enquiryOrbitReverse 34s linear infinite;
+}
+
+.orbitThree {
+  width: 48%;
+  height: 88%;
+  border-color: color-mix(in srgb, var(--cyan) 26%, transparent);
+  transform: translate(-50%, -50%) rotate(-54deg);
+  animation: enquiryOrbit 38s linear infinite;
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 78px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 42%, var(--border));
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 28%,
+      color-mix(in srgb, white 16%, transparent),
+      transparent 40%
+    ),
+    color-mix(in srgb, var(--background) 82%, var(--primary));
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--primary) 4%, transparent),
+    0 0 42px color-mix(in srgb, var(--primary) 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  color: var(--cyan);
+  transform: translate(-50%, -50%);
+  animation: enquiryCorePulse 4.8s ease-in-out infinite;
+}
+
+.dataDot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--cyan) 8%, transparent),
+    0 0 18px color-mix(in srgb, var(--cyan) 60%, transparent);
+  animation: enquiryDotFloat 4.5s ease-in-out infinite;
+}
+
+.dataDotOne {
+  top: 22%;
+  right: 28%;
+}
+
+.dataDotTwo {
+  right: 14%;
+  bottom: 34%;
+  animation-delay: -1.4s;
+}
+
+.dataDotThree {
+  bottom: 24%;
+  left: 24%;
+  width: 5px;
+  height: 5px;
+  background: var(--primary);
+  animation-delay: -2.8s;
+}
+
+@keyframes enquiryLineScan {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+
+  48%,
+  58% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes enquiryAura {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 0.96;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes enquiryOrbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes enquiryOrbitReverse {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes enquiryCorePulse {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    filter: brightness(1.1);
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
+
+@keyframes enquiryDotFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 980px) {
+  .section {
+    padding-block: 52px 92px;
+  }
+
+  .container {
+    width: min(100% - 36px, 820px);
+  }
+
+  .panel {
+    min-height: 380px;
+    border-radius: 28px;
+  }
+
+  .content {
+    padding: 48px 26px 24px;
+  }
+
+  .visual {
+    right: clamp(22px, 6vw, 58px);
+    bottom: 74px;
+    width: clamp(160px, 24vw, 210px);
+    opacity: 0.34;
+  }
+
+  .contacts {
+    width: min(100% - 40px, 720px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-block: 44px 74px;
+  }
+
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .panel {
+    min-height: auto;
+    border-radius: 24px;
+  }
+
+  .content {
+    padding: 42px 20px 24px;
+  }
+
+  .content h2 {
+    font-size: 34px;
+  }
+
+  .content p {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.66;
+  }
+
+  .primaryCta {
+    width: min(100%, 270px);
+    margin-top: 24px;
+  }
+
+  .contacts {
+    grid-template-columns: 1fr;
+    width: calc(100% - 32px);
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .contact {
+    padding: 12px;
+  }
+
+  .visual {
+    top: auto;
+    right: -30px;
+    bottom: 188px;
+    width: 158px;
+    opacity: 0.16;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding-block: 40px 66px;
+  }
+
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  .content {
+    padding: 36px 16px 22px;
+  }
+
+  .eyebrow {
+    gap: 9px;
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .eyebrowLine {
+    width: 22px;
+  }
+
+  .content h2 {
+    font-size: clamp(30px, 9vw, 34px);
+  }
+
+  .contacts {
+    width: calc(100% - 24px);
+  }
+
+  .contactValue {
+    font-size: 11px;
+  }
+
+  .visual {
+    right: -42px;
+    bottom: 188px;
+    width: 138px;
+    opacity: 0.13;
+  }
+
+  .core {
+    width: 62px;
+  }
+}
+
+@media (max-width: 380px) {
+  .content {
+    padding-inline: 14px;
+  }
+
+  .primaryCta {
+    width: 100%;
+  }
+
+  .contact {
+    gap: 10px;
+  }
+
+  .contactIcon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .visual {
+    right: -48px;
+    width: 126px;
+  }
+}
+
+@media (hover: none) {
+  .panel:hover {
+    border-color: color-mix(in srgb, var(--foreground) 9%, transparent);
+    box-shadow:
+      0 28px 86px color-mix(in srgb, var(--shadow-color) 66%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--primary) 9%, transparent);
+  }
+
+  .primaryCta:hover,
+  .contact:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrowLine::after,
+  .visual::before,
+  .orbit,
+  .core,
+  .dataDot {
+    animation: none;
+  }
+
+  .section,
+  .panel,
+  .visual,
+  .primaryCta,
+  .primaryCta::before,
+  .primaryCta svg,
+  .contact,
+  .contactIcon {
+    transition: none;
+  }
+
+  .visual {
+    transform: none;
+  }
+}

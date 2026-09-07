@@ -1,0 +1,593 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(48px, 6vw, 78px) 0 28px;
+  border-top: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      color-mix(in srgb, var(--primary) 11%, transparent),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 72%,
+      color-mix(in srgb, var(--cyan) 8%, transparent),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      var(--background),
+      color-mix(in srgb, var(--background-secondary) 84%, var(--background))
+    );
+  color: var(--foreground);
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 78px 78px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, 1.4fr) minmax(130px, 0.62fr) minmax(
+      190px,
+      0.86fr
+    ) minmax(230px, 0.9fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(28px, 4vw, 42px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at 14% 18%,
+      color-mix(in srgb, var(--cyan) 9%, transparent),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 76%, transparent),
+      color-mix(in srgb, var(--background) 92%, var(--primary))
+    );
+  box-shadow:
+    0 24px 78px color-mix(in srgb, var(--shadow-color) 64%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 9%, transparent);
+}
+
+.brandArea,
+.column {
+  position: relative;
+  z-index: 1;
+}
+
+.brandArea {
+  min-width: 0;
+}
+
+.brandVisual {
+  position: absolute;
+  top: -22px;
+  left: 22px;
+  z-index: -1;
+  width: 176px;
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0.34;
+}
+
+.brandOrb {
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow:
+    0 0 26px color-mix(in srgb, var(--cyan) 54%, transparent),
+    0 0 70px color-mix(in srgb, var(--primary) 20%, transparent);
+  animation: footerOrbPulse 5.8s ease-in-out infinite;
+}
+
+.brandLine {
+  position: absolute;
+  inset: 18%;
+  border: 1px solid color-mix(in srgb, var(--primary) 32%, transparent);
+  border-radius: 50%;
+  transform: rotate(28deg);
+}
+
+.brandDot {
+  position: absolute;
+  top: 24%;
+  right: 25%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--cyan) 70%, transparent);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  color: var(--foreground);
+  font-weight: 800;
+}
+
+.brand:focus-visible,
+.column a:focus-visible,
+.socialButton:focus-visible,
+.cta:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+.brandMark {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 55%, var(--border));
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in srgb, var(--cyan) 18%, transparent),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      color-mix(in srgb, var(--primary) 18%, transparent),
+      transparent 50%
+    ),
+    var(--surface);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary) 7%, transparent),
+    0 0 26px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.brandMark::before,
+.brandMark::after {
+  content: "";
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--cyan) 48%, transparent);
+  border-radius: 50%;
+}
+
+.brandMark::before {
+  width: 25px;
+  height: 25px;
+  transform: rotate(35deg);
+}
+
+.brandMark::after {
+  width: 13px;
+  height: 29px;
+  border-color: color-mix(in srgb, var(--primary) 52%, transparent);
+  transform: rotate(-35deg);
+}
+
+.brandMarkCore {
+  position: relative;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow:
+    0 0 6px var(--cyan),
+    0 0 14px color-mix(in srgb, var(--cyan) 76%, transparent);
+}
+
+.brandName {
+  font-size: 22px;
+  letter-spacing: -0.045em;
+}
+
+.brandName span {
+  color: var(--primary);
+}
+
+.tagline {
+  margin: 18px 0 0;
+  color: var(--foreground);
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  max-width: 380px;
+  margin: 12px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 22px;
+}
+
+.socialButton {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 50%;
+  color: #ffffff;
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--shadow-color) 32%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  transition:
+    transform 190ms ease,
+    box-shadow 190ms ease,
+    filter 190ms ease;
+}
+
+.socialButton:hover {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.05);
+}
+
+.linkedin {
+  background: #0a66c2;
+}
+
+.linkedin:hover {
+  box-shadow:
+    0 14px 34px rgba(10, 102, 194, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.instagram {
+  background:
+    radial-gradient(circle at 30% 105%, #feda75 0 18%, transparent 38%),
+    linear-gradient(135deg, #833ab4, #fd1d1d 58%, #fcb045);
+}
+
+.instagram:hover {
+  box-shadow:
+    0 14px 34px rgba(225, 48, 108, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.whatsapp {
+  background: #25d366;
+}
+
+.whatsapp:hover {
+  box-shadow:
+    0 14px 34px rgba(37, 211, 102, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.column h2 {
+  margin: 4px 0 16px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.column ul {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.column a {
+  color: var(--foreground-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.column a:hover {
+  color: var(--foreground);
+  transform: translateX(3px);
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+}
+
+.contactLink svg {
+  flex: 0 0 auto;
+  color: var(--primary);
+}
+
+.contactLink span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  margin-top: 20px;
+  padding: 0 18px;
+  border: 1px solid color-mix(in srgb, var(--primary) 62%, transparent);
+  border-radius: 12px;
+  color: #ffffff;
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      color-mix(in srgb, var(--cyan) 32%, var(--primary))
+    );
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  font-size: 13px;
+  font-weight: 800;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.column .cta {
+  color: #ffffff;
+}
+
+.cta svg {
+  transition: transform 180ms ease;
+}
+
+.cta:hover {
+  filter: brightness(1.07);
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 36px color-mix(in srgb, var(--primary) 30%, transparent),
+    0 0 24px color-mix(in srgb, var(--cyan) 10%, transparent);
+}
+
+.cta:hover svg {
+  transform: translateX(4px);
+}
+
+.statement {
+  margin: 22px 0 0;
+  color: color-mix(in srgb, var(--foreground-secondary) 78%, transparent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  color: var(--foreground-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.bottomBar p {
+  margin: 0;
+}
+
+@keyframes footerOrbPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 0.76;
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 980px) {
+  .footer {
+    padding-top: 54px;
+  }
+
+  .shell {
+    width: min(100% - 36px, 820px);
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(170px, 0.8fr);
+    gap: 34px 28px;
+    padding: 34px;
+    border-radius: 26px;
+  }
+
+  .brandArea {
+    grid-column: 1 / -1;
+  }
+
+  .description {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 36px 0 22px;
+  }
+
+  .shell {
+    width: calc(100% - 28px);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px;
+    border-radius: 24px;
+  }
+
+  .brandVisual {
+    top: -26px;
+    left: 42px;
+    width: 150px;
+    opacity: 0.24;
+  }
+
+  .brandMark {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .brandName {
+    font-size: 20px;
+  }
+
+  .tagline {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  .description {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .socials {
+    margin-top: 18px;
+  }
+
+  .socialButton {
+    width: 44px;
+    height: 44px;
+  }
+
+  .column {
+    padding-top: 2px;
+  }
+
+  .column h2 {
+    margin-bottom: 12px;
+  }
+
+  .column ul {
+    gap: 10px;
+  }
+
+  .cta {
+    width: min(100%, 220px);
+  }
+
+  .statement {
+    margin-top: 18px;
+    line-height: 1.55;
+  }
+
+  .bottomBar {
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .shell {
+    width: calc(100% - 20px);
+  }
+
+  .grid {
+    padding: 22px 16px;
+  }
+
+  .brandVisual {
+    left: 36px;
+    width: 136px;
+    opacity: 0.2;
+  }
+
+  .socials {
+    gap: 9px;
+  }
+
+  .socialButton {
+    width: 42px;
+    height: 42px;
+  }
+
+  .column a {
+    font-size: 13px;
+  }
+
+  .statement,
+  .bottomBar {
+    font-size: 11px;
+  }
+}
+
+@media (hover: none) {
+  .socialButton:hover,
+  .column a:hover,
+  .cta:hover {
+    transform: none;
+  }
+
+  .cta:hover svg {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandOrb {
+    animation: none;
+  }
+
+  .socialButton,
+  .column a,
+  .cta,
+  .cta svg {
+    transition: none;
+  }
+}
