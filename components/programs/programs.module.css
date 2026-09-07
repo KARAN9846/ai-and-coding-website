@@ -1103,7 +1103,8 @@
 
 @media (max-width: 980px) {
   .aiCard {
-    padding-right: clamp(138px, 18vw, 166px);
+    align-items: flex-start;
+    padding: 26px clamp(144px, 19vw, 172px) 26px 26px;
   }
 
   .aiIcon,
@@ -1116,7 +1117,7 @@
   .aiToolsVisual {
     position: absolute;
     top: 50%;
-    right: 18px;
+    right: 28px;
     z-index: 1;
     display: block;
     width: clamp(124px, 16vw, 148px);
@@ -1248,6 +1249,10 @@
       0 0 24px color-mix(in srgb, var(--cyan) 10%, transparent),
       inset 0 1px 0 color-mix(in srgb, white 11%, transparent);
     transform: translate(50%, calc(-50% - 5px)) scale(1.03);
+  }
+
+  .aiCard > div:nth-child(2) {
+    max-width: 360px;
   }
 }
 
@@ -1424,13 +1429,35 @@
   }
 
   .aiCard {
-    align-items: flex-start;
-    flex-wrap: wrap;
+    display: block;
+    min-height: 220px;
+    padding: 28px clamp(132px, 34vw, 160px) 28px 24px;
+  }
+
+  .aiIcon {
+    margin-bottom: 14px;
+  }
+
+  .aiCard > div:nth-child(2) {
+    max-width: 100%;
+  }
+
+  .aiCard h3 {
+    max-width: 210px;
+    margin-top: 10px;
+    font-size: 23px;
+    line-height: 1.18;
+  }
+
+  .aiCard p {
+    max-width: 225px;
+    font-size: 13px;
+    line-height: 1.55;
   }
 
   .aiCard > .cardLink {
-    margin-left: 68px;
-    margin-top: 0;
+    margin-left: 0;
+    margin-top: 22px;
   }
 }
 
@@ -1464,7 +1491,7 @@
   }
 
   .aiCard {
-    padding: 20px;
+    padding: 24px 118px 24px 20px;
   }
 
   .aiCard > .cardLink {
@@ -1481,13 +1508,9 @@
     padding-right: clamp(124px, 34vw, 156px);
   }
 
-  .aiCard {
-    padding-right: clamp(124px, 34vw, 156px);
-  }
-
   .skillToolsVisual,
   .aiToolsVisual {
-    right: 14px;
+    right: 18px;
     width: clamp(122px, 32vw, 150px);
     opacity: 0.78;
   }
@@ -1499,12 +1522,12 @@
   }
 
   .aiCard {
-    padding-right: 116px;
+    padding-right: 112px;
   }
 
   .skillToolsVisual,
   .aiToolsVisual {
-    right: 10px;
+    right: 14px;
     width: 112px;
     opacity: 0.58;
   }
@@ -1529,12 +1552,12 @@
   }
 
   .aiCard {
-    padding-right: 98px;
+    padding-right: 102px;
   }
 
   .skillToolsVisual,
   .aiToolsVisual {
-    right: 6px;
+    right: 12px;
     width: 96px;
     opacity: 0.54;
   }
