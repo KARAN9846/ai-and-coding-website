@@ -11,9 +11,57 @@ import {
   Sparkles,
   Video,
 } from "lucide-react";
+import {
+  SiFigma,
+  SiGooglegemini,
+  SiGoogledocs,
+  SiGooglesearchconsole,
+  SiWondersharefilmora,
+} from "@icons-pack/react-simple-icons";
 import styles from "./programs.module.css";
 
 import { DiPython, DiJava, DiReact, DiMysql } from "react-icons/di";
+
+type SkillTool = {
+  label: string;
+  Icon: React.ComponentType<{ size?: string | number; title?: string }>;
+};
+
+type SkillToolsVisualProps = {
+  variant: "design" | "content" | "video" | "growth";
+  tools: SkillTool[];
+};
+
+const skillToolsVisualClassNames: Record<
+  SkillToolsVisualProps["variant"],
+  string
+> = {
+  design: styles.skillToolsVisualDesign,
+  content: styles.skillToolsVisualContent,
+  video: styles.skillToolsVisualVideo,
+  growth: styles.skillToolsVisualGrowth,
+};
+
+function SkillToolsVisual({ variant, tools }: SkillToolsVisualProps) {
+  return (
+    <div
+      className={`${styles.skillToolsVisual} ${skillToolsVisualClassNames[variant]}`}
+      aria-hidden="true"
+    >
+      <span className={styles.skillToolsOrbit} />
+      {tools.map(({ label, Icon }, index) => (
+        <span
+          className={`${styles.skillTool} ${styles[`skillTool${index + 1}`]}`}
+          key={label}
+        >
+          <Icon size={54} title={label} />
+        </span>
+      ))}
+      <span className={`${styles.skillToolsDot} ${styles.skillToolsDotOne}`} />
+      <span className={`${styles.skillToolsDot} ${styles.skillToolsDotTwo}`} />
+    </div>
+  );
+}
 
 export function Programs() {
   const f2pVisualRef = useRef<HTMLDivElement>(null);
@@ -228,6 +276,11 @@ export function Programs() {
           >
             <div className={styles.cardGlow} />
 
+            <SkillToolsVisual
+              variant="design"
+              tools={[{ label: "Figma", Icon: SiFigma }]}
+            />
+
             <div className={styles.skillIcon}>
               <Palette size={22} strokeWidth={1.6} />
             </div>
@@ -251,6 +304,11 @@ export function Programs() {
             onMouseLeave={handleCardMouseLeave}
           >
             <div className={styles.cardGlow} />
+
+            <SkillToolsVisual
+              variant="content"
+              tools={[{ label: "Google Docs", Icon: SiGoogledocs }]}
+            />
 
             <div className={styles.skillIcon}>
               <Sparkles size={22} strokeWidth={1.6} />
@@ -276,6 +334,11 @@ export function Programs() {
           >
             <div className={styles.cardGlow} />
 
+            <SkillToolsVisual
+              variant="video"
+              tools={[{ label: "Wondershare Filmora", Icon: SiWondersharefilmora }]}
+            />
+
             <div className={styles.skillIcon}>
               <Video size={22} strokeWidth={1.6} />
             </div>
@@ -299,6 +362,11 @@ export function Programs() {
             onMouseLeave={handleCardMouseLeave}
           >
             <div className={styles.cardGlow} />
+
+            <SkillToolsVisual
+              variant="growth"
+              tools={[{ label: "Google Search Console", Icon: SiGooglesearchconsole }]}
+            />
 
             <div className={styles.skillIcon}>
               <BrainCircuit size={22} strokeWidth={1.6} />
@@ -334,6 +402,15 @@ export function Programs() {
             <h3>AI Tools for Creators</h3>
 
             <p>Explore modern AI tools for faster, smarter digital creation.</p>
+          </div>
+
+          <div className={styles.aiToolsVisual} aria-hidden="true">
+            <span className={styles.aiToolsOrbit} />
+            <span className={styles.aiToolsLogo}>
+              <SiGooglegemini size={54} title="Google Gemini" />
+            </span>
+            <span className={`${styles.aiToolsDot} ${styles.aiToolsDotOne}`} />
+            <span className={`${styles.aiToolsDot} ${styles.aiToolsDotTwo}`} />
           </div>
 
           <a href="#skill-development" className={styles.cardLink}>
