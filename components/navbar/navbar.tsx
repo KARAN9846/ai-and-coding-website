@@ -10,17 +10,26 @@ import styles from "./navbar.module.css";
 const navigation = [
   { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
-  { label: "F2P", href: "/f2p" },
   { label: "Why Us", href: "/why-us" },
-  { label: "Fees", href: "/fees" },
   { label: "About", href: "/about" },
 ];
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setIsMounted(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +62,11 @@ export function Navbar() {
   };
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+    <header
+      className={`${styles.header} ${
+        isScrolled ? styles.scrolled : ""
+      } ${isMenuOpen ? styles.menuOpen : ""}`}
+    >
       <nav className={styles.navbar} aria-label="Main navigation">
         <div className={styles.container}>
           {/* Brand */}
@@ -94,7 +107,7 @@ export function Navbar() {
                 className={styles.themeButton}
                 onClick={toggleTheme}
                 aria-label={
-                  theme === "dark"
+                  !isMounted || theme === "dark"
                     ? "Switch to light theme"
                     : "Switch to dark theme"
                 }
@@ -127,7 +140,7 @@ export function Navbar() {
               className={styles.themeButton}
               onClick={toggleTheme}
               aria-label={
-                theme === "dark"
+                !isMounted || theme === "dark"
                   ? "Switch to light theme"
                   : "Switch to dark theme"
               }
@@ -186,8 +199,6 @@ export function Navbar() {
                     transitionDelay: isMenuOpen ? `${index * 45}ms` : "0ms",
                   }}
                 >
-                  <span className={styles.mobileLinkNumber}>0{index + 1}</span>
-
                   <span>{item.label}</span>
 
                   <ArrowRight size={18} strokeWidth={1.7} aria-hidden="true" />
