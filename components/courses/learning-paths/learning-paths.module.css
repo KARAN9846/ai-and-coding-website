@@ -1,0 +1,1065 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: clamp(18px, 2.4vw, 30px) 0 clamp(52px, 6vw, 88px);
+  overflow: hidden;
+  color: var(--foreground);
+  background:
+    radial-gradient(
+      circle at 50% 8%,
+      color-mix(in srgb, var(--primary) 8%, transparent),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 84% 42%,
+      color-mix(in srgb, var(--cyan) 5%, transparent),
+      transparent 30%
+    ),
+    var(--background);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 76px 76px;
+  mask-image: radial-gradient(circle at 50% 20%, black, transparent 64%);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.container {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.heading {
+  max-width: 760px;
+  margin: 0 auto clamp(28px, 3.4vw, 42px);
+  text-align: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: 0.17em;
+}
+
+.eyebrowLine {
+  position: relative;
+  width: 28px;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--primary) 42%, transparent);
+}
+
+.eyebrowLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: pathLineScan 4.8s ease-in-out infinite;
+}
+
+.heading h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(34px, 4vw, 56px);
+  font-weight: 760;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.heading p {
+  max-width: 610px;
+  margin: 18px auto 0;
+  color: var(--foreground-secondary);
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 28px);
+}
+
+.programCard {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto minmax(280px, 1fr) auto;
+  min-height: 610px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 44%),
+      color-mix(in srgb, var(--cyan) 12%, transparent),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 82%, transparent),
+      color-mix(in srgb, var(--background) 88%, var(--primary))
+    );
+  box-shadow:
+    0 24px 72px color-mix(in srgb, var(--shadow-color) 48%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    background 300ms ease;
+}
+
+.programCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, white 7%, transparent),
+      transparent 34%,
+      color-mix(in srgb, var(--primary) 7%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: auto, 58px 58px, 58px 58px;
+  mask-image: radial-gradient(circle at 50% 54%, black, transparent 76%);
+  opacity: 0.68;
+  pointer-events: none;
+}
+
+.programCard:hover {
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+  box-shadow:
+    0 30px 86px color-mix(in srgb, var(--shadow-color) 56%, transparent),
+    0 0 36px color-mix(in srgb, var(--primary) 8%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 11%, transparent);
+  transform: translateY(-7px);
+}
+
+.cardGlow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 44%),
+      color-mix(in srgb, var(--cyan) 16%, transparent),
+      transparent 32%
+    );
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+.programCard:hover .cardGlow {
+  opacity: 1;
+}
+
+.cardHeader,
+.cardFooter {
+  position: relative;
+  z-index: 2;
+}
+
+.cardHeader {
+  padding: clamp(24px, 3vw, 34px) clamp(22px, 3vw, 34px) 0;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.meta::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--cyan) 7%, transparent),
+    0 0 16px color-mix(in srgb, var(--cyan) 42%, transparent);
+}
+
+.cardHeader h3 {
+  max-width: 470px;
+  margin: 16px 0 0;
+  color: var(--foreground);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+.cardHeader p {
+  max-width: 500px;
+  margin: 16px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 14px;
+  line-height: 1.68;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 clamp(22px, 3vw, 34px) clamp(22px, 3vw, 30px);
+}
+
+.cardFooter > span {
+  max-width: 300px;
+  color: color-mix(in srgb, var(--foreground) 54%, transparent);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.cardLink {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 17px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 34%, var(--border));
+  border-radius: 999px;
+  color: var(--foreground);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 14%, transparent),
+      color-mix(in srgb, var(--surface-elevated) 70%, transparent)
+    );
+  box-shadow:
+    0 12px 28px color-mix(in srgb, var(--shadow-color) 24%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    color 220ms ease,
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.cardLink svg {
+  transition: transform 220ms ease;
+}
+
+.cardLink:hover {
+  color: #ffffff;
+  border-color: color-mix(in srgb, var(--primary) 62%, transparent);
+  background: linear-gradient(
+    110deg,
+    var(--primary),
+    color-mix(in srgb, var(--primary) 62%, var(--cyan))
+  );
+  box-shadow:
+    0 16px 36px color-mix(in srgb, var(--primary) 26%, transparent),
+    0 0 24px color-mix(in srgb, var(--cyan) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+.cardLink:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 5px;
+}
+
+.f2pVisual,
+.skillVisual {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 30px, 560px);
+  min-height: 300px;
+  margin: 8px auto 10px;
+  transform: translate3d(var(--path-x), var(--path-y), 0);
+  transition: transform 260ms ease-out;
+}
+
+.f2pVisual::before,
+.skillVisual::before {
+  content: "";
+  position: absolute;
+  inset: 16% 10%;
+  z-index: -1;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--cyan) 12%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      circle at 62% 48%,
+      color-mix(in srgb, var(--primary) 12%, transparent),
+      transparent 68%
+    );
+  filter: blur(22px);
+  opacity: 0.8;
+  transition: opacity 260ms ease;
+}
+
+.programCard:hover .f2pVisual::before,
+.programCard:hover .skillVisual::before {
+  opacity: 1;
+}
+
+.f2pMap,
+.skillMap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--cyan);
+  pointer-events: none;
+}
+
+.f2pRail,
+.f2pPulse,
+.skillLine {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.f2pRail {
+  stroke: color-mix(in srgb, var(--foreground) 11%, transparent);
+  stroke-width: 1.2;
+}
+
+.f2pPulse {
+  stroke: var(--cyan);
+  stroke-width: 1.4;
+  stroke-dasharray: 42 190;
+  opacity: 0.54;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--cyan) 28%, transparent));
+  animation: journeyPulse 8.4s ease-in-out infinite;
+}
+
+.pathNode {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 6px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-radius: 999px;
+  color: var(--foreground);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 72%, transparent),
+      color-mix(in srgb, var(--background) 58%, transparent)
+    );
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--shadow-color) 24%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(14px);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.pathNode:hover {
+  border-color: color-mix(in srgb, var(--cyan) 32%, var(--border));
+  box-shadow:
+    0 18px 42px color-mix(in srgb, var(--shadow-color) 32%, transparent),
+    0 0 24px color-mix(in srgb, var(--cyan) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+  transform: translate(-50%, -50%) scale(1.035);
+}
+
+.nodeOrb {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--cyan) 14%, transparent),
+    0 0 16px color-mix(in srgb, var(--cyan) 13%, transparent);
+}
+
+.f2pFoundation {
+  left: 12%;
+  top: 65%;
+}
+
+.f2pDatabase {
+  left: 31%;
+  top: 36%;
+}
+
+.f2pJava {
+  left: 51%;
+  top: 50%;
+}
+
+.f2pSpecialization {
+  left: 70%;
+  top: 72%;
+}
+
+.f2pMobile {
+  left: 88%;
+  top: 30%;
+}
+
+.f2pCore {
+  position: absolute;
+  left: 51%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 104px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--cyan) 24%, var(--border));
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 26%,
+      color-mix(in srgb, white 15%, transparent),
+      transparent 38%
+    ),
+    color-mix(in srgb, var(--background) 78%, var(--primary));
+  box-shadow:
+    0 0 0 10px color-mix(in srgb, var(--primary) 4%, transparent),
+    0 0 44px color-mix(in srgb, var(--cyan) 13%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 11%, transparent);
+  transform: translate(-50%, -50%);
+  animation: coreBreathe 5.4s ease-in-out infinite;
+}
+
+.f2pCore::before,
+.f2pCore::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.f2pCore::before {
+  inset: 14%;
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  transform: rotate(32deg);
+}
+
+.f2pCore::after {
+  inset: 34%;
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  box-shadow: 0 0 22px color-mix(in srgb, var(--cyan) 52%, transparent);
+}
+
+.f2pCore span {
+  width: 54%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  transform: rotate(-28deg);
+}
+
+.pathParticle,
+.skillDot {
+  position: absolute;
+  z-index: 4;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--cyan) 7%, transparent),
+    0 0 18px color-mix(in srgb, var(--cyan) 42%, transparent);
+  pointer-events: none;
+  animation: floatDot 5s ease-in-out infinite;
+}
+
+.pathParticleOne {
+  left: 20%;
+  top: 26%;
+  width: 6px;
+  height: 6px;
+}
+
+.pathParticleTwo {
+  right: 18%;
+  top: 56%;
+  width: 5px;
+  height: 5px;
+  animation-delay: -1.8s;
+}
+
+.pathParticleThree {
+  left: 56%;
+  bottom: 18%;
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  animation-delay: -3.2s;
+}
+
+.skillVisual {
+  width: min(100% - 34px, 520px);
+}
+
+.skillMap {
+  inset: 4% 0;
+}
+
+.skillLine {
+  stroke: color-mix(in srgb, var(--cyan) 23%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 7 13;
+  opacity: 0.58;
+  animation: ecosystemFlow 9s linear infinite;
+}
+
+.skillCore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  width: 110px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--cyan) 28%, var(--border));
+  border-radius: 32%;
+  color: var(--cyan);
+  background:
+    radial-gradient(
+      circle at 36% 28%,
+      color-mix(in srgb, white 16%, transparent),
+      transparent 40%
+    ),
+    color-mix(in srgb, var(--background) 76%, var(--primary));
+  box-shadow:
+    0 0 0 12px color-mix(in srgb, var(--cyan) 4%, transparent),
+    0 24px 58px color-mix(in srgb, var(--shadow-color) 28%, transparent),
+    0 0 44px color-mix(in srgb, var(--cyan) 14%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: coreBreathe 5.8s ease-in-out infinite;
+}
+
+.skillCore svg {
+  transform: rotate(-45deg);
+}
+
+.skillNode {
+  position: absolute;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-radius: 999px;
+  color: var(--foreground);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-elevated) 66%, transparent),
+      color-mix(in srgb, var(--background) 52%, transparent)
+    );
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--shadow-color) 21%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  backdrop-filter: blur(14px);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.skillNode svg {
+  color: var(--cyan);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--cyan) 28%, transparent));
+}
+
+.skillNode:hover {
+  border-color: color-mix(in srgb, var(--cyan) 34%, var(--border));
+  color: var(--foreground);
+  box-shadow:
+    0 18px 42px color-mix(in srgb, var(--shadow-color) 30%, transparent),
+    0 0 24px color-mix(in srgb, var(--cyan) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+  transform: translate(-50%, -50%) scale(1.035);
+}
+
+.skillDesign {
+  left: 26%;
+  top: 24%;
+}
+
+.skillContent {
+  left: 66%;
+  top: 21%;
+}
+
+.skillVideo {
+  left: 82%;
+  top: 50%;
+}
+
+.skillSeo {
+  left: 66%;
+  top: 78%;
+}
+
+.skillSocial {
+  left: 31%;
+  top: 78%;
+}
+
+.skillAi {
+  left: 16%;
+  top: 51%;
+}
+
+.skillRing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.skillRingOne {
+  width: 68%;
+  height: 42%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  animation: skillOrbitOne 30s linear infinite;
+}
+
+.skillRingTwo {
+  width: 46%;
+  height: 78%;
+  border-color: color-mix(in srgb, var(--cyan) 18%, transparent);
+  transform: translate(-50%, -50%) rotate(32deg);
+  animation: skillOrbitTwo 38s linear infinite;
+}
+
+.skillDotOne {
+  left: 51%;
+  top: 14%;
+  width: 6px;
+  height: 6px;
+}
+
+.skillDotTwo {
+  right: 15%;
+  bottom: 28%;
+  width: 5px;
+  height: 5px;
+  animation-delay: -1.7s;
+}
+
+.skillDotThree {
+  left: 20%;
+  bottom: 30%;
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  animation-delay: -3.4s;
+}
+
+:global([data-theme="light"]) .programCard {
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 44%),
+      color-mix(in srgb, var(--cyan) 10%, transparent),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, white 86%, transparent),
+      color-mix(in srgb, var(--primary) 8%, var(--surface))
+    );
+}
+
+:global([data-theme="light"]) .f2pRail {
+  stroke: color-mix(in srgb, #526581 20%, transparent);
+}
+
+:global([data-theme="light"]) .pathNode,
+:global([data-theme="light"]) .skillNode {
+  border-color: color-mix(in srgb, #526581 14%, transparent);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, white 72%, transparent),
+      color-mix(in srgb, var(--surface) 42%, transparent)
+    );
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--shadow-color) 16%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 48%, transparent);
+}
+
+:global([data-theme="light"]) .f2pCore,
+:global([data-theme="light"]) .skillCore {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  background:
+    radial-gradient(
+      circle at 35% 26%,
+      color-mix(in srgb, white 82%, transparent),
+      transparent 38%
+    ),
+    color-mix(in srgb, var(--primary) 11%, var(--surface));
+  box-shadow:
+    0 0 0 10px color-mix(in srgb, var(--primary) 6%, transparent),
+    0 24px 58px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+    0 0 38px color-mix(in srgb, var(--primary) 11%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 54%, transparent);
+}
+
+:global([data-theme="light"]) .skillLine {
+  stroke: color-mix(in srgb, var(--primary) 26%, transparent);
+}
+
+:global([data-theme="light"]) .skillRing {
+  border-color: color-mix(in srgb, #526581 18%, transparent);
+}
+
+:global([data-theme="light"]) .skillRingTwo {
+  border-color: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+@keyframes pathLineScan {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+
+  48%,
+  58% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes journeyPulse {
+  0% {
+    stroke-dashoffset: 230;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ecosystemFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+@keyframes coreBreathe {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.08);
+  }
+}
+
+@keyframes floatDot {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes skillOrbitOne {
+  from {
+    transform: translate(-50%, -50%) rotate(-18deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(342deg);
+  }
+}
+
+@keyframes skillOrbitTwo {
+  from {
+    transform: translate(-50%, -50%) rotate(32deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(392deg);
+  }
+}
+
+@media (max-width: 1050px) {
+  .container {
+    width: min(100% - 36px, 920px);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .programCard {
+    min-height: auto;
+  }
+
+  .f2pVisual,
+  .skillVisual {
+    min-height: 286px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 12px 0 62px;
+  }
+
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    gap: 9px;
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .eyebrowLine {
+    width: 22px;
+  }
+
+  .heading h2 {
+    font-size: clamp(30px, 9vw, 36px);
+  }
+
+  .heading p {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  .programCard {
+    grid-template-rows: auto auto auto;
+    border-radius: 24px;
+  }
+
+  .cardHeader {
+    padding: 24px 20px 0;
+  }
+
+  .cardHeader h3 {
+    font-size: clamp(25px, 8vw, 32px);
+  }
+
+  .cardHeader p {
+    font-size: 13px;
+  }
+
+  .f2pVisual,
+  .skillVisual {
+    width: min(100% - 12px, 390px);
+    min-height: 250px;
+    margin-block: 4px 6px;
+  }
+
+  .pathNode,
+  .skillNode {
+    gap: 0;
+    min-height: 31px;
+    padding: 4px;
+  }
+
+  .nodeText,
+  .skillNode span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .nodeOrb {
+    width: 25px;
+    height: 25px;
+  }
+
+  .f2pCore {
+    width: 88px;
+  }
+
+  .skillCore {
+    width: 92px;
+  }
+
+  .cardFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 0 20px 20px;
+  }
+
+  .cardFooter > span {
+    max-width: none;
+  }
+
+  .cardLink {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  .cardHeader {
+    padding-inline: 18px;
+  }
+
+  .f2pVisual,
+  .skillVisual {
+    width: min(100%, 340px);
+    min-height: 230px;
+  }
+
+  .f2pCore {
+    width: 76px;
+  }
+
+  .skillCore {
+    width: 80px;
+  }
+
+  .pathNode,
+  .skillNode {
+    scale: 0.92;
+  }
+
+  .cardFooter {
+    padding-inline: 18px;
+  }
+}
+
+@media (hover: none) {
+  .programCard:hover,
+  .cardLink:hover,
+  .pathNode:hover,
+  .skillNode:hover {
+    transform: none;
+  }
+
+  .cardLink:hover svg {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrowLine::after,
+  .f2pPulse,
+  .f2pCore,
+  .skillLine,
+  .skillCore,
+  .pathParticle,
+  .skillDot,
+  .skillRing {
+    animation: none;
+  }
+
+  .programCard,
+  .cardGlow,
+  .f2pVisual,
+  .skillVisual,
+  .pathNode,
+  .skillNode,
+  .cardLink,
+  .cardLink svg {
+    transition: none;
+  }
+
+  .f2pVisual,
+  .skillVisual {
+    transform: none;
+  }
+}

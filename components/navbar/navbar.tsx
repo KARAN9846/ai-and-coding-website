@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { ArrowRight, Menu, Moon, Sun, X } from "lucide-react";
 
@@ -20,6 +21,7 @@ export function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
 
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -61,6 +63,14 @@ export function Navbar() {
     setIsMenuOpen(false);
   };
 
+  const isActiveLink = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
     <header
       className={`${styles.header} ${
@@ -93,7 +103,7 @@ export function Navbar() {
                   key={item.label}
                   href={item.href}
                   className={`${styles.navLink} ${
-                    item.label === "Home" ? styles.active : ""
+                    isActiveLink(item.href) ? styles.active : ""
                   }`}
                 >
                   {item.label}
@@ -192,7 +202,7 @@ export function Navbar() {
                   key={item.label}
                   href={item.href}
                   className={`${styles.mobileLink} ${
-                    item.label === "Home" ? styles.mobileLinkActive : ""
+                    isActiveLink(item.href) ? styles.mobileLinkActive : ""
                   }`}
                   onClick={closeMenu}
                   style={{
