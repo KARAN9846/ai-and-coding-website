@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
@@ -24,6 +25,10 @@ type Level = {
   technologies: string[];
   icon: LucideIcon;
   visualClassName: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
 };
 
 type Specialization = {
@@ -55,6 +60,10 @@ const levels: Level[] = [
     ],
     icon: Braces,
     visualClassName: styles.foundationVisual,
+    image: {
+      src: "/images/courses/f2p/foundation-programming.png",
+      alt: "Foundation programming visual",
+    },
   },
   {
     level: "LEVEL 2",
@@ -64,6 +73,10 @@ const levels: Level[] = [
     technologies: ["Tableau", "SQL", "Database", "Advanced SQL"],
     icon: Database,
     visualClassName: styles.databaseVisual,
+    image: {
+      src: "/images/courses/f2p/database-management.png",
+      alt: "Database management visual",
+    },
   },
   {
     level: "LEVEL 3",
@@ -117,7 +130,8 @@ const specializations: Specialization[] = [
   {
     label: "C",
     title: "Game Development",
-    description: "Create interactive experiences through focused game development.",
+    description:
+      "Create interactive experiences through focused game development.",
     technologies: ["Unity"],
     icon: Gamepad2,
     panelClassName: styles.gamePanel,
@@ -169,24 +183,39 @@ function handleLeave(event: MouseEvent<HTMLElement>) {
 
 function LevelVisual({ level }: { level: Level }) {
   const Icon = level.icon;
+  const hasImage = Boolean(level.image);
 
   return (
     <div
-      className={`${styles.visualStage} ${level.visualClassName}`}
-      aria-hidden="true"
+      className={`${styles.visualStage} ${level.visualClassName} ${
+        hasImage ? styles.imageStage : ""
+      }`}
+      aria-hidden={hasImage ? undefined : true}
     >
-      <span className={styles.stageGlow} />
-      <span className={styles.stageGrid} />
-      <span className={styles.stageRing} />
-      <span className={styles.stageRingSoft} />
-      <span className={styles.stagePanel} />
-      <span className={styles.stageCore}>
-        <Icon size={30} strokeWidth={1.55} />
-      </span>
-      <span className={`${styles.stageNode} ${styles.stageNodeOne}`} />
-      <span className={`${styles.stageNode} ${styles.stageNodeTwo}`} />
-      <span className={`${styles.stageNode} ${styles.stageNodeThree}`} />
-      <span className={styles.stageLabel}>LEVEL VISUAL</span>
+      {level.image ? (
+        <Image
+          src={level.image.src}
+          alt={level.image.alt}
+          fill
+          className={styles.levelImage}
+          sizes="(max-width: 760px) calc(100vw - 82px), (max-width: 1020px) 380px, 440px"
+        />
+      ) : (
+        <>
+          <span className={styles.stageGlow} />
+          <span className={styles.stageGrid} />
+          <span className={styles.stageRing} />
+          <span className={styles.stageRingSoft} />
+          <span className={styles.stagePanel} />
+          <span className={styles.stageCore}>
+            <Icon size={30} strokeWidth={1.55} />
+          </span>
+          <span className={`${styles.stageNode} ${styles.stageNodeOne}`} />
+          <span className={`${styles.stageNode} ${styles.stageNodeTwo}`} />
+          <span className={`${styles.stageNode} ${styles.stageNodeThree}`} />
+          <span className={styles.stageLabel}>LEVEL VISUAL</span>
+        </>
+      )}
     </div>
   );
 }
@@ -318,9 +347,18 @@ export function F2PJourney() {
             aria-hidden="true"
             focusable="false"
           >
-            <path className={styles.branchLine} d="M450 18 C320 70 220 86 150 142" />
-            <path className={styles.branchLine} d="M450 18 C450 76 450 96 450 142" />
-            <path className={styles.branchLine} d="M450 18 C580 70 680 86 750 142" />
+            <path
+              className={styles.branchLine}
+              d="M450 18 C320 70 220 86 150 142"
+            />
+            <path
+              className={styles.branchLine}
+              d="M450 18 C450 76 450 96 450 142"
+            />
+            <path
+              className={styles.branchLine}
+              d="M450 18 C580 70 680 86 750 142"
+            />
           </svg>
 
           <div className={styles.specializationGrid}>
@@ -330,7 +368,9 @@ export function F2PJourney() {
                 key={specialization.label}
               >
                 <div className={styles.specialPanelTop}>
-                  <span className={styles.specialLetter}>{specialization.label}</span>
+                  <span className={styles.specialLetter}>
+                    {specialization.label}
+                  </span>
                   <SpecializationVisual specialization={specialization} />
                 </div>
 
@@ -353,8 +393,16 @@ export function F2PJourney() {
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
           </a>
 
-          <Sparkles className={styles.specialSpark} size={20} aria-hidden="true" />
-          <Network className={styles.specialNetwork} size={22} aria-hidden="true" />
+          <Sparkles
+            className={styles.specialSpark}
+            size={20}
+            aria-hidden="true"
+          />
+          <Network
+            className={styles.specialNetwork}
+            size={22}
+            aria-hidden="true"
+          />
         </article>
       </div>
     </section>
