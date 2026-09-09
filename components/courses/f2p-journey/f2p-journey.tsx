@@ -11,9 +11,7 @@ import {
   Database,
   Gamepad2,
   Layers3,
-  Network,
   Smartphone,
-  Sparkles,
 } from "lucide-react";
 
 import styles from "./f2p-journey.module.css";
@@ -37,7 +35,6 @@ type Specialization = {
   description: string;
   technologies: string[];
   icon: LucideIcon;
-  panelClassName: string;
   visualClassName: string;
 };
 
@@ -106,7 +103,6 @@ const specializations: Specialization[] = [
       "Build across the application stack with modern frontend and backend tools.",
     technologies: ["MongoDB", "Express", "React", "Node"],
     icon: Layers3,
-    panelClassName: styles.fullStackPanel,
     visualClassName: styles.fullStackVisual,
   },
   {
@@ -124,7 +120,6 @@ const specializations: Specialization[] = [
       "Deep Learning",
     ],
     icon: Bot,
-    panelClassName: styles.aiPanel,
     visualClassName: styles.aiVisual,
   },
   {
@@ -134,7 +129,6 @@ const specializations: Specialization[] = [
       "Create interactive experiences through focused game development.",
     technologies: ["Unity"],
     icon: Gamepad2,
-    panelClassName: styles.gamePanel,
     visualClassName: styles.gameVisual,
   },
 ];
@@ -145,13 +139,6 @@ const baseInteractiveStyle = {
   "--stage-x": "0px",
   "--stage-y": "0px",
 } as CSSProperties;
-
-function getInteractiveStyle(index: number) {
-  return {
-    ...baseInteractiveStyle,
-    "--reveal-delay": `${index * 90}ms`,
-  } as CSSProperties;
-}
 
 function handleMove(event: MouseEvent<HTMLElement>) {
   if (
@@ -198,7 +185,7 @@ function LevelVisual({ level }: { level: Level }) {
           alt={level.image.alt}
           fill
           className={styles.levelImage}
-          sizes="(max-width: 760px) calc(100vw - 82px), (max-width: 1020px) 380px, 440px"
+          sizes="(max-width: 768px) min(380px, calc(100vw - 68px)), (max-width: 1024px) 40vw, 420px"
         />
       ) : (
         <>
@@ -269,23 +256,6 @@ export function F2PJourney() {
         </div>
 
         <div className={styles.journey}>
-          <svg
-            className={styles.journeyPath}
-            viewBox="0 0 120 1120"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              className={styles.pathBase}
-              d="M60 38 C96 154 20 272 60 386 S96 620 60 754 S24 974 60 1082"
-            />
-            <path
-              className={styles.pathPulse}
-              d="M60 38 C96 154 20 272 60 386 S96 620 60 754 S24 974 60 1082"
-            />
-          </svg>
-
           {levels.map((level, index) => (
             <article
               className={`${styles.levelBlock} ${
@@ -294,8 +264,9 @@ export function F2PJourney() {
               key={level.level}
               onMouseMove={handleMove}
               onMouseLeave={handleLeave}
-              style={getInteractiveStyle(index)}
+              style={baseInteractiveStyle}
             >
+              <StageRoute />
               <div className={styles.levelContent}>
                 <span className={styles.levelLabel}>{level.level}</span>
                 <h3>{level.title}</h3>
@@ -328,11 +299,15 @@ export function F2PJourney() {
           className={styles.specialization}
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
-          style={getInteractiveStyle(levels.length)}
+          style={baseInteractiveStyle}
         >
-          <div className={styles.specializationGlow} aria-hidden="true" />
-
           <div className={styles.specializationHeader}>
+            <div
+              className={`${styles.milestone} ${styles.finalMilestone}`}
+              aria-hidden="true"
+            >
+              <span />
+            </div>
             <span className={styles.levelLabel}>LEVEL 5</span>
             <h3>Choose Your Specialization</h3>
             <p>
@@ -342,29 +317,30 @@ export function F2PJourney() {
 
           <svg
             className={styles.branchMap}
-            viewBox="0 0 900 210"
+            viewBox="0 0 900 80"
             preserveAspectRatio="none"
             aria-hidden="true"
             focusable="false"
           >
             <path
               className={styles.branchLine}
-              d="M450 18 C320 70 220 86 150 142"
+              d="M450 0 C450 42 150 26 150 80"
             />
             <path
               className={styles.branchLine}
-              d="M450 18 C450 76 450 96 450 142"
+              d="M450 0 L450 80"
             />
             <path
               className={styles.branchLine}
-              d="M450 18 C580 70 680 86 750 142"
+              d="M450 0 C450 42 750 26 750 80"
             />
+            <circle className={styles.branchJunction} cx="450" cy="4" r="4" />
           </svg>
 
           <div className={styles.specializationGrid}>
             {specializations.map((specialization) => (
               <article
-                className={`${styles.specializationPanel} ${specialization.panelClassName}`}
+                className={styles.specializationPanel}
                 key={specialization.label}
               >
                 <div className={styles.specialPanelTop}>
@@ -392,19 +368,45 @@ export function F2PJourney() {
             <span>Discuss Your Path</span>
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
           </a>
-
-          <Sparkles
-            className={styles.specialSpark}
-            size={20}
-            aria-hidden="true"
-          />
-          <Network
-            className={styles.specialNetwork}
-            size={22}
-            aria-hidden="true"
-          />
         </article>
       </div>
     </section>
+  );
+}
+
+// Each segment shares endpoints with its neighbors, even when a stage grows.
+function StageRoute() {
+  const curve = "M500 0 C500 60 580 105 500 160 C420 215 500 260 500 320";
+
+  return (
+    <>
+      <svg
+        className={styles.journeyPath}
+        viewBox="0 0 1000 320"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path className={styles.pathGlow} d={curve} />
+        <path className={styles.pathBase} d={curve} />
+        <path className={styles.pathPulse} d={curve} />
+        <path
+          className={styles.connector}
+          d="M500 160 C463 160 463 128 418 128 M500 160 C537 160 537 192 582 192"
+        />
+      </svg>
+      <svg
+        className={styles.mobilePath}
+        viewBox="0 0 32 320"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          className={styles.pathBase}
+          d="M12 0 V80 C12 140 24 180 12 240 V320"
+        />
+      </svg>
+    </>
   );
 }
