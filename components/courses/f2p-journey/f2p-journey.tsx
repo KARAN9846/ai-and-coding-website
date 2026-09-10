@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
@@ -14,6 +14,11 @@ import {
   Smartphone,
 } from "lucide-react";
 
+import foundationProgrammingImage from "@/public/images/courses/f2p/foundation-programming.png";
+import databaseManagementImage from "@/public/images/courses/f2p/database-management.png";
+import enterpriseJavaImage from "@/public/images/courses/f2p/enterprise-java-development.png";
+import mobileProgrammingImage from "@/public/images/courses/f2p/mobile-based-programming.png";
+
 import styles from "./f2p-journey.module.css";
 
 type Level = {
@@ -24,7 +29,7 @@ type Level = {
   icon: LucideIcon;
   visualClassName: string;
   image?: {
-    src: string;
+    src: StaticImageData;
     alt: string;
   };
 };
@@ -58,7 +63,7 @@ const levels: Level[] = [
     icon: Braces,
     visualClassName: styles.foundationVisual,
     image: {
-      src: "/images/courses/f2p/foundation-programming.png",
+      src: foundationProgrammingImage,
       alt: "Foundation programming visual",
     },
   },
@@ -71,7 +76,7 @@ const levels: Level[] = [
     icon: Database,
     visualClassName: styles.databaseVisual,
     image: {
-      src: "/images/courses/f2p/database-management.png",
+      src: databaseManagementImage,
       alt: "Database management visual",
     },
   },
@@ -83,6 +88,10 @@ const levels: Level[] = [
     technologies: ["Advanced Java", "Spring Framework", "Core", "Boot", "MVC"],
     icon: Cpu,
     visualClassName: styles.enterpriseVisual,
+    image: {
+      src: enterpriseJavaImage,
+      alt: "Enterprise Java development visual",
+    },
   },
   {
     level: "LEVEL 4",
@@ -92,6 +101,10 @@ const levels: Level[] = [
     technologies: ["Android", "Firebase", "iOS"],
     icon: Smartphone,
     visualClassName: styles.mobileVisual,
+    image: {
+      src: mobileProgrammingImage,
+      alt: "Mobile programming visual for Android, Firebase, and iOS",
+    },
   },
 ];
 
@@ -184,8 +197,9 @@ function LevelVisual({ level }: { level: Level }) {
           src={level.image.src}
           alt={level.image.alt}
           fill
+          quality={90}
           className={styles.levelImage}
-          sizes="(max-width: 768px) min(380px, calc(100vw - 68px)), (max-width: 1024px) 40vw, 420px"
+          sizes="(max-width: 768px) min(414px, calc(100vw - 72px)), (max-width: 1024px) 41vw, 460px"
         />
       ) : (
         <>
