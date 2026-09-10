@@ -1,16 +1,14 @@
 "use client";
 
-import type { CSSProperties, MouseEvent } from "react";
+import { useSyncExternalStore, type CSSProperties, type MouseEvent } from "react";
 import Image, { type StaticImageData } from "next/image";
+import { useTheme } from "next-themes";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
-  Bot,
   Braces,
   Cpu,
   Database,
-  Gamepad2,
-  Layers3,
   Smartphone,
 } from "lucide-react";
 
@@ -18,6 +16,12 @@ import foundationProgrammingImage from "@/public/images/courses/f2p/foundation-p
 import databaseManagementImage from "@/public/images/courses/f2p/database-management.png";
 import enterpriseJavaImage from "@/public/images/courses/f2p/enterprise-java-development.png";
 import mobileProgrammingImage from "@/public/images/courses/f2p/mobile-based-programming.png";
+import fullStackDark from "@/public/images/courses/f2p/specialization-full-stack-dark.png";
+import fullStackLight from "@/public/images/courses/f2p/specialization-full-stack-light.png";
+import aiDataRoboticsDark from "@/public/images/courses/f2p/specialization-ai-data-robotics-dark.png";
+import aiDataRoboticsLight from "@/public/images/courses/f2p/specialization-ai-data-robotics-light.png";
+import gameDevelopmentDark from "@/public/images/courses/f2p/specialization-game-development-dark.png";
+import gameDevelopmentLight from "@/public/images/courses/f2p/specialization-game-development-light.png";
 
 import styles from "./f2p-journey.module.css";
 
@@ -39,8 +43,7 @@ type Specialization = {
   title: string;
   description: string;
   technologies: string[];
-  icon: LucideIcon;
-  visualClassName: string;
+  images: Record<"light" | "dark", StaticImageData>;
 };
 
 const levels: Level[] = [
@@ -115,8 +118,7 @@ const specializations: Specialization[] = [
     description:
       "Build across the application stack with modern frontend and backend tools.",
     technologies: ["MongoDB", "Express", "React", "Node"],
-    icon: Layers3,
-    visualClassName: styles.fullStackVisual,
+    images: { light: fullStackLight, dark: fullStackDark },
   },
   {
     label: "B",
@@ -132,8 +134,7 @@ const specializations: Specialization[] = [
       "Machine Learning",
       "Deep Learning",
     ],
-    icon: Bot,
-    visualClassName: styles.aiVisual,
+    images: { light: aiDataRoboticsLight, dark: aiDataRoboticsDark },
   },
   {
     label: "C",
@@ -141,8 +142,7 @@ const specializations: Specialization[] = [
     description:
       "Create interactive experiences through focused game development.",
     technologies: ["Unity"],
-    icon: Gamepad2,
-    visualClassName: styles.gameVisual,
+    images: { light: gameDevelopmentLight, dark: gameDevelopmentDark },
   },
 ];
 
@@ -221,31 +221,20 @@ function LevelVisual({ level }: { level: Level }) {
   );
 }
 
-function SpecializationVisual({
-  specialization,
-}: {
-  specialization: Specialization;
-}) {
-  const Icon = specialization.icon;
-
-  return (
-    <div
-      className={`${styles.specialVisual} ${specialization.visualClassName}`}
-      aria-hidden="true"
-    >
-      <span className={styles.specialOrbit} />
-      <span className={styles.specialOrbitSoft} />
-      <span className={styles.specialCore}>
-        <Icon size={24} strokeWidth={1.65} />
-      </span>
-      <span className={`${styles.specialDot} ${styles.specialDotOne}`} />
-      <span className={`${styles.specialDot} ${styles.specialDotTwo}`} />
-      <span className={styles.specialLabel}>VISUAL</span>
-    </div>
-  );
-}
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 export function F2PJourney() {
+  const { resolvedTheme } = useTheme();
+  // The server and first client render agree on dark artwork before theme resolution.
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    clientSnapshot,
+    serverSnapshot,
+  );
+  const posterTheme = hydrated && resolvedTheme === "light" ? "light" : "dark";
+
   return (
     <section
       id="f2p-journey"
@@ -309,12 +298,7 @@ export function F2PJourney() {
           ))}
         </div>
 
-        <article
-          className={styles.specialization}
-          onMouseMove={handleMove}
-          onMouseLeave={handleLeave}
-          style={baseInteractiveStyle}
-        >
+        <article className={styles.specialization}>
           <div className={styles.specializationHeader}>
             <div
               className={`${styles.milestone} ${styles.finalMilestone}`}
@@ -356,23 +340,29 @@ export function F2PJourney() {
               <article
                 className={styles.specializationPanel}
                 key={specialization.label}
+                aria-labelledby={`specialization-${specialization.label}-title`}
               >
-                <div className={styles.specialPanelTop}>
-                  <span className={styles.specialLetter}>
-                    {specialization.label}
-                  </span>
-                  <SpecializationVisual specialization={specialization} />
-                </div>
-
-                <h4>{specialization.title}</h4>
-                <p>{specialization.description}</p>
-
-                <div className={styles.techGroup} aria-label="Technologies">
-                  {specialization.technologies.map((technology) => (
-                    <span className={styles.techChip} key={technology}>
-                      {technology}
-                    </span>
-                  ))}
+                <Image
+                  src={specialization.images[posterTheme]}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  quality={90}
+                  loading="lazy"
+                  sizes="(max-width: 768px) min(580px, calc(100vw - 72px)), (max-width: 1024px) calc((100vw - 48px) / 3 - 12px), (max-width: 1184px) calc((100vw - 64px) / 3 - 18px), 356px"
+                  className={styles.specializationPoster}
+                />
+                <div className={styles.screenReaderOnly}>
+                  <span>{specialization.label}</span>
+                  <h4 id={`specialization-${specialization.label}-title`}>
+                    {specialization.title}
+                  </h4>
+                  <p>{specialization.description}</p>
+                  <ul aria-label="Technologies">
+                    {specialization.technologies.map((technology) => (
+                      <li key={technology}>{technology}</li>
+                    ))}
+                  </ul>
                 </div>
               </article>
             ))}
