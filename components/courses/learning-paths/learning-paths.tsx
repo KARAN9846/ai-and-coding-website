@@ -220,10 +220,10 @@ export function LearningPaths() {
 
             <div className={styles.cardFooter}>
               <span>Design, content, video, SEO, social media, portfolio, and AI tools.</span>
-              <Link href="/#programs-title" className={styles.cardLink}>
+              <a href="#skill-development" className={styles.cardLink}>
                 <span>Explore Skills</span>
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-              </Link>
+              </a>
             </div>
           </article>
         </div>
