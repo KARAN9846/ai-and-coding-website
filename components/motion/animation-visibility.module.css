@@ -1,0 +1,8 @@
+.boundary[data-motion-paused="true"],
+.boundary[data-motion-paused="true"]::before,
+.boundary[data-motion-paused="true"]::after,
+.boundary[data-motion-paused="true"] *,
+.boundary[data-motion-paused="true"] *::before,
+.boundary[data-motion-paused="true"] *::after {
+  animation-play-state: paused !important;
+}

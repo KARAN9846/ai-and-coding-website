@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useAnimationVisibility } from "../motion/use-animation-visibility";
 
 import {
   ArrowUpRight,
@@ -64,6 +65,7 @@ function SkillToolsVisual({ variant, tools }: SkillToolsVisualProps) {
 }
 
 export function Programs() {
+  const motionRef = useAnimationVisibility();
   const f2pVisualRef = useRef<HTMLDivElement>(null);
 
   const handleF2PMouseMove = (event: React.MouseEvent<HTMLElement>) => {
@@ -159,7 +161,7 @@ export function Programs() {
   };
 
   return (
-    <section className={styles.section} aria-labelledby="programs-title">
+    <section ref={motionRef} className={styles.section} aria-labelledby="programs-title">
       <div className={styles.container}>
         {/* Section heading */}
         <div className={styles.heading}>

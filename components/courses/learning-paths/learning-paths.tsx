@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -78,8 +79,10 @@ function handleCardLeave(event: MouseEvent<HTMLElement>) {
 }
 
 export function LearningPaths() {
+  const motionRef = useAnimationVisibility();
   return (
     <section
+      ref={motionRef}
       id="courses-programs"
       className={styles.section}
       aria-labelledby="courses-programs-title"

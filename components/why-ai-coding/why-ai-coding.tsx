@@ -2,6 +2,7 @@
 
 import type { CSSProperties, PointerEvent } from "react";
 import { useState } from "react";
+import { useAnimationVisibility } from "../motion/use-animation-visibility";
 import {
   Award,
   BrainCircuit,
@@ -76,6 +77,7 @@ const cardStyle = {
 } as CSSProperties;
 
 export function WhyAiCoding() {
+  const motionRef = useAnimationVisibility();
   const [activeBenefit, setActiveBenefit] = useState<string | undefined>();
 
   const handleExperiencePointerMove = (
@@ -138,7 +140,7 @@ export function WhyAiCoding() {
   };
 
   return (
-    <section className={styles.section} aria-labelledby="why-ai-coding-title">
+    <section ref={motionRef} className={styles.section} aria-labelledby="why-ai-coding-title">
       <div className={styles.sectionGrid} aria-hidden="true" />
 
       <div className={styles.container}>

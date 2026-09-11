@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent } from "react";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -58,6 +59,7 @@ const learningNodes = [
 ];
 
 export function CoursesHero() {
+  const motionRef = useAnimationVisibility();
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
     if (
       window.matchMedia("(hover: none)").matches ||
@@ -92,6 +94,7 @@ export function CoursesHero() {
 
   return (
     <section
+      ref={motionRef}
       id="courses-hero"
       className={styles.hero}
       aria-labelledby="courses-hero-title"

@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent } from "react";
+import { useAnimationVisibility } from "../motion/use-animation-visibility";
 import { ArrowRight, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
 
 import styles from "./enquiry.module.css";
@@ -34,6 +35,7 @@ const contactOptions = [
 ];
 
 export function Enquiry() {
+  const motionRef = useAnimationVisibility();
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
     if (
       window.matchMedia("(hover: none)").matches ||
@@ -64,6 +66,7 @@ export function Enquiry() {
 
   return (
     <section
+      ref={motionRef}
       id="enquiry"
       className={styles.section}
       aria-labelledby="enquiry-title"

@@ -1,6 +1,7 @@
 "use client";
 
 import { type MouseEvent } from "react";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Image, { type StaticImageData } from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
@@ -96,8 +97,10 @@ const creatorTools: Skill = {
 };
 
 export function SkillDevelopment() {
+  const motionRef = useAnimationVisibility();
   return (
     <section
+      ref={motionRef}
       id="skill-development"
       className={styles.section}
       aria-labelledby="skill-development-title"

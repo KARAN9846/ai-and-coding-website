@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent } from "react";
+import { useAnimationVisibility } from "../motion/use-animation-visibility";
 import {
   ArrowUpRight,
   BrainCircuit,
@@ -20,6 +21,7 @@ const cardStyle = {
 } as CSSProperties;
 
 export function ChoosePath() {
+  const motionRef = useAnimationVisibility();
   const handleCardPointerMove = (event: PointerEvent<HTMLElement>) => {
     const card = event.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -44,7 +46,7 @@ export function ChoosePath() {
   };
 
   return (
-    <section className={styles.section} aria-labelledby="choose-path-title">
+    <section ref={motionRef} className={styles.section} aria-labelledby="choose-path-title">
       <div className={styles.sectionGrid} aria-hidden="true" />
       <span className={`${styles.sectionParticle} ${styles.particleOne}`} />
       <span className={`${styles.sectionParticle} ${styles.particleTwo}`} />

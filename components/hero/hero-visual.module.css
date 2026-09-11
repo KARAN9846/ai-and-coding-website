@@ -67,18 +67,6 @@
   --visual-frame: rgba(36, 91, 219, 0.2);
 }
 
-.visual canvas {
-  position: absolute;
-  inset: 0;
-
-  width: 100% !important;
-  height: 100% !important;
-
-  pointer-events: none;
-
-  z-index: 3;
-}
-
 .glow {
   position: absolute;
 

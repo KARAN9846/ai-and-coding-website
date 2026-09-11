@@ -3,6 +3,7 @@
 import { useSyncExternalStore, type CSSProperties, type MouseEvent } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { useTheme } from "next-themes";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
@@ -227,6 +228,7 @@ const clientSnapshot = () => true;
 const serverSnapshot = () => false;
 
 export function F2PJourney() {
+  const motionRef = useAnimationVisibility();
   const { resolvedTheme } = useTheme();
   // The server and first client render agree on dark artwork before theme resolution.
   const hydrated = useSyncExternalStore(
@@ -238,6 +240,7 @@ export function F2PJourney() {
 
   return (
     <section
+      ref={motionRef}
       id="f2p-journey"
       className={styles.section}
       aria-labelledby="f2p-journey-title"
