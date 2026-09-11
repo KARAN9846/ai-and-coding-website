@@ -639,6 +639,7 @@
 }
 
 @media (max-width: 768px) {
+  .techGroup { display: none; }
   .section { padding: 28px 0 48px; }
   .container { width: min(620px, calc(100% - 32px)); }
   .heading { margin-bottom: 22px; }

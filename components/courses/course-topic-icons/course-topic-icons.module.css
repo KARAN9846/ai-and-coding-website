@@ -1,0 +1,65 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.row li { flex: 0 0 44px; }
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--topic-accent);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+:global([data-theme="light"]) .icon {
+  color: color-mix(in srgb, var(--topic-accent) 72%, #142333);
+}
+
+.icon:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .icon:hover {
+    border-color: var(--border);
+    background: color-mix(in srgb, var(--topic-accent) 8%, transparent);
+  }
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  width: max-content;
+  max-width: min(240px, calc(100vw - 24px));
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-elevated);
+  color: var(--foreground);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--shadow-color) 25%, transparent);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .icon svg { width: 23px; height: 23px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon { transition: none; }
+}

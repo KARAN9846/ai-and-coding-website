@@ -1,3 +1,6 @@
+"use client";
+
+import { type MouseEvent } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
@@ -11,12 +14,14 @@ import portfolioImage from "@/public/images/courses/skill-development/project-po
 import aiImage from "@/public/images/courses/skill-development/ai-tools-for-creators.png";
 
 import styles from "./skill-development.module.css";
+import { CourseTopicIcons, type CourseTopic } from "../course-topic-icons/course-topic-icons";
 
 type Skill = {
   id: string;
   title: string;
   description: string;
-  topics: string[];
+  topics: CourseTopic[];
+  iconTopics?: CourseTopic[];
   image: StaticImageData;
   alt: string;
 };
@@ -75,6 +80,7 @@ const skills: Skill[] = [
     title: "Project & Portfolio",
     description: "Create Social Campaign + Poster + Video",
     topics: [],
+    iconTopics: ["Social Campaign", "Poster", "Video"],
     image: portfolioImage,
     alt: "A coordinated project showcase connecting a social campaign, poster, and video",
   },
@@ -110,11 +116,27 @@ export function SkillDevelopment() {
           {skills.map((skill, index) => (
             <SkillStage skill={skill} reverse={index % 2 === 1} key={skill.id} />
           ))}
-          <SkillStage skill={creatorTools} featured />
+          <SkillStage skill={creatorTools} featured reverse />
         </div>
       </div>
     </section>
   );
+}
+
+function handleImageMove(event: MouseEvent<HTMLElement>) {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const target = event.currentTarget;
+  const rect = target.getBoundingClientRect();
+  const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+  const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+  target.style.setProperty("--stage-x", `${((x - 0.5) * 10).toFixed(2)}px`);
+  target.style.setProperty("--stage-y", `${((y - 0.5) * 8).toFixed(2)}px`);
+}
+
+function resetImageMove(event: MouseEvent<HTMLElement>) {
+  event.currentTarget.style.setProperty("--stage-x", "0px");
+  event.currentTarget.style.setProperty("--stage-y", "0px");
 }
 
 function SkillStage({
@@ -132,6 +154,8 @@ function SkillStage({
     <article
       className={`${styles.stage} ${reverse ? styles.reverse : ""} ${featured ? styles.featured : ""}`}
       aria-labelledby={titleId}
+      onMouseMove={handleImageMove}
+      onMouseLeave={resetImageMove}
     >
       <SkillRoute featured={featured} />
       <div className={styles.content}>
@@ -143,6 +167,7 @@ function SkillStage({
             {skill.topics.map((topic) => <li key={topic}>{topic}</li>)}
           </ul>
         )}
+        <CourseTopicIcons topics={skill.iconTopics ?? skill.topics} />
         {featured && (
           <a href="#enquiry" className={styles.enquiryLink}>
             <span>Enquire About Skills</span>
@@ -169,11 +194,9 @@ function SkillStage({
 function SkillRoute({ featured }: { featured: boolean }) {
   // Every row meets at the same endpoints; the milestone stays inside the gutter.
   const curve = featured
-    ? "M500 0 C500 80 540 96 540 160"
+    ? "M500 0 C500 64 460 96 460 160"
     : "M500 0 C500 64 460 96 460 160 C460 224 500 256 500 320";
-  const branches = featured
-    ? "M540 160 C496 160 468 176 420 176 M540 160 C556 160 560 144 580 144"
-    : "M460 160 C444 160 440 144 420 144 M460 160 C512 160 532 176 580 176";
+  const branches = "M460 160 C444 160 440 144 420 144 M460 160 C512 160 532 176 580 176";
 
   return (
     <>

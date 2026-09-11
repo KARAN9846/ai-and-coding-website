@@ -24,12 +24,13 @@ import gameDevelopmentDark from "@/public/images/courses/f2p/specialization-game
 import gameDevelopmentLight from "@/public/images/courses/f2p/specialization-game-development-light.png";
 
 import styles from "./f2p-journey.module.css";
+import { CourseTopicIcons, type CourseTopic } from "../course-topic-icons/course-topic-icons";
 
 type Level = {
   level: string;
   title: string;
   description: string;
-  technologies: string[];
+  technologies: CourseTopic[];
   icon: LucideIcon;
   visualClassName: string;
   image?: {
@@ -283,6 +284,7 @@ export function F2PJourney() {
                   ))}
                 </div>
 
+                <CourseTopicIcons topics={level.technologies} />
                 <a href="#enquiry" className={styles.levelLink}>
                   <span>Explore Level</span>
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />

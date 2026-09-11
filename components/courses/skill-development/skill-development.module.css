@@ -72,8 +72,7 @@
   padding-block: 16px;
 }
 
-.reverse,
-.featured { --milestone-x: 54%; }
+.reverse { --milestone-x: 54%; }
 
 .route {
   position: absolute;
@@ -212,7 +211,8 @@
   width: min(100%, 400px);
   aspect-ratio: 4 / 3;
   filter: drop-shadow(0 10px 16px color-mix(in srgb, var(--shadow-color) 40%, transparent));
-  transition: filter 220ms ease;
+  transform: translate3d(var(--stage-x, 0px), var(--stage-y, 0px), 0);
+  transition: filter 220ms ease, transform 260ms ease-out;
 }
 
 .reverse .artwork {
@@ -274,6 +274,7 @@
 }
 
 @media (max-width: 768px) {
+  .topics { display: none; }
   .section { padding: 28px 0 48px; scroll-margin-top: 84px; }
   .container { width: min(620px, calc(100% - 32px)); }
   .heading h2 { font-size: 34px; }
@@ -329,6 +330,7 @@
 }
 
 @media (hover: none), (prefers-reduced-motion: reduce) {
+  .artwork { transform: none; }
   .routeEnergy { animation: none; }
 }
 
