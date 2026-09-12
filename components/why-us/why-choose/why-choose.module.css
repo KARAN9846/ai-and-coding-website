@@ -1,0 +1,713 @@
+.section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 90px 24px 95px;
+  background: #020612;
+}
+
+.container {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+/* =========================
+   INTRO
+   ========================= */
+
+.intro {
+  position: relative;
+  z-index: 5;
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #08b9cf;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.intro h2 {
+  margin: 0;
+  color: #f5f8ff;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.intro h2 span {
+  background: linear-gradient(
+    90deg,
+    #24346f 0%,
+    #3567d8 45%,
+    #159fd3 75%,
+    #08b9cf 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.intro p {
+  max-width: 680px;
+  margin: 20px auto 0;
+  color: #aab7ce;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* =========================
+   ECOSYSTEM
+   ========================= */
+
+.workshop {
+  position: relative;
+  width: min(1240px, 100%);
+  min-height: 720px;
+  margin: 10px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(300px, 1fr)
+    minmax(430px, 500px)
+    minmax(300px, 1fr);
+
+  grid-template-rows:
+    135px
+    205px
+    205px
+    135px;
+
+  grid-template-areas:
+    "top top top"
+    "leftTop hub rightTop"
+    "leftBottom hub rightBottom"
+    "bottom bottom bottom";
+
+  align-items: center;
+  justify-items: center;
+}
+/* =========================
+   CONNECTIONS
+   ========================= */
+
+.connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.connectionsDesktop {
+  display: block;
+}
+
+.connectionsMobile {
+  display: none;
+}
+
+.connectionLine path {
+  fill: none;
+  stroke: rgba(20, 151, 220, 0.52);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.connectionGlow path {
+  fill: none;
+  stroke: rgba(0, 190, 255, 0.22);
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+  filter: blur(5px);
+}
+
+.connectionNodes circle {
+  fill: #08d2ef;
+  stroke: rgba(8, 210, 239, 0.28);
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 7px rgba(8, 210, 239, 0.65));
+}
+
+/* =========================
+   NODES
+   ========================= */
+
+.node {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 380px;
+}
+
+.nodeIcon {
+  flex: 0 0 88px;
+  width: 88px;
+  height: 88px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(38, 111, 214, 0.72);
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(20, 160, 210, 0.18),
+      transparent 68%
+    ),
+    linear-gradient(145deg, rgba(10, 30, 58, 0.96), rgba(5, 17, 36, 0.92));
+
+  box-shadow:
+    0 0 40px rgba(0, 120, 255, 0.13),
+    inset 0 0 30px rgba(0, 150, 255, 0.08);
+
+  color: #08d2ef;
+}
+
+.nodeIcon svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.5;
+}
+
+.nodeIcon svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 1.5;
+}
+
+.nodeContent {
+  min-width: 0;
+  padding-top: 5px;
+}
+
+.nodeContent h3 {
+  margin: 0 0 9px;
+
+  color: #f5f8ff;
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.nodeContent p {
+  margin: 0;
+
+  color: #aab7ce;
+  font-size: 15px;
+  line-height: 1.6;
+}
+/* =========================
+   POSITIONS
+   ========================= */
+
+.nodeTop {
+  grid-area: top;
+  justify-self: center;
+
+  max-width: 440px;
+  justify-content: center;
+  text-align: center;
+}
+
+.nodeTop .nodeContent {
+  padding-top: 0;
+}
+
+.nodeTop .nodeIcon,
+.nodeBottom .nodeIcon {
+  flex-basis: 92px;
+  width: 92px;
+  height: 92px;
+}
+
+.nodeTop .nodeIcon svg,
+.nodeBottom .nodeIcon svg {
+  width: 42px;
+  height: 42px;
+}
+
+.nodeTop .nodeContent p {
+  max-width: 300px;
+}
+
+.nodeLeftTop {
+  grid-area: leftTop;
+  justify-self: end;
+}
+
+.nodeRightTop {
+  grid-area: rightTop;
+  justify-self: start;
+}
+
+.nodeLeftBottom {
+  grid-area: leftBottom;
+  justify-self: end;
+}
+
+.nodeRightBottom {
+  grid-area: rightBottom;
+  justify-self: start;
+}
+
+.nodeBottom {
+  grid-area: bottom;
+  justify-self: center;
+
+  max-width: 440px;
+  justify-content: center;
+  text-align: center;
+}
+
+/* =========================
+   CENTER HUB
+   ========================= */
+
+.hub {
+  grid-area: hub;
+  position: relative;
+  z-index: 2;
+
+  width: 440px;
+  height: 390px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(37, 105, 205, 0.72);
+  border-radius: 32px;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(24, 105, 185, 0.22),
+      transparent 68%
+    ),
+    linear-gradient(145deg, rgba(10, 25, 48, 0.88), rgba(5, 17, 34, 0.82));
+
+  box-shadow:
+    0 0 90px rgba(0, 104, 220, 0.15),
+    inset 0 0 45px rgba(55, 130, 220, 0.08);
+}
+
+.hub::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+
+  border: 1px solid rgba(47, 111, 207, 0.34);
+  border-radius: 26px;
+
+  pointer-events: none;
+}
+
+.hubGlow {
+  position: absolute;
+
+  width: 72%;
+  height: 72%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle, rgba(0, 180, 255, 0.14), transparent 70%);
+
+  filter: blur(25px);
+  pointer-events: none;
+}
+
+.hubIcon {
+  position: relative;
+  z-index: 1;
+
+  width: 76px;
+  height: 76px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(30, 126, 221, 0.68);
+  border-radius: 21px;
+
+  color: #08d2ef;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(0, 194, 255, 0.15),
+      transparent 70%
+    ),
+    rgba(6, 24, 45, 0.88);
+
+  box-shadow: 0 0 38px rgba(0, 160, 255, 0.12);
+}
+
+.hubIcon svg {
+  width: 38px;
+  height: 38px;
+}
+
+.hubTitle {
+  position: relative;
+  z-index: 1;
+
+  margin-top: 20px;
+
+  color: #f5f8ff;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.hubSubtitle {
+  position: relative;
+  z-index: 1;
+
+  margin-top: 8px;
+
+  color: #b5c1d7;
+  font-size: 14px;
+}
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+  .section {
+    padding: 90px 20px 100px;
+  }
+
+  .intro {
+    margin-bottom: 50px;
+  }
+
+  .intro h2 {
+    font-size: clamp(32px, 6vw, 46px);
+  }
+
+  .workshop {
+    min-height: 560px;
+
+    grid-template-columns:
+      minmax(170px, 1fr)
+      minmax(260px, 330px)
+      minmax(170px, 1fr);
+
+    grid-template-rows:
+      100px
+      160px
+      160px
+      100px;
+  }
+
+  .node {
+    gap: 12px;
+    max-width: 260px;
+  }
+
+  .nodeIcon {
+    flex-basis: 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+  }
+
+  .nodeIcon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nodeContent h3 {
+    font-size: 15px;
+  }
+
+  .nodeContent p {
+    font-size: 13px;
+  }
+
+  .hub {
+    width: 300px;
+  }
+
+  .hubIcon {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 680px) {
+  .section {
+    padding: 76px 16px 110px;
+  }
+
+  .intro {
+    margin-bottom: 42px;
+    padding: 0 8px;
+  }
+
+  .eyebrow {
+    margin-bottom: 12px;
+    font-size: 10px;
+  }
+
+  .intro h2 {
+    font-size: clamp(30px, 8vw, 38px);
+    line-height: 1.12;
+  }
+
+  .intro p {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .workshop {
+    min-height: 1000px;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    grid-template-rows:
+      155px
+      130px
+      300px
+      130px
+      155px;
+
+    grid-template-areas:
+      "top top"
+      "leftTop rightTop"
+      "hub hub"
+      "leftBottom rightBottom"
+      "bottom bottom";
+
+    column-gap: 14px;
+    row-gap: 0;
+  }
+
+  .connectionsDesktop {
+    display: none;
+  }
+
+  .connectionsMobile {
+    display: block;
+  }
+
+  .node {
+    width: 100%;
+    max-width: none;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+  }
+
+  .nodeIcon {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+  }
+
+  .nodeIcon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .nodeContent {
+    padding-top: 1px;
+  }
+
+  .nodeContent h3 {
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .nodeContent p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .nodeTop,
+  .nodeBottom {
+    width: min(100%, 340px);
+    max-width: 340px;
+
+    justify-self: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nodeTop,
+  .nodeBottom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nodeTop .nodeIcon,
+  .nodeBottom .nodeIcon {
+    flex-basis: 56px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .nodeTop .nodeContent p,
+  .nodeBottom .nodeContent p {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nodeLeftTop,
+  .nodeLeftBottom {
+    justify-self: stretch;
+  }
+
+  .nodeRightTop,
+  .nodeRightBottom {
+    justify-self: stretch;
+  }
+
+  .hub {
+    width: min(100%, 300px);
+    aspect-ratio: 1 / 0.9;
+    justify-self: center;
+  }
+
+  .hubIcon {
+    width: 64px;
+    height: 64px;
+    border-radius: 17px;
+  }
+
+  .hubIcon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hubTitle {
+    margin-top: 19px;
+    font-size: 16px;
+    letter-spacing: 0.16em;
+  }
+
+  .hubSubtitle {
+    margin-top: 7px;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   SMALL PHONES
+   ========================= */
+
+@media (max-width: 420px) {
+  .section {
+    padding: 64px 12px 100px;
+  }
+
+  .intro {
+    margin-bottom: 36px;
+    padding: 0 4px;
+  }
+
+  .intro h2 {
+    font-size: 29px;
+  }
+
+  .intro p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .workshop {
+    min-height: 940px;
+
+    grid-template-rows:
+      145px
+      120px
+      280px
+      120px
+      145px;
+
+    column-gap: 10px;
+  }
+
+  .node {
+    gap: 7px;
+  }
+
+  .nodeIcon {
+    flex-basis: 46px;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .nodeIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nodeContent h3 {
+    font-size: 12px;
+  }
+
+  .nodeContent p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .hub {
+    width: min(100%, 250px);
+  }
+
+  .hubIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .hubTitle {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .hubSubtitle {
+    font-size: 11px;
+  }
+
+  .nodeBottom {
+    padding-bottom: 12px;
+  }
+}
