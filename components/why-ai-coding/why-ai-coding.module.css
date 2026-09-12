@@ -535,7 +535,7 @@
     0 24px 68px color-mix(in srgb, var(--shadow-color) 52%, transparent),
     0 0 34px color-mix(in srgb, var(--primary) 8%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
-  transform: translateY(-7px);
+  transform: none;
 }
 
 .benefit:hover::before {
@@ -782,8 +782,8 @@
     min-height: 154px;
   }
 
-  .benefit:hover {
-    transform: translateY(-6px);
+.benefit:hover {
+    transform: none;
   }
 }
 

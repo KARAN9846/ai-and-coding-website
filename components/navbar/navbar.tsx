@@ -12,7 +12,6 @@ const navigation = [
   { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
   { label: "Why Us", href: "/why-us" },
-  { label: "About", href: "/about" },
 ];
 
 export function Navbar() {

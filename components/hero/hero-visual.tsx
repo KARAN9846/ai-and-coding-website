@@ -1,3 +1,4 @@
+import { BrainCircuit, Code2, Database, Blocks } from "lucide-react";
 import styles from "./hero-visual.module.css";
 
 export function HeroVisual() {
@@ -40,14 +41,11 @@ export function HeroVisual() {
         </div>
       </div>
 
-      <div className={`${styles.dataCard} ${styles.dataCardTop}`}>
-        <span className={styles.dataDot} />
-        <span>AI SYSTEM</span>
-      </div>
-
-      <div className={`${styles.dataCard} ${styles.dataCardBottom}`}>
-        <span>LEARNING</span>
-        <span className={styles.dataValue}>∞</span>
+      <div className={styles.markers} aria-hidden="true">
+        <span className={styles.markerAi}><BrainCircuit size={19} /><span>AI</span></span>
+        <span className={styles.markerCode}><Code2 size={19} /><span>CODE</span></span>
+        <span className={styles.markerData}><Database size={19} /><span>DATA</span></span>
+        <span className={styles.markerProjects}><Blocks size={19} /><span>PROJECTS</span></span>
       </div>
 
       <div className={styles.cornerTopLeft} />

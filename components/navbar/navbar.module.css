@@ -146,7 +146,7 @@
 
 .brand:hover {
   opacity: 1;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .brand:focus-visible {
@@ -363,7 +363,7 @@
   box-shadow: inset 0 0 0 1px
     color-mix(in srgb, var(--primary) 12%, transparent);
 
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .navLink:focus-visible {
@@ -478,7 +478,7 @@
 
   background: color-mix(in srgb, var(--cyan) 7%, var(--surface));
 
-  transform: translateY(-2px);
+  transform: none;
 
   box-shadow: 0 0 20px color-mix(in srgb, var(--cyan) 10%, transparent);
 }
@@ -583,7 +583,7 @@
 }
 
 .enquireButton:hover {
-  transform: translateY(-2px);
+  transform: none;
 
   filter: brightness(1.07);
 
@@ -802,7 +802,7 @@
 }
 
 .mobileEnquireButton:hover {
-  transform: translateY(-2px);
+  transform: none;
 
   filter: brightness(1.06);
 }

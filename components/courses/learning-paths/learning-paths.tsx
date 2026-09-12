@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, MouseEvent } from "react";
+import type { CSSProperties } from "react";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Link from "next/link";
 import {
@@ -18,6 +18,7 @@ import {
   Video,
 } from "lucide-react";
 
+import { usePointerMotion } from "../../motion/use-pointer-motion";
 import styles from "./learning-paths.module.css";
 
 type PathStage = {
@@ -50,36 +51,11 @@ const cardStyle = {
   "--path-y": "0px",
 } as CSSProperties;
 
-function handleCardMove(event: MouseEvent<HTMLElement>) {
-  if (
-    window.matchMedia("(hover: none)").matches ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    return;
-  }
-
-  const card = event.currentTarget;
-  const rect = card.getBoundingClientRect();
-  const x = (event.clientX - rect.left) / rect.width;
-  const y = (event.clientY - rect.top) / rect.height;
-
-  card.style.setProperty("--mouse-x", `${(x * 100).toFixed(2)}%`);
-  card.style.setProperty("--mouse-y", `${(y * 100).toFixed(2)}%`);
-  card.style.setProperty("--path-x", `${((x - 0.5) * 10).toFixed(2)}px`);
-  card.style.setProperty("--path-y", `${((y - 0.5) * 8).toFixed(2)}px`);
-}
-
-function handleCardLeave(event: MouseEvent<HTMLElement>) {
-  const card = event.currentTarget;
-
-  card.style.setProperty("--mouse-x", "50%");
-  card.style.setProperty("--mouse-y", "44%");
-  card.style.setProperty("--path-x", "0px");
-  card.style.setProperty("--path-y", "0px");
-}
-
 export function LearningPaths() {
   const motionRef = useAnimationVisibility();
+  const pointer = usePointerMotion(cardStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%`, "--path-x": `${(x-0.5)*10}px`, "--path-y": `${(y-0.5)*8}px`,
+  }));
   return (
     <section
       ref={motionRef}
@@ -108,8 +84,7 @@ export function LearningPaths() {
         <div className={styles.cards}>
           <article
             className={`${styles.programCard} ${styles.f2pCard}`}
-            onMouseMove={handleCardMove}
-            onMouseLeave={handleCardLeave}
+            {...pointer}
             style={cardStyle}
           >
             <div className={styles.cardGlow} />
@@ -171,8 +146,7 @@ export function LearningPaths() {
 
           <article
             className={`${styles.programCard} ${styles.skillCard}`}
-            onMouseMove={handleCardMove}
-            onMouseLeave={handleCardLeave}
+            {...pointer}
             style={cardStyle}
           >
             <div className={styles.cardGlow} />

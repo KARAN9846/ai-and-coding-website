@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore, type CSSProperties, type MouseEvent } from "react";
+import { useSyncExternalStore, type CSSProperties } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { useTheme } from "next-themes";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
@@ -24,6 +24,7 @@ import aiDataRoboticsLight from "@/public/images/courses/f2p/specialization-ai-d
 import gameDevelopmentDark from "@/public/images/courses/f2p/specialization-game-development-dark.png";
 import gameDevelopmentLight from "@/public/images/courses/f2p/specialization-game-development-light.png";
 
+import { usePointerMotion } from "../../motion/use-pointer-motion";
 import styles from "./f2p-journey.module.css";
 import { CourseTopicIcons, type CourseTopic } from "../course-topic-icons/course-topic-icons";
 
@@ -155,34 +156,6 @@ const baseInteractiveStyle = {
   "--stage-y": "0px",
 } as CSSProperties;
 
-function handleMove(event: MouseEvent<HTMLElement>) {
-  if (
-    window.matchMedia("(hover: none)").matches ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    return;
-  }
-
-  const target = event.currentTarget;
-  const rect = target.getBoundingClientRect();
-  const x = (event.clientX - rect.left) / rect.width;
-  const y = (event.clientY - rect.top) / rect.height;
-
-  target.style.setProperty("--mouse-x", `${(x * 100).toFixed(2)}%`);
-  target.style.setProperty("--mouse-y", `${(y * 100).toFixed(2)}%`);
-  target.style.setProperty("--stage-x", `${((x - 0.5) * 10).toFixed(2)}px`);
-  target.style.setProperty("--stage-y", `${((y - 0.5) * 8).toFixed(2)}px`);
-}
-
-function handleLeave(event: MouseEvent<HTMLElement>) {
-  const target = event.currentTarget;
-
-  target.style.setProperty("--mouse-x", "50%");
-  target.style.setProperty("--mouse-y", "44%");
-  target.style.setProperty("--stage-x", "0px");
-  target.style.setProperty("--stage-y", "0px");
-}
-
 function LevelVisual({ level }: { level: Level }) {
   const Icon = level.icon;
   const hasImage = Boolean(level.image);
@@ -229,6 +202,9 @@ const serverSnapshot = () => false;
 
 export function F2PJourney() {
   const motionRef = useAnimationVisibility();
+  const pointer = usePointerMotion(baseInteractiveStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%`, "--stage-x": `${(x-0.5)*10}px`, "--stage-y": `${(y-0.5)*8}px`,
+  }));
   const { resolvedTheme } = useTheme();
   // The server and first client render agree on dark artwork before theme resolution.
   const hydrated = useSyncExternalStore(
@@ -269,8 +245,7 @@ export function F2PJourney() {
                 index % 2 === 1 ? styles.levelReverse : ""
               }`}
               key={level.level}
-              onMouseMove={handleMove}
-              onMouseLeave={handleLeave}
+              {...pointer}
               style={baseInteractiveStyle}
             >
               <StageRoute />

@@ -60,7 +60,11 @@ export function Footer() {
               <span className={styles.brandDot} />
             </div>
 
-            <Link href="/" className={styles.brand} aria-label="AI & Coding home">
+            <Link
+              href="/"
+              className={styles.brand}
+              aria-label="AI & Coding home"
+            >
               <span className={styles.brandMark} aria-hidden="true">
                 <span className={styles.brandMarkCore} />
               </span>

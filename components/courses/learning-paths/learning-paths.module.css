@@ -165,7 +165,7 @@
     0 30px 86px color-mix(in srgb, var(--shadow-color) 56%, transparent),
     0 0 36px color-mix(in srgb, var(--primary) 8%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 11%, transparent);
-  transform: translateY(-7px);
+  transform: none;
 }
 
 .cardGlow {
@@ -300,7 +300,7 @@
   box-shadow:
     0 16px 36px color-mix(in srgb, var(--primary) 26%, transparent),
     0 0 24px color-mix(in srgb, var(--cyan) 10%, transparent);
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .cardLink:hover svg {
@@ -319,7 +319,7 @@
   width: min(100% - 30px, 560px);
   min-height: 300px;
   margin: 8px auto 10px;
-  transform: translate3d(var(--path-x), var(--path-y), 0);
+  transform: none;
   transition: transform 260ms ease-out;
 }
 
@@ -421,7 +421,7 @@
     0 18px 42px color-mix(in srgb, var(--shadow-color) 32%, transparent),
     0 0 24px color-mix(in srgb, var(--cyan) 12%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
-  transform: translate(-50%, -50%) scale(1.035);
+  transform: translate(-50%, -50%);
 }
 
 .nodeOrb {
@@ -645,7 +645,7 @@
     0 18px 42px color-mix(in srgb, var(--shadow-color) 30%, transparent),
     0 0 24px color-mix(in srgb, var(--cyan) 12%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
-  transform: translate(-50%, -50%) scale(1.035);
+  transform: translate(-50%, -50%);
 }
 
 .skillDesign {
@@ -1062,4 +1062,14 @@
   .skillVisual {
     transform: none;
   }
+}
+/* Move decorative layers while the marker coordinates remain stationary. */
+.f2pMap, .skillMap, .f2pCore, .skillCore, .skillRing {
+  translate: var(--path-x) var(--path-y);
+  transition: translate 200ms ease-out;
+  pointer-events: none;
+}
+.nodeOrb, .nodeText, .skillNode > svg, .skillNode > span { pointer-events: none; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .f2pMap, .skillMap, .f2pCore, .skillCore, .skillRing { translate: none; transition: none; }
 }

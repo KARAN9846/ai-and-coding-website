@@ -662,3 +662,35 @@
     transform: rotateX(34deg) rotateY(-58deg) rotateZ(404deg);
   }
 }
+
+.markers {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.markers > span {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--visual-card-border);
+  border-radius: 6px;
+  background: var(--visual-card-bg);
+  color: var(--foreground-secondary);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+  font-size: 11px;
+  font-weight: 750;
+}
+.markers svg { color: var(--primary); flex-shrink: 0; }
+.markerAi { left: 7%; top: 13%; }
+.markerCode { right: 5%; top: 25%; }
+.markerData { left: 4%; bottom: 26%; }
+.markerProjects { right: 6%; bottom: 12%; }
+@media (max-width: 768px) {
+  .markers > span { padding: 7px 9px; gap: 6px; font-size: 10px; }
+  .markers svg { width: 16px; height: 16px; }
+  .markerCode { top: 17%; }
+  .markerData { bottom: 18%; }
+}

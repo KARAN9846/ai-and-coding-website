@@ -311,7 +311,7 @@
 }
 
 .primaryButton:hover {
-  transform: translateY(-3px);
+  transform: none;
 
   box-shadow:
     0 18px 38px color-mix(in srgb, var(--primary) 28%, transparent),
@@ -353,7 +353,7 @@
 }
 
 .secondaryButton:hover {
-  transform: translateY(-3px);
+  transform: none;
 
   color: var(--foreground);
 

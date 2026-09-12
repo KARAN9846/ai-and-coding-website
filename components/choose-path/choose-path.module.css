@@ -5,8 +5,16 @@
   padding: clamp(72px, 7vw, 98px) 0 clamp(78px, 7vw, 108px);
   overflow: hidden;
 
-  --path-card-bg-top: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
-  --path-card-bg-bottom: color-mix(in srgb, var(--background) 92%, var(--primary));
+  --path-card-bg-top: color-mix(
+    in srgb,
+    var(--surface-elevated) 88%,
+    transparent
+  );
+  --path-card-bg-bottom: color-mix(
+    in srgb,
+    var(--background) 92%,
+    var(--primary)
+  );
   --path-card-border: color-mix(in srgb, var(--foreground) 10%, transparent);
   --path-card-border-hover: color-mix(in srgb, var(--primary) 36%, transparent);
   --path-card-shadow: color-mix(in srgb, var(--shadow-color) 68%, transparent);
@@ -75,8 +83,15 @@
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 74px 74px;
   mask-image: radial-gradient(circle at 50% 30%, black, transparent 72%);
   opacity: 0.38;
@@ -221,10 +236,7 @@
     0 22px 70px var(--path-card-shadow),
     inset 0 1px 0 color-mix(in srgb, white 9%, transparent),
     inset 0 -1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
-  transform:
-    translateY(0)
-    rotateX(var(--tilt-x))
-    rotateY(var(--tilt-y));
+  transform: translateY(0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transform-style: preserve-3d;
   transition:
     transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -249,14 +261,13 @@
   inset: 1px;
   z-index: 1;
   border-radius: inherit;
-  background:
-    linear-gradient(
-      120deg,
-      color-mix(in srgb, white 12%, transparent),
-      transparent 24%,
-      transparent 72%,
-      color-mix(in srgb, var(--primary) 8%, transparent)
-    );
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, white 12%, transparent),
+    transparent 24%,
+    transparent 72%,
+    color-mix(in srgb, var(--primary) 8%, transparent)
+  );
   opacity: 0.72;
 }
 
@@ -279,10 +290,7 @@
     0 30px 90px color-mix(in srgb, var(--path-card-shadow) 78%, var(--primary)),
     0 0 42px color-mix(in srgb, var(--primary) 9%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
-  transform:
-    translateY(-7px)
-    rotateX(var(--tilt-x))
-    rotateY(var(--tilt-y));
+  transform: translateY(-7px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
 }
 
 .pathCard:hover::after {
@@ -344,7 +352,11 @@
   border-radius: 12px;
   color: var(--primary);
   background:
-    radial-gradient(circle at 35% 20%, color-mix(in srgb, var(--cyan) 10%, transparent), transparent 55%),
+    radial-gradient(
+      circle at 35% 20%,
+      color-mix(in srgb, var(--cyan) 10%, transparent),
+      transparent 55%
+    ),
     color-mix(in srgb, var(--primary) 7%, transparent);
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
 }
@@ -549,7 +561,11 @@
   border: 1px solid color-mix(in srgb, var(--primary) 38%, transparent);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 28%, color-mix(in srgb, white 20%, transparent), transparent 52%),
+    radial-gradient(
+      circle at 35% 28%,
+      color-mix(in srgb, white 20%, transparent),
+      transparent 52%
+    ),
     color-mix(in srgb, var(--primary) 11%, var(--background));
   box-shadow:
     0 0 34px color-mix(in srgb, var(--primary) 24%, transparent),

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, PointerEvent } from "react";
+import type { CSSProperties } from "react";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Link from "next/link";
 import {
@@ -14,6 +14,7 @@ import {
   Palette,
 } from "lucide-react";
 
+import { usePointerMotion } from "../../motion/use-pointer-motion";
 import styles from "./courses-hero.module.css";
 
 const heroStyle = {
@@ -60,37 +61,14 @@ const learningNodes = [
 
 export function CoursesHero() {
   const motionRef = useAnimationVisibility();
-  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (
-      window.matchMedia("(hover: none)").matches ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const section = event.currentTarget;
-    const rect = section.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = (event.clientY - rect.top) / rect.height;
-
-    section.style.setProperty("--mouse-x", `${(x * 100).toFixed(2)}%`);
-    section.style.setProperty("--mouse-y", `${(y * 100).toFixed(2)}%`);
-    section.style.setProperty("--tilt-x", `${((0.5 - y) * 4).toFixed(2)}deg`);
-    section.style.setProperty("--tilt-y", `${((x - 0.5) * 5).toFixed(2)}deg`);
-    section.style.setProperty("--visual-x", `${((x - 0.5) * 12).toFixed(2)}px`);
-    section.style.setProperty("--visual-y", `${((y - 0.5) * 10).toFixed(2)}px`);
-  };
-
-  const resetPointer = (event: PointerEvent<HTMLElement>) => {
-    const section = event.currentTarget;
-
-    section.style.setProperty("--mouse-x", "62%");
-    section.style.setProperty("--mouse-y", "46%");
-    section.style.setProperty("--tilt-x", "0deg");
-    section.style.setProperty("--tilt-y", "0deg");
-    section.style.setProperty("--visual-x", "0px");
-    section.style.setProperty("--visual-y", "0px");
-  };
+  const pointer = usePointerMotion(heroStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`,
+    "--mouse-y": `${y * 100}%`,
+    "--tilt-x": `${(0.5 - y) * 4}deg`,
+    "--tilt-y": `${(x - 0.5) * 5}deg`,
+    "--visual-x": `${(x - 0.5) * 12}px`,
+    "--visual-y": `${(y - 0.5) * 10}px`,
+  }));
 
   return (
     <section
@@ -98,8 +76,7 @@ export function CoursesHero() {
       id="courses-hero"
       className={styles.hero}
       aria-labelledby="courses-hero-title"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={resetPointer}
+      {...pointer}
       style={heroStyle}
     >
       <div className={styles.shell}>
@@ -136,6 +113,21 @@ export function CoursesHero() {
         <div className={styles.visualColumn} aria-hidden="true">
           <div className={styles.learningVisual}>
             <div className={styles.visualGlow} />
+            {learningNodes.map((node) => {
+              const Icon = node.icon;
+
+              return (
+                <div
+                  className={`${styles.learningNode} ${styles[node.className]}`}
+                  key={node.label}
+                >
+                  <span className={styles.nodeIcon}>
+                    <Icon size={18} strokeWidth={1.75} />
+                  </span>
+                  <span className={styles.nodeLabel}>{node.label}</span>
+                </div>
+              );
+            })}
             <div className={styles.visualObject}>
               <svg
                 className={styles.connectionMap}
@@ -183,23 +175,6 @@ export function CoursesHero() {
                   <span className={styles.coreCenter} />
                 </div>
               </div>
-
-              {learningNodes.map((node) => {
-                const Icon = node.icon;
-
-                return (
-                  <div
-                    className={`${styles.learningNode} ${styles[node.className]}`}
-                    key={node.label}
-                  >
-                    <span className={styles.nodeIcon}>
-                      <Icon size={18} strokeWidth={1.75} />
-                    </span>
-                    <span className={styles.nodeLabel}>{node.label}</span>
-                  </div>
-                );
-              })}
-
               <div className={styles.ribbonLayer}>
                 <span className={`${styles.ribbon} ${styles.ribbonOne}`} />
                 <span className={`${styles.ribbon} ${styles.ribbonTwo}`} />

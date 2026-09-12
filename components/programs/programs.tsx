@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import type { CSSProperties } from "react";
+import { usePointerMotion } from "../motion/use-pointer-motion";
 import { useAnimationVisibility } from "../motion/use-animation-visibility";
 
 import {
@@ -64,101 +65,15 @@ function SkillToolsVisual({ variant, tools }: SkillToolsVisualProps) {
   );
 }
 
+const programPointerStyle = { "--mouse-x": "50%", "--mouse-y": "50%", "--tilt-x": "0deg", "--tilt-y": "0deg", "--f2p-x": "0px", "--f2p-y": "0px" } as CSSProperties;
+
 export function Programs() {
   const motionRef = useAnimationVisibility();
-  const f2pVisualRef = useRef<HTMLDivElement>(null);
-
-  const handleF2PMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    if (window.matchMedia("(hover: none)").matches) {
-      return;
-    }
-
-    const visual = f2pVisualRef.current;
-
-    if (!visual) return;
-
-    const card = event.currentTarget;
-
-    const cardRect = card.getBoundingClientRect();
-    const visualRect = visual.getBoundingClientRect();
-
-    // Mouse position inside the card
-    const mouseX = event.clientX - cardRect.left;
-    const mouseY = event.clientY - cardRect.top;
-
-    const percentX = (mouseX / cardRect.width) * 100;
-    const percentY = (mouseY / cardRect.height) * 100;
-
-    // Subtle 3D tilt
-    const rotateY = (mouseX / cardRect.width - 0.5) * 6;
-
-    const rotateX = (mouseY / cardRect.height - 0.5) * -6;
-
-    // Existing visual parallax
-    const visualX = event.clientX - (visualRect.left + visualRect.width / 2);
-
-    const visualY = event.clientY - (visualRect.top + visualRect.height / 2);
-
-    const moveX = Math.max(-8, Math.min(8, visualX / 18));
-
-    const moveY = Math.max(-8, Math.min(8, visualY / 18));
-
-    // Mouse-following glow
-    card.style.setProperty("--mouse-x", `${percentX}%`);
-
-    card.style.setProperty("--mouse-y", `${percentY}%`);
-
-    // 3D card tilt
-    card.style.setProperty("--tilt-x", `${rotateX}deg`);
-
-    card.style.setProperty("--tilt-y", `${rotateY}deg`);
-
-    // Existing visual parallax
-    visual.style.setProperty("--f2p-x", `${moveX}px`);
-
-    visual.style.setProperty("--f2p-y", `${moveY}px`);
-  };
-
-  const handleF2PMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-    const visual = f2pVisualRef.current;
-
-    if (!visual) return;
-
-    const card = event.currentTarget;
-
-    // Reset card interaction
-    card.style.setProperty("--mouse-x", "50%");
-    card.style.setProperty("--mouse-y", "50%");
-    card.style.setProperty("--tilt-x", "0deg");
-    card.style.setProperty("--tilt-y", "0deg");
-
-    // Reset existing visual parallax
-    visual.style.setProperty("--f2p-x", "0px");
-    visual.style.setProperty("--f2p-y", "0px");
-  };
-
-  const handleCardMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    if (window.matchMedia("(hover: none)").matches) return;
-
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    const percentX = (mouseX / rect.width) * 100;
-    const percentY = (mouseY / rect.height) * 100;
-
-    card.style.setProperty("--mouse-x", `${percentX}%`);
-    card.style.setProperty("--mouse-y", `${percentY}%`);
-  };
-
-  const handleCardMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-    const card = event.currentTarget;
-
-    card.style.setProperty("--mouse-x", "50%");
-    card.style.setProperty("--mouse-y", "50%");
-  };
+  const f2pPointer = usePointerMotion(programPointerStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%`, "--tilt-x": `${(0.5-y)*6}deg`, "--tilt-y": `${(x-0.5)*6}deg`,
+    "--f2p-x": `${(x-0.5)*16}px`, "--f2p-y": `${(y-0.5)*16}px`,
+  }));
+  const cardPointer = usePointerMotion(programPointerStyle, (x, y) => ({ "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%` }));
 
   return (
     <section ref={motionRef} className={styles.section} aria-labelledby="programs-title">
@@ -184,8 +99,7 @@ export function Programs() {
         {/* Featured F2P program */}
         <article
           className={`${styles.programCard} ${styles.f2pCard}`}
-          onMouseMove={handleF2PMouseMove}
-          onMouseLeave={handleF2PMouseLeave}
+          {...f2pPointer}
         >
           {" "}
           <div className={styles.cardGlow} />
@@ -234,7 +148,7 @@ export function Programs() {
           </div>
           {/* F2P technology visual */}
           <div
-            ref={f2pVisualRef}
+
             className={styles.f2pVisual}
             aria-hidden="true"
           >
@@ -273,8 +187,7 @@ export function Programs() {
         <div className={styles.skillsGrid}>
           <article
             className={`${styles.programCard} ${styles.skillCard}`}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
+            {...cardPointer}
           >
             <div className={styles.cardGlow} />
 
@@ -302,8 +215,7 @@ export function Programs() {
 
           <article
             className={`${styles.programCard} ${styles.skillCard}`}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
+            {...cardPointer}
           >
             <div className={styles.cardGlow} />
 
@@ -331,8 +243,7 @@ export function Programs() {
 
           <article
             className={`${styles.programCard} ${styles.skillCard}`}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
+            {...cardPointer}
           >
             <div className={styles.cardGlow} />
 
@@ -360,8 +271,7 @@ export function Programs() {
 
           <article
             className={`${styles.programCard} ${styles.skillCard}`}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
+            {...cardPointer}
           >
             <div className={styles.cardGlow} />
 
@@ -391,8 +301,7 @@ export function Programs() {
         {/* AI Tools highlight */}
         <article
           className={`${styles.programCard} ${styles.aiCard}`}
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
+          {...cardPointer}
         >
           <div className={styles.aiIcon}>
             <Sparkles size={20} strokeWidth={1.6} />

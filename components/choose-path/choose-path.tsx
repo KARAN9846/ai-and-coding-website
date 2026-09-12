@@ -46,7 +46,11 @@ export function ChoosePath() {
   };
 
   return (
-    <section ref={motionRef} className={styles.section} aria-labelledby="choose-path-title">
+    <section
+      ref={motionRef}
+      className={styles.section}
+      aria-labelledby="choose-path-title"
+    >
       <div className={styles.sectionGrid} aria-hidden="true" />
       <span className={`${styles.sectionParticle} ${styles.particleOne}`} />
       <span className={`${styles.sectionParticle} ${styles.particleTwo}`} />

@@ -100,8 +100,7 @@
 
   isolation: isolate;
 
-  transform: translateY(0) rotateX(var(--tilt-x, 0deg))
-    rotateY(var(--tilt-y, 0deg));
+  transform: none;
 
   transform-style: preserve-3d;
 
@@ -164,8 +163,7 @@
     0 0 42px color-mix(in srgb, var(--primary) 9%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
 
-  transform: translateY(-7px) rotateX(var(--tilt-x, 0deg))
-    rotateY(var(--tilt-y, 0deg));
+  transform: none;
 }
 
 .cardGlow {
@@ -379,6 +377,7 @@
   right: 0;
 
   translate: var(--f2p-x, 0px) var(--f2p-y, 0px);
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: translate 180ms ease-out;
   will-change: translate;
 
@@ -728,7 +727,7 @@
 }
 
 .skillCard:hover {
-  transform: translateY(-7px);
+  transform: none;
 
   border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
 
@@ -1016,7 +1015,7 @@
 }
 
 .aiCard:hover {
-  transform: translateY(-6px);
+  transform: none;
 
   border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
 
@@ -1297,7 +1296,7 @@
 
   background: color-mix(in srgb, var(--primary) 6%, transparent);
 
-  transform: translateY(-2px);
+  transform: none;
 }
 
 /* ========================================

@@ -1,6 +1,7 @@
 "use client";
 
-import { type MouseEvent } from "react";
+import type { CSSProperties } from "react";
+import { usePointerMotion } from "../../motion/use-pointer-motion";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Image, { type StaticImageData } from "next/image";
 import { ArrowUpRight } from "lucide-react";
@@ -126,21 +127,7 @@ export function SkillDevelopment() {
   );
 }
 
-function handleImageMove(event: MouseEvent<HTMLElement>) {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const target = event.currentTarget;
-  const rect = target.getBoundingClientRect();
-  const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-  const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
-  target.style.setProperty("--stage-x", `${((x - 0.5) * 10).toFixed(2)}px`);
-  target.style.setProperty("--stage-y", `${((y - 0.5) * 8).toFixed(2)}px`);
-}
-
-function resetImageMove(event: MouseEvent<HTMLElement>) {
-  event.currentTarget.style.setProperty("--stage-x", "0px");
-  event.currentTarget.style.setProperty("--stage-y", "0px");
-}
+const imageStyle = { "--stage-x": "0px", "--stage-y": "0px" } as CSSProperties;
 
 function SkillStage({
   skill,
@@ -151,14 +138,16 @@ function SkillStage({
   reverse?: boolean;
   featured?: boolean;
 }) {
+  const pointer = usePointerMotion(imageStyle, (x, y) => ({
+    "--stage-x": `${(x-0.5)*10}px`, "--stage-y": `${(y-0.5)*8}px`,
+  }));
   const titleId = `skill-${skill.id}-title`;
 
   return (
     <article
       className={`${styles.stage} ${reverse ? styles.reverse : ""} ${featured ? styles.featured : ""}`}
       aria-labelledby={titleId}
-      onMouseMove={handleImageMove}
-      onMouseLeave={resetImageMove}
+      {...pointer}
     >
       <SkillRoute featured={featured} />
       <div className={styles.content}>

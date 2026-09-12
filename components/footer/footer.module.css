@@ -52,10 +52,9 @@
 .grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(280px, 1.4fr) minmax(130px, 0.62fr) minmax(
-      190px,
-      0.86fr
-    ) minmax(230px, 0.9fr);
+  grid-template-columns:
+    minmax(280px, 1.4fr) minmax(130px, 0.62fr) minmax(190px, 0.86fr)
+    minmax(230px, 0.9fr);
   gap: clamp(28px, 4vw, 56px);
   padding: clamp(28px, 4vw, 42px);
   overflow: hidden;
@@ -348,12 +347,11 @@
   border: 1px solid color-mix(in srgb, var(--primary) 62%, transparent);
   border-radius: 12px;
   color: #ffffff;
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary),
-      color-mix(in srgb, var(--cyan) 32%, var(--primary))
-    );
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in srgb, var(--cyan) 32%, var(--primary))
+  );
   box-shadow:
     0 12px 30px color-mix(in srgb, var(--primary) 24%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
