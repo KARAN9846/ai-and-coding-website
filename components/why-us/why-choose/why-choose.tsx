@@ -1,224 +1,285 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
+  Award,
   BriefcaseBusiness,
-  BrainCircuit,
+  ChevronRight,
   Code2,
-  Compass,
-  Lightbulb,
-  Presentation,
+  Users,
+  Wrench,
 } from "lucide-react";
+
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import styles from "./why-choose.module.css";
 
-export default function WhyChoose() {
+type FeatureKey =
+  | "projects"
+  | "mentorship"
+  | "career"
+  | "workshops"
+  | "certification";
+
+type Feature = {
+  key: FeatureKey;
+  number: string;
+  label: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  image: string;
+  imageAlt: string;
+  visualLabel: string;
+};
+
+const features: Feature[] = [
+  {
+    key: "projects",
+    number: "01",
+    label: "PROJECT-BASED",
+    title: "Real Projects",
+    description:
+      "Turn concepts into practical work by building projects that reflect how technology is actually used.",
+    icon: Code2,
+    image: "/images/why-us/learning-studio/real-projects.png",
+    imageAlt:
+      "3D illustration representing practical coding and software project development",
+    visualLabel: "BUILD • APPLY • COMPLETE",
+  },
+  {
+    key: "mentorship",
+    number: "02",
+    label: "GUIDED LEARNING",
+    title: "Expert Mentorship",
+    description:
+      "Learn with trainer guidance, useful feedback, and support while you practice, build, and improve.",
+    icon: Users,
+    image: "/images/why-us/learning-studio/expert-mentorship.png",
+    imageAlt:
+      "3D illustration representing expert mentorship, guidance, and project feedback",
+    visualLabel: "GUIDANCE • FEEDBACK • GROWTH",
+  },
+  {
+    key: "career",
+    number: "03",
+    label: "CAREER-FOCUSED",
+    title: "Skills With Direction",
+    description:
+      "Build practical abilities around projects, tools, and learning paths connected to real opportunities.",
+    icon: BriefcaseBusiness,
+    image: "/images/why-us/learning-studio/career-focused-learning.png",
+    imageAlt:
+      "3D illustration representing skill development, projects, and career readiness",
+    visualLabel: "SKILLS • PROJECTS • READINESS",
+  },
+  {
+    key: "workshops",
+    number: "04",
+    label: "HANDS-ON",
+    title: "Workshops & Activities",
+    description:
+      "Go beyond lectures through practical sessions, challenges, collaborative activities, and guided building.",
+    icon: Wrench,
+    image: "/images/why-us/learning-studio/workshops-activities.png",
+    imageAlt:
+      "3D illustration representing hands-on coding workshops and practical activities",
+    visualLabel: "PRACTICE • BUILD • REVIEW",
+  },
+  {
+    key: "certification",
+    number: "05",
+    label: "MILESTONE",
+    title: "Certification",
+    description:
+      "Complete your learning journey with a clear milestone that recognizes your progress and effort.",
+    icon: Award,
+    image: "/images/why-us/learning-studio/certification.png",
+    imageAlt:
+      "3D illustration representing certification, achievement, and learning completion",
+    visualLabel: "PROGRESS • COMPLETE • ACHIEVE",
+  },
+];
+
+export function WhyChoose() {
+  const motionRef = useAnimationVisibility();
+  const [activeFeature, setActiveFeature] = useState<FeatureKey>("projects");
+
+  const active =
+    features.find((feature) => feature.key === activeFeature) ?? features[0];
+
+  const ActiveIcon = active.icon;
+
   return (
-    <section className={styles.section} aria-labelledby="why-choose-title">
+    <section
+      ref={motionRef}
+      className={styles.section}
+      aria-labelledby="why-choose-title"
+    >
+      <div className={styles.backgroundGrid} aria-hidden="true" />
+      <div className={styles.backgroundGlow} aria-hidden="true" />
+
       <div className={styles.container}>
-        <div className={styles.intro}>
-          <span className={styles.eyebrow}>WHY CHOOSE AI & CODING</span>
+        <header className={styles.heading}>
+          <div className={styles.eyebrow}>
+            <span />
+            WHY CHOOSE AI &amp; CODING
+            <span />
+          </div>
 
           <h2 id="why-choose-title">
-            Learning That Turns Into <span>Real Skills.</span>
+            Built Around How
+            <span>You Actually Learn.</span>
           </h2>
 
           <p>
-            We believe learning should be practical, engaging, and connected to
-            real-world outcomes.
+            A practical learning environment where guidance, projects,
+            activities, and clear progress come together to help you build
+            skills with confidence.
           </p>
-        </div>
+        </header>
 
-        <div className={styles.workshop}>
-          {/* Desktop / tablet connection system */}
-          <svg
-            className={`${styles.connections} ${styles.connectionsDesktop}`}
-            viewBox="0 0 1080 620"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {/* glow layer */}
-            <g className={styles.connectionGlow}>
-              <path d="M540 275 C540 225 540 170 540 115" />
-              <path d="M405 300 C350 270 305 235 255 220" />
-              <path d="M675 300 C730 270 775 235 825 220" />
-              <path d="M405 390 C350 405 305 420 255 425" />
-              <path d="M675 390 C730 405 775 420 825 425" />
-              <path d="M540 440 C540 485 540 515 540 555" />
-            </g>
+        <div className={styles.studio}>
+          <div className={styles.studioHeader}>
+            <div className={styles.studioIdentity}>
+              <span className={styles.studioMark}>
+                <Code2 size={18} strokeWidth={1.6} />
+              </span>
 
-            {/* sharp connection layer */}
-            <g className={styles.connectionLine}>
-              <path d="M540 275 C540 225 540 170 540 115" />
-              <path d="M405 300 C350 270 305 235 255 220" />
-              <path d="M675 300 C730 270 775 235 825 220" />
-              <path d="M405 390 C350 405 305 420 255 425" />
-              <path d="M675 390 C730 405 775 420 825 425" />
-              <path d="M540 440 C540 485 540 515 540 555" />
-            </g>
-
-            {/* connection nodes */}
-            <g className={styles.connectionNodes}>
-              <circle cx="540" cy="115" r="4" />
-              <circle cx="255" cy="220" r="4" />
-              <circle cx="825" cy="220" r="4" />
-              <circle cx="255" cy="425" r="4" />
-              <circle cx="825" cy="425" r="4" />
-              <circle cx="540" cy="555" r="4" />
-            </g>
-          </svg>
-
-          {/* Mobile connection system */}
-          <svg
-            className={`${styles.connections} ${styles.connectionsMobile}`}
-            viewBox="0 0 600 1000"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <g className={styles.connectionGlow}>
-              <path d="M300 155 L300 390" />
-              <path d="M120 285 C175 310 220 350 250 410" />
-              <path d="M480 285 C425 310 380 350 350 410" />
-              <path d="M250 590 C220 650 175 690 120 715" />
-              <path d="M350 590 C380 650 425 690 480 715" />
-              <path d="M300 790 L300 905" />
-            </g>
-
-            <g className={styles.connectionLine}>
-              <path d="M300 155 L300 390" />
-              <path d="M120 285 C175 310 220 350 250 410" />
-              <path d="M480 285 C425 310 380 350 350 410" />
-              <path d="M250 590 C220 650 175 690 120 715" />
-              <path d="M350 590 C380 650 425 690 480 715" />
-              <path d="M300 790 L300 905" />
-            </g>
-
-            <g className={styles.connectionNodes}>
-              <circle cx="300" cy="155" r="4" />
-              <circle cx="120" cy="285" r="4" />
-              <circle cx="480" cy="285" r="4" />
-              <circle cx="120" cy="715" r="4" />
-              <circle cx="480" cy="715" r="4" />
-              <circle cx="300" cy="905" r="4" />
-            </g>
-          </svg>
-
-          {/* Top node */}
-          <div className={`${styles.node} ${styles.nodeTop}`}>
-            <div className={styles.nodeIcon}>
-              <Lightbulb aria-hidden="true" />
+              <div>
+                <small>AI &amp; CODING</small>
+                <strong>LEARNING STUDIO</strong>
+              </div>
             </div>
 
-            <div className={styles.nodeContent}>
-              <h3>Practical Learning</h3>
-              <p>Learn through hands-on practice and real applications.</p>
+            <div className={styles.studioStatus}>
+              <span />
+              LEARNING SYSTEM ACTIVE
             </div>
           </div>
 
-          {/* Left top */}
-          <div className={`${styles.node} ${styles.nodeLeftTop}`}>
-            <div className={styles.nodeIcon}>
-              <Code2 aria-hidden="true" />
+          <div className={styles.studioBody}>
+            <div className={styles.featureRail}>
+              <div className={styles.railIntro}>
+                <span>THE EXPERIENCE</span>
+                <strong>What makes learning different here.</strong>
+              </div>
+
+              <div className={styles.featureList}>
+                {features.map((feature) => {
+                  const Icon = feature.icon;
+                  const isActive = activeFeature === feature.key;
+
+                  return (
+                    <button
+                      key={feature.key}
+                      type="button"
+                      data-feature={feature.key}
+                      className={`${styles.featureButton} ${
+                        isActive ? styles.featureButtonActive : ""
+                      }`}
+                      aria-pressed={isActive}
+                      onClick={() => setActiveFeature(feature.key)}
+                      onPointerEnter={() => setActiveFeature(feature.key)}
+                    >
+                      <span className={styles.featureNumber}>
+                        {feature.number}
+                      </span>
+
+                      <span className={styles.featureIcon} aria-hidden="true">
+                        <Icon size={29} strokeWidth={1.65} />
+                      </span>
+
+                      <span className={styles.featureButtonText}>
+                        <small>{feature.label}</small>
+                        <strong>{feature.title}</strong>
+                      </span>
+
+                      <ChevronRight
+                        className={styles.featureArrow}
+                        size={18}
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className={styles.nodeContent}>
-              <h3>Real Projects</h3>
-              <p>Turn what you learn into meaningful, working projects.</p>
+            <div className={styles.stage} data-feature={activeFeature}>
+              <div className={styles.stageTop}>
+                <div>
+                  <span className={styles.stageIcon} aria-hidden="true">
+                    <ActiveIcon size={34} strokeWidth={1.55} />
+                  </span>
+
+                  <div>
+                    <small>{active.label}</small>
+                    <h3>{active.title}</h3>
+                  </div>
+                </div>
+
+                <span className={styles.stageIndex}>{active.number} / 05</span>
+              </div>
+
+              <p className={styles.stageDescription}>{active.description}</p>
+
+              <div key={activeFeature} className={styles.visualStage}>
+                <div className={styles.artworkGlow} aria-hidden="true" />
+
+                <div className={styles.artworkFrame}>
+                  <Image
+                    src={active.image}
+                    alt={active.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 92vw, (max-width: 1023px) 82vw, 58vw"
+                    className={styles.artworkImage}
+                    priority={activeFeature === "projects"}
+                  />
+                </div>
+
+                <div className={styles.visualMeta} aria-hidden="true">
+                  <span>{active.number}</span>
+                  <i />
+                  <strong>{active.visualLabel}</strong>
+                </div>
+              </div>
+
+              <div className={styles.stageFooter}>
+                <span>
+                  <i />
+                  PRACTICAL LEARNING
+                </span>
+
+                <span>
+                  <i />
+                  GUIDED PROGRESS
+                </span>
+
+                <span>
+                  <i />
+                  REAL APPLICATION
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Right top */}
-          <div className={`${styles.node} ${styles.nodeRightTop}`}>
-            <div className={styles.nodeIcon}>
-              <BrainCircuit aria-hidden="true" />
+          <div className={styles.studioFooter}>
+            <div>
+              <span>LEARN</span>
+              <i />
+              <span>PRACTICE</span>
+              <i />
+              <span>BUILD</span>
+              <i />
+              <span>IMPROVE</span>
+              <i />
+              <span>GROW</span>
             </div>
 
-            <div className={styles.nodeContent}>
-              <h3>Expert Mentorship</h3>
-              <p>Get guidance while learning, building, and improving.</p>
-            </div>
-          </div>
-
-          {/* Left bottom */}
-          <div className={`${styles.node} ${styles.nodeLeftBottom}`}>
-            <div className={styles.nodeIcon}>
-              <Presentation aria-hidden="true" />
-            </div>
-
-            <div className={styles.nodeContent}>
-              <h3>Workshops &amp; Bootcamps</h3>
-              <p>Focused learning experiences beyond routine classes.</p>
-            </div>
-          </div>
-
-          {/* Right bottom */}
-          <div className={`${styles.node} ${styles.nodeRightBottom}`}>
-            <div className={styles.nodeIcon}>
-              <BriefcaseBusiness aria-hidden="true" />
-            </div>
-
-            <div className={styles.nodeContent}>
-              <h3>Career Focus</h3>
-              <p>Build practical skills connected to real-world work.</p>
-            </div>
-          </div>
-
-          {/* Bottom */}
-          <div className={`${styles.node} ${styles.nodeBottom}`}>
-            <div className={styles.nodeIcon}>
-              <Compass aria-hidden="true" />
-            </div>
-
-            <div className={styles.nodeContent}>
-              <h3>Future-Ready Skills</h3>
-              <p>Explore modern AI, coding, and digital technologies.</p>
-            </div>
-          </div>
-
-          {/* Central hub */}
-          <div className={styles.hub}>
-            <div className={styles.hubGlow} />
-
-            <div className={styles.hubIcon}>
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="7"
-                  y="7"
-                  width="10"
-                  height="10"
-                  rx="2"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-
-                <path
-                  d="M9 1V4M12 1V4M15 1V4M9 20V23M12 20V23M15 20V23"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-
-                <path
-                  d="M20 9H23M20 12H23M20 15H23M1 9H4M1 12H4M1 15H4"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-
-                <path
-                  d="M10 10H14V14H10V10Z"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                />
-              </svg>
-            </div>
-
-            <div className={styles.hubTitle}>AI &amp; CODING</div>
-
-            <div className={styles.hubSubtitle}>Learn. Practice. Build.</div>
+            <small>LEARNING EXPERIENCE / 01</small>
           </div>
         </div>
       </div>

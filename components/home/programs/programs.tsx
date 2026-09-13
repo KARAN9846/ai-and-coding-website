@@ -1,8 +1,8 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { usePointerMotion } from "../motion/use-pointer-motion";
-import { useAnimationVisibility } from "../motion/use-animation-visibility";
+import { usePointerMotion } from "../../motion/use-pointer-motion";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 
 import {
   ArrowUpRight,
@@ -65,18 +65,36 @@ function SkillToolsVisual({ variant, tools }: SkillToolsVisualProps) {
   );
 }
 
-const programPointerStyle = { "--mouse-x": "50%", "--mouse-y": "50%", "--tilt-x": "0deg", "--tilt-y": "0deg", "--f2p-x": "0px", "--f2p-y": "0px" } as CSSProperties;
+const programPointerStyle = {
+  "--mouse-x": "50%",
+  "--mouse-y": "50%",
+  "--tilt-x": "0deg",
+  "--tilt-y": "0deg",
+  "--f2p-x": "0px",
+  "--f2p-y": "0px",
+} as CSSProperties;
 
 export function Programs() {
   const motionRef = useAnimationVisibility();
   const f2pPointer = usePointerMotion(programPointerStyle, (x, y) => ({
-    "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%`, "--tilt-x": `${(0.5-y)*6}deg`, "--tilt-y": `${(x-0.5)*6}deg`,
-    "--f2p-x": `${(x-0.5)*16}px`, "--f2p-y": `${(y-0.5)*16}px`,
+    "--mouse-x": `${x * 100}%`,
+    "--mouse-y": `${y * 100}%`,
+    "--tilt-x": `${(0.5 - y) * 6}deg`,
+    "--tilt-y": `${(x - 0.5) * 6}deg`,
+    "--f2p-x": `${(x - 0.5) * 16}px`,
+    "--f2p-y": `${(y - 0.5) * 16}px`,
   }));
-  const cardPointer = usePointerMotion(programPointerStyle, (x, y) => ({ "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%` }));
+  const cardPointer = usePointerMotion(programPointerStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`,
+    "--mouse-y": `${y * 100}%`,
+  }));
 
   return (
-    <section ref={motionRef} className={styles.section} aria-labelledby="programs-title">
+    <section
+      ref={motionRef}
+      className={styles.section}
+      aria-labelledby="programs-title"
+    >
       <div className={styles.container}>
         {/* Section heading */}
         <div className={styles.heading}>
@@ -147,11 +165,7 @@ export function Programs() {
             </a>
           </div>
           {/* F2P technology visual */}
-          <div
-
-            className={styles.f2pVisual}
-            aria-hidden="true"
-          >
+          <div className={styles.f2pVisual} aria-hidden="true">
             <div className={`${styles.orbit} ${styles.orbitOne}`} />
             <div className={`${styles.orbit} ${styles.orbitTwo}`} />
             <div className={`${styles.orbit} ${styles.orbitThree}`} />
@@ -249,7 +263,9 @@ export function Programs() {
 
             <SkillToolsVisual
               variant="video"
-              tools={[{ label: "Wondershare Filmora", Icon: SiWondersharefilmora }]}
+              tools={[
+                { label: "Wondershare Filmora", Icon: SiWondersharefilmora },
+              ]}
             />
 
             <div className={styles.skillIcon}>
@@ -277,7 +293,9 @@ export function Programs() {
 
             <SkillToolsVisual
               variant="growth"
-              tools={[{ label: "Google Search Console", Icon: SiGooglesearchconsole }]}
+              tools={[
+                { label: "Google Search Console", Icon: SiGooglesearchconsole },
+              ]}
             />
 
             <div className={styles.skillIcon}>

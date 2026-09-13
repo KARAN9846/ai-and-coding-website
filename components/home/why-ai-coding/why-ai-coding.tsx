@@ -1,8 +1,8 @@
- "use client";
+"use client";
 
 import type { CSSProperties } from "react";
 import { useState } from "react";
-import { useAnimationVisibility } from "../motion/use-animation-visibility";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import {
   Award,
   BrainCircuit,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-import { usePointerMotion } from "../motion/use-pointer-motion";
+import { usePointerMotion } from "../../motion/use-pointer-motion";
 import styles from "./why-ai-coding.module.css";
 
 type Benefit = {
@@ -82,14 +82,24 @@ export function WhyAiCoding() {
   const [activeBenefit, setActiveBenefit] = useState<string | undefined>();
 
   const experiencePointer = usePointerMotion(sectionStyle, (x, y) => ({
-    "--core-x": `${(x-0.5)*14}px`, "--core-y": `${(y-0.5)*12}px`,
-    "--core-tilt-x": `${(0.5-y)*3.2}deg`, "--core-tilt-y": `${(x-0.5)*4.2}deg`,
-    "--core-glow-x": `${x*100}%`, "--core-glow-y": `${y*100}%`,
+    "--core-x": `${(x - 0.5) * 14}px`,
+    "--core-y": `${(y - 0.5) * 12}px`,
+    "--core-tilt-x": `${(0.5 - y) * 3.2}deg`,
+    "--core-tilt-y": `${(x - 0.5) * 4.2}deg`,
+    "--core-glow-x": `${x * 100}%`,
+    "--core-glow-y": `${y * 100}%`,
   }));
-  const cardPointer = usePointerMotion(cardStyle, (x, y) => ({ "--mouse-x": `${x * 100}%`, "--mouse-y": `${y * 100}%` }));
+  const cardPointer = usePointerMotion(cardStyle, (x, y) => ({
+    "--mouse-x": `${x * 100}%`,
+    "--mouse-y": `${y * 100}%`,
+  }));
 
   return (
-    <section ref={motionRef} className={styles.section} aria-labelledby="why-ai-coding-title">
+    <section
+      ref={motionRef}
+      className={styles.section}
+      aria-labelledby="why-ai-coding-title"
+    >
       <div className={styles.sectionGrid} aria-hidden="true" />
 
       <div className={styles.container}>

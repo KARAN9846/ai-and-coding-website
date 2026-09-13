@@ -1,9 +1,9 @@
-import { AnnouncementBar } from "@/components/announcement-bar/announcement-bar";
-import { Navbar } from "@/components/navbar/navbar";
-import { WhyUsHero } from "@/components/why-us/why-us-hero";
-import WhyChoose from "@/components/why-us/why-choose/why-choose";
+import { AnnouncementBar } from "@/components/layout/announcement-bar/announcement-bar";
+import { Navbar } from "@/components/layout/navbar/navbar";
+import { WhyUsHero } from "@/components/why-us/why-us-hero/why-us-hero";
+import { WhyChoose } from "@/components/why-us/why-choose/why-choose";
 import { Enquiry } from "@/components/enquiry/enquiry";
-import { Footer } from "@/components/footer/footer";
+import { Footer } from "@/components/layout/footer/footer";
 import styles from "./page.module.css";
 
 export default function WhyUsPage() {

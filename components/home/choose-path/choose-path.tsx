@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent } from "react";
-import { useAnimationVisibility } from "../motion/use-animation-visibility";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import {
   ArrowUpRight,
   BrainCircuit,

@@ -1,13 +1,17 @@
 "use client";
 
 import styles from "./hero.module.css";
-import { useAnimationVisibility } from "../motion/use-animation-visibility";
+import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import { HeroVisual } from "./hero-visual";
 
 export function Hero() {
   const motionRef = useAnimationVisibility();
   return (
-    <section ref={motionRef} className={styles.hero} aria-labelledby="hero-title">
+    <section
+      ref={motionRef}
+      className={styles.hero}
+      aria-labelledby="hero-title"
+    >
       <div className={styles.heroShell}>
         {/* =========================
             LEFT — HERO CONTENT
