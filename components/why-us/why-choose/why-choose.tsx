@@ -27,6 +27,7 @@ type Feature = {
   number: string;
   label: string;
   title: string;
+  compactTitle: string;
   description: string;
   icon: LucideIcon;
   image: string;
@@ -40,6 +41,7 @@ const features: Feature[] = [
     number: "01",
     label: "PROJECT-BASED",
     title: "Real Projects",
+    compactTitle: "Projects",
     description:
       "Turn concepts into practical work by building projects that reflect how technology is actually used.",
     icon: Code2,
@@ -53,6 +55,7 @@ const features: Feature[] = [
     number: "02",
     label: "GUIDED LEARNING",
     title: "Expert Mentorship",
+    compactTitle: "Mentorship",
     description:
       "Learn with trainer guidance, useful feedback, and support while you practice, build, and improve.",
     icon: Users,
@@ -66,6 +69,7 @@ const features: Feature[] = [
     number: "03",
     label: "CAREER-FOCUSED",
     title: "Skills With Direction",
+    compactTitle: "Career",
     description:
       "Build practical abilities around projects, tools, and learning paths connected to real opportunities.",
     icon: BriefcaseBusiness,
@@ -79,6 +83,7 @@ const features: Feature[] = [
     number: "04",
     label: "HANDS-ON",
     title: "Workshops & Activities",
+    compactTitle: "Workshops",
     description:
       "Go beyond lectures through practical sessions, challenges, collaborative activities, and guided building.",
     icon: Wrench,
@@ -92,6 +97,7 @@ const features: Feature[] = [
     number: "05",
     label: "MILESTONE",
     title: "Certification",
+    compactTitle: "Certificate",
     description:
       "Complete your learning journey with a clear milestone that recognizes your progress and effort.",
     icon: Award,
@@ -160,6 +166,7 @@ export function WhyChoose() {
           </div>
 
           <div className={styles.studioBody}>
+            {/* Desktop / laptop side rail */}
             <div className={styles.featureRail}>
               <div className={styles.railIntro}>
                 <span>THE EXPERIENCE</span>
@@ -180,6 +187,7 @@ export function WhyChoose() {
                         isActive ? styles.featureButtonActive : ""
                       }`}
                       aria-pressed={isActive}
+                      aria-controls="learning-studio-stage"
                       onClick={() => setActiveFeature(feature.key)}
                       onPointerEnter={() => setActiveFeature(feature.key)}
                     >
@@ -208,7 +216,60 @@ export function WhyChoose() {
               </div>
             </div>
 
-            <div className={styles.stage} data-feature={activeFeature}>
+            {/* Tablet / mobile intro */}
+            <div className={styles.compactIntro}>
+              <span>THE EXPERIENCE</span>
+              <strong>What makes learning different here.</strong>
+            </div>
+
+            {/* Tablet / mobile horizontal selector. It stays reachable while the stage scrolls. */}
+            <div className={styles.compactSelectorShell}>
+              <div
+                className={styles.compactSelector}
+                role="tablist"
+                aria-label="Learning Studio experiences"
+              >
+                {features.map((feature) => {
+                  const Icon = feature.icon;
+                  const isActive = activeFeature === feature.key;
+
+                  return (
+                    <button
+                      key={feature.key}
+                      type="button"
+                      role="tab"
+                      data-feature={feature.key}
+                      className={`${styles.compactFeatureButton} ${
+                        isActive ? styles.compactFeatureButtonActive : ""
+                      }`}
+                      aria-selected={isActive}
+                      aria-controls="learning-studio-stage"
+                      onClick={() => setActiveFeature(feature.key)}
+                    >
+                      <span
+                        className={styles.compactFeatureIcon}
+                        aria-hidden="true"
+                      >
+                        <Icon size={25} strokeWidth={1.7} />
+                      </span>
+
+                      <span className={styles.compactFeatureCopy}>
+                        <small>{feature.number}</small>
+                        <strong>{feature.compactTitle}</strong>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div
+              id="learning-studio-stage"
+              className={styles.stage}
+              data-feature={activeFeature}
+              role="tabpanel"
+              aria-live="polite"
+            >
               <div className={styles.stageTop}>
                 <div>
                   <span className={styles.stageIcon} aria-hidden="true">
@@ -234,7 +295,7 @@ export function WhyChoose() {
                     src={active.image}
                     alt={active.imageAlt}
                     fill
-                    sizes="(max-width: 640px) 92vw, (max-width: 1023px) 82vw, 58vw"
+                    sizes="(max-width: 640px) 92vw, (max-width: 1023px) 86vw, 58vw"
                     className={styles.artworkImage}
                     priority={activeFeature === "projects"}
                   />
