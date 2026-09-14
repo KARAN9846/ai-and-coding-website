@@ -2,6 +2,7 @@ import { AnnouncementBar } from "@/components/layout/announcement-bar/announceme
 import { Navbar } from "@/components/layout/navbar/navbar";
 import { WhyUsHero } from "@/components/why-us/why-us-hero/why-us-hero";
 import { WhyChoose } from "@/components/why-us/why-choose/why-choose";
+import { HowYouLearn } from "@/components/why-us/how-you-learn/how-you-learn";
 import { Enquiry } from "@/components/enquiry/enquiry";
 import { Footer } from "@/components/layout/footer/footer";
 import styles from "./page.module.css";
@@ -14,6 +15,7 @@ export default function WhyUsPage() {
 
       <WhyUsHero />
       <WhyChoose />
+      <HowYouLearn />
       <Enquiry />
       <Footer />
     </main>
