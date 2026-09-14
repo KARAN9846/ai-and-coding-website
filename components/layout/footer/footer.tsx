@@ -1,30 +1,25 @@
 import Link from "next/link";
-import { ArrowRight, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
 import styles from "./footer.module.css";
 
+const PHONE_DISPLAY = "+91 99044 25105";
+const PHONE_HREF = "tel:+919904425105";
+const EMAIL = "nyalkarantechnosoft@gmail.com";
+const WHATSAPP_HREF =
+  "https://wa.me/919904425105?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20%26%20Coding%20learning%20programs.";
+
 const exploreLinks = [
   { label: "Home", href: "/" },
-  { label: "Courses", href: "/#programs-title" },
-  { label: "Why Us", href: "/#why-ai-coding-title" },
-  { label: "About", href: "/#footer-brand" },
+  { label: "Courses", href: "/courses" },
+  { label: "Why Us", href: "/why-us" },
 ];
 
 const programLinks = [
-  { label: "F2P - Fresher to Professional", href: "/#programs-title" },
-  { label: "Skill Development", href: "/#programs-title" },
-  { label: "AI Tools for Creators", href: "/#programs-title" },
-];
-
-const contacts = [
-  { label: "9913006732", href: "tel:+919913006732", icon: Phone },
-  { label: "9727701949", href: "tel:+919727701949", icon: Phone },
-  {
-    label: "nyalkarantechnosoft@gmail.com",
-    href: "mailto:nyalkarantechnosoft@gmail.com",
-    icon: Mail,
-  },
+  { label: "F2P - Fresher to Professional", href: "/courses" },
+  { label: "Skill Development", href: "/courses" },
+  { label: "AI Tools for Creators", href: "/courses" },
 ];
 
 const socials = [
@@ -42,7 +37,7 @@ const socials = [
   },
   {
     label: "Contact AI & Coding on WhatsApp",
-    href: "https://wa.me/919904425105",
+    href: WHATSAPP_HREF,
     icon: FaWhatsapp,
     className: styles.whatsapp,
   },
@@ -51,15 +46,11 @@ const socials = [
 export function Footer() {
   return (
     <footer className={styles.footer} aria-labelledby="footer-brand">
-      <div className={styles.shell}>
-        <div className={styles.grid}>
-          <div className={styles.brandArea}>
-            <div className={styles.brandVisual} aria-hidden="true">
-              <span className={styles.brandOrb} />
-              <span className={styles.brandLine} />
-              <span className={styles.brandDot} />
-            </div>
+      <div className={styles.backgroundGrid} aria-hidden="true" />
 
+      <div className={styles.shell}>
+        <div className={styles.main}>
+          <div className={styles.brandArea}>
             <Link
               href="/"
               className={styles.brand}
@@ -68,15 +59,17 @@ export function Footer() {
               <span className={styles.brandMark} aria-hidden="true">
                 <span className={styles.brandMarkCore} />
               </span>
+
               <span id="footer-brand" className={styles.brandName}>
                 AI <span>&amp;</span> Coding
               </span>
             </Link>
 
             <p className={styles.tagline}>Learn Today. Lead Tomorrow.</p>
+
             <p className={styles.description}>
               Practical AI and coding education built around real projects,
-              expert guidance, and future-ready skills.
+              clear guidance, and skills you can actually use.
             </p>
 
             <div className={styles.socials} aria-label="Social media links">
@@ -92,7 +85,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Icon size={20} aria-hidden="true" />
+                    <Icon size={18} aria-hidden="true" />
                   </a>
                 );
               })}
@@ -110,7 +103,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav className={styles.column} aria-label="Footer programs links">
+          <nav className={styles.column} aria-label="Footer program links">
             <h2>Programs</h2>
             <ul>
               {programLinks.map((link) => (
@@ -122,32 +115,31 @@ export function Footer() {
           </nav>
 
           <div className={`${styles.column} ${styles.contactColumn}`}>
-            <h2>Get in Touch</h2>
-            <ul>
-              {contacts.map((contact) => {
-                const Icon = contact.icon;
+            <h2>Contact</h2>
 
-                return (
-                  <li key={contact.href}>
-                    <a href={contact.href} className={styles.contactLink}>
-                      <Icon size={15} strokeWidth={1.8} aria-hidden="true" />
-                      <span>{contact.label}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className={styles.contactList}>
+              <a href={PHONE_HREF} className={styles.contactLink}>
+                <span
+                  className={`${styles.contactIcon} ${styles.phoneIcon}`}
+                  aria-hidden="true"
+                >
+                  <Phone size={15} strokeWidth={1.9} />
+                </span>
+                <span>{PHONE_DISPLAY}</span>
+              </a>
 
-            <a href="#enquiry" className={styles.cta}>
-              <span>Enquire Now</span>
-              <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
-            </a>
+              <a href={`mailto:${EMAIL}`} className={styles.contactLink}>
+                <span
+                  className={`${styles.contactIcon} ${styles.mailIcon}`}
+                  aria-hidden="true"
+                >
+                  <Mail size={15} strokeWidth={1.9} />
+                </span>
+                <span>{EMAIL}</span>
+              </a>
+            </div>
           </div>
         </div>
-
-        <p className={styles.statement}>
-          Build skills. Create projects. Shape your future.
-        </p>
 
         <div className={styles.bottomBar}>
           <p>&copy; 2026 AI &amp; Coding. All rights reserved.</p>
