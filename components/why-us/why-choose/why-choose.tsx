@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Award,
@@ -110,7 +110,117 @@ const features: Feature[] = [
 
 export function WhyChoose() {
   const motionRef = useAnimationVisibility();
+  const compactSelectorRef = useRef<HTMLDivElement>(null);
+  const selectorInteractedRef = useRef(false);
+
   const [activeFeature, setActiveFeature] = useState<FeatureKey>("projects");
+  const [canScrollForward, setCanScrollForward] = useState(false);
+
+  useEffect(() => {
+    const selector = compactSelectorRef.current;
+
+    if (!selector) {
+      return;
+    }
+
+    const updateScrollHint = () => {
+      const remaining =
+        selector.scrollWidth - selector.clientWidth - selector.scrollLeft;
+
+      setCanScrollForward(remaining > 8);
+    };
+
+    updateScrollHint();
+
+    selector.addEventListener("scroll", updateScrollHint, { passive: true });
+    window.addEventListener("resize", updateScrollHint);
+
+    return () => {
+      selector.removeEventListener("scroll", updateScrollHint);
+      window.removeEventListener("resize", updateScrollHint);
+    };
+  }, []);
+
+  useEffect(() => {
+    const selector = compactSelectorRef.current;
+
+    if (!selector || typeof window === "undefined") {
+      return;
+    }
+
+    const isCompact = window.matchMedia("(max-width: 1023px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!isCompact || prefersReducedMotion) {
+      return;
+    }
+
+    const storageKey = "learning-studio-selector-hint-seen";
+
+    try {
+      if (window.sessionStorage.getItem(storageKey)) {
+        return;
+      }
+    } catch {
+      // Storage can be unavailable in stricter privacy modes.
+    }
+
+    let returnTimer: number | undefined;
+
+    const hintTimer = window.setTimeout(() => {
+      if (selectorInteractedRef.current) {
+        return;
+      }
+
+      const maxScroll = selector.scrollWidth - selector.clientWidth;
+
+      if (maxScroll <= 12) {
+        return;
+      }
+
+      try {
+        window.sessionStorage.setItem(storageKey, "true");
+      } catch {
+        // The visual hint should still work even when storage is blocked.
+      }
+
+      selector.scrollTo({
+        left: Math.min(14, maxScroll),
+        behavior: "smooth",
+      });
+
+      returnTimer = window.setTimeout(() => {
+        if (!selectorInteractedRef.current) {
+          selector.scrollTo({ left: 0, behavior: "smooth" });
+        }
+      }, 420);
+    }, 700);
+
+    return () => {
+      window.clearTimeout(hintTimer);
+
+      if (returnTimer) {
+        window.clearTimeout(returnTimer);
+      }
+    };
+  }, []);
+
+  const scrollSelectorForward = () => {
+    const selector = compactSelectorRef.current;
+
+    if (!selector) {
+      return;
+    }
+
+    selectorInteractedRef.current = true;
+
+    selector.scrollBy({
+      left: Math.max(selector.clientWidth * 0.62, 120),
+      behavior: "smooth",
+    });
+  };
 
   const active =
     features.find((feature) => feature.key === activeFeature) ?? features[0];
@@ -223,11 +333,18 @@ export function WhyChoose() {
             </div>
 
             {/* Tablet / mobile horizontal selector. It stays reachable while the stage scrolls. */}
-            <div className={styles.compactSelectorShell}>
+            <div
+              className={styles.compactSelectorShell}
+              data-can-scroll={canScrollForward ? "true" : "false"}
+            >
               <div
+                ref={compactSelectorRef}
                 className={styles.compactSelector}
                 role="tablist"
                 aria-label="Learning Studio experiences"
+                onPointerDown={() => {
+                  selectorInteractedRef.current = true;
+                }}
               >
                 {features.map((feature) => {
                   const Icon = feature.icon;
@@ -244,7 +361,16 @@ export function WhyChoose() {
                       }`}
                       aria-selected={isActive}
                       aria-controls="learning-studio-stage"
-                      onClick={() => setActiveFeature(feature.key)}
+                      onClick={(event) => {
+                        selectorInteractedRef.current = true;
+                        setActiveFeature(feature.key);
+
+                        event.currentTarget.scrollIntoView({
+                          behavior: "smooth",
+                          block: "nearest",
+                          inline: "center",
+                        });
+                      }}
                     >
                       <span
                         className={styles.compactFeatureIcon}
@@ -261,6 +387,21 @@ export function WhyChoose() {
                   );
                 })}
               </div>
+
+              {canScrollForward && (
+                <button
+                  type="button"
+                  className={styles.selectorScrollHint}
+                  onClick={scrollSelectorForward}
+                  aria-label="Show more learning experiences"
+                >
+                  <ChevronRight
+                    size={18}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                </button>
+              )}
             </div>
 
             <div
