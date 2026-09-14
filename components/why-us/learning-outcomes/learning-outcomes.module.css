@@ -1,0 +1,1146 @@
+.section {
+  --section-bg: #050914;
+
+  --surface: rgba(12, 20, 39, 0.72);
+  --surface-hover: rgba(14, 24, 47, 0.9);
+
+  --border: rgba(126, 164, 244, 0.12);
+
+  --text-primary: #f5f8ff;
+  --text-secondary: #aeb9cd;
+  --text-muted: #78849b;
+
+  --accent: #5b9dff;
+  --grid-line: rgba(113, 159, 255, 0.045);
+
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+
+  /*
+   * Keep the transition from Learning Support compact.
+   */
+  padding: clamp(2.75rem, 3.5vw, 3.5rem) 0 clamp(4rem, 5vw, 5.25rem);
+
+  color: var(--text-primary);
+
+  background:
+    radial-gradient(
+      circle at 50% 55%,
+      rgba(48, 105, 230, 0.09),
+      transparent 38rem
+    ),
+    var(--section-bg);
+}
+
+/* ============================================================
+   LIGHT THEME
+   ============================================================ */
+
+:global(.light) .section,
+:global([data-theme="light"]) .section {
+  --section-bg: #f7faff;
+
+  --surface: rgba(255, 255, 255, 0.76);
+  --surface-hover: rgba(255, 255, 255, 0.96);
+
+  --border: rgba(41, 84, 150, 0.11);
+
+  --text-primary: #101a30;
+  --text-secondary: #5c6a81;
+  --text-muted: #8791a5;
+
+  --accent: #3178ee;
+  --grid-line: rgba(45, 102, 190, 0.045);
+
+  background:
+    radial-gradient(
+      circle at 50% 55%,
+      rgba(70, 137, 255, 0.075),
+      transparent 38rem
+    ),
+    var(--section-bg);
+}
+
+/* ============================================================
+   BACKGROUND
+   ============================================================ */
+
+.backgroundGrid {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+
+  background-size: 64px 64px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 9%,
+    black 91%,
+    transparent
+  );
+}
+
+.backgroundGlow {
+  position: absolute;
+  z-index: -2;
+
+  top: 38%;
+  left: 50%;
+
+  width: min(980px, 86vw);
+  height: 620px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 42% 46%,
+      rgba(36, 146, 255, 0.1),
+      transparent 43%
+    ),
+    radial-gradient(
+      circle at 64% 48%,
+      rgba(132, 77, 255, 0.055),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 62% 68%,
+      rgba(31, 202, 159, 0.045),
+      transparent 42%
+    );
+
+  filter: blur(28px);
+
+  pointer-events: none;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.container {
+  width: min(1260px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* ============================================================
+   HEADING
+   ============================================================ */
+
+.heading {
+  width: min(800px, 100%);
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  margin-bottom: 16px;
+
+  color: var(--accent);
+
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.17em;
+}
+
+.eyebrowLine {
+  width: 38px;
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
+.eyebrowLine:last-child {
+  transform: scaleX(-1);
+}
+
+.heading h2 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: clamp(2.35rem, 3.6vw, 3.6rem);
+  font-weight: 760;
+  line-height: 1;
+  letter-spacing: -0.052em;
+}
+
+.heading h2 span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--accent);
+}
+
+.heading > p {
+  width: min(650px, 100%);
+  margin: 18px auto 0;
+
+  color: var(--text-secondary);
+
+  font-size: clamp(0.94rem, 1vw, 1rem);
+  line-height: 1.62;
+}
+
+/* ============================================================
+   CAPABILITY STAGE
+   IMPORTANT:
+   No giant enclosing card.
+   ============================================================ */
+
+.outcomesStage {
+  position: relative;
+
+  width: 100%;
+  margin-top: clamp(2.3rem, 3vw, 3rem);
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(260px, 0.9fr)
+    minmax(500px, 1.55fr)
+    minmax(260px, 0.9fr);
+
+  grid-template-rows:
+    minmax(190px, 1fr)
+    minmax(190px, 1fr);
+
+  grid-template-areas:
+    "skills visual projects"
+    "problem visual career";
+
+  column-gap: clamp(24px, 2.2vw, 34px);
+  row-gap: 24px;
+
+  align-items: center;
+
+  min-height: 540px;
+}
+
+/*
+ * Very subtle atmosphere only.
+ * This is NOT a container/card.
+ */
+.outcomesStage::before {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+
+  top: 50%;
+  left: 50%;
+
+  width: min(820px, 64vw);
+  height: 470px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(63, 116, 236, 0.075),
+    rgba(86, 81, 202, 0.025) 48%,
+    transparent 72%
+  );
+
+  filter: blur(20px);
+
+  pointer-events: none;
+}
+
+/* ============================================================
+   SLOTS
+   ============================================================ */
+
+.skillsSlot {
+  grid-area: skills;
+
+  align-self: end;
+
+  transform: translate(0, 8px);
+}
+
+.projectsSlot {
+  grid-area: projects;
+
+  align-self: end;
+
+  transform: translate(0, 8px);
+}
+
+.problemSolvingSlot {
+  grid-area: problem;
+
+  align-self: start;
+
+  transform: translate(0, -8px);
+}
+
+.careerSlot {
+  grid-area: career;
+
+  align-self: start;
+
+  transform: translate(0, -8px);
+}
+
+.visualSlot {
+  grid-area: visual;
+
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+
+  align-self: center;
+}
+
+/* ============================================================
+   OUTCOME COLORS
+   ============================================================ */
+
+.skills {
+  --outcome-rgb: 39, 159, 255;
+  --outcome-color: #2dafff;
+
+  --outcome-start: #27c0f4;
+  --outcome-end: #2875ed;
+}
+
+.projects {
+  --outcome-rgb: 139, 82, 255;
+  --outcome-color: #9c6cff;
+
+  --outcome-start: #a957f2;
+  --outcome-end: #6846e8;
+}
+
+.problemSolving {
+  --outcome-rgb: 255, 153, 31;
+  --outcome-color: #ffa01f;
+
+  --outcome-start: #ffad24;
+  --outcome-end: #ed700d;
+}
+
+.career {
+  --outcome-rgb: 35, 205, 153;
+  --outcome-color: #29d0a1;
+
+  --outcome-start: #2ad69a;
+  --outcome-end: #0ba7a8;
+}
+
+/* ============================================================
+   OUTCOME PANEL
+   Compact annotation-style treatment.
+   ============================================================ */
+
+.outcomeItem {
+  position: relative;
+  z-index: 4;
+
+  width: 100%;
+  max-width: 310px;
+
+  padding: 16px 18px 17px;
+
+  border: 1px solid rgba(var(--outcome-rgb), 0.16);
+  border-radius: 17px;
+
+  background:
+    linear-gradient(145deg, rgba(var(--outcome-rgb), 0.05), transparent 62%),
+    rgba(10, 18, 36, 0.88);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 14px 34px rgba(0, 0, 0, 0.045);
+
+  backdrop-filter: blur(8px);
+
+  min-height: 150px;
+
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms ease,
+    background-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+/*
+ * Tiny stage-colored accent.
+ * Avoids making the whole panel glow.
+ */
+.outcomeItem::before {
+  content: "";
+
+  position: absolute;
+
+  top: -1px;
+  left: 22px;
+
+  width: 68px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--outcome-color),
+    transparent
+  );
+
+  opacity: 0.68;
+
+  pointer-events: none;
+}
+
+:global(.light) .outcomeItem,
+:global([data-theme="light"]) .outcomeItem {
+  background:
+    linear-gradient(145deg, rgba(var(--outcome-rgb), 0.04), transparent 62%),
+    rgba(255, 255, 255, 0.93);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 14px 30px rgba(31, 68, 124, 0.045);
+}
+
+/* ============================================================
+   OUTCOME TOP
+   ============================================================ */
+
+.outcomeTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   OUTCOME ICON
+   ============================================================ */
+
+.outcomeIcon {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 auto;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 13px;
+
+  color: #fff;
+
+  background: linear-gradient(145deg, var(--outcome-start), var(--outcome-end));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.11),
+    0 9px 20px rgba(var(--outcome-rgb), 0.16);
+
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms ease;
+}
+
+.outcomeIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================================
+   OUTCOME LABEL
+   ============================================================ */
+
+.outcomeLabel {
+  display: block;
+
+  min-width: 0;
+
+  color: var(--outcome-color);
+
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+
+  line-height: 1.35;
+}
+
+/* ============================================================
+   OUTCOME CONTENT
+   ============================================================ */
+
+.outcomeContent {
+  min-width: 0;
+}
+
+.outcomeContent h3 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: clamp(1.08rem, 1.15vw, 1.2rem);
+  font-weight: 720;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+
+  transition: color 240ms ease;
+}
+
+.outcomeContent p {
+  margin: 6px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   OUTCOME HOVER
+   ============================================================ */
+
+@media (hover: hover) and (pointer: fine) {
+  .outcomeItem:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(var(--outcome-rgb), 0.24);
+
+    background:
+      linear-gradient(145deg, rgba(var(--outcome-rgb), 0.065), transparent 60%),
+      var(--surface-hover);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.045),
+      0 16px 36px rgba(0, 0, 0, 0.07),
+      0 0 24px rgba(var(--outcome-rgb), 0.035);
+  }
+
+  .outcomeItem:hover .outcomeIcon {
+    transform: translateY(-2px) scale(1.035);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      0 11px 24px rgba(var(--outcome-rgb), 0.24),
+      0 0 18px rgba(var(--outcome-rgb), 0.08);
+  }
+
+  .outcomeItem:hover .outcomeContent h3 {
+    color: var(--outcome-color);
+  }
+}
+
+/* ============================================================
+   CENTRAL IMAGE
+   This is intentionally the visual hero.
+   ============================================================ */
+
+.visual {
+  position: relative;
+
+  width: min(100%, 600px);
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * Atmospheric color sits behind the PNG instead of wrapping
+ * the image in another card.
+ */
+.visualAmbient {
+  position: absolute;
+  z-index: -1;
+
+  top: 51%;
+  left: 50%;
+
+  width: 74%;
+  height: 64%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 33% 43%,
+      rgba(42, 159, 255, 0.14),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 64% 37%,
+      rgba(139, 82, 255, 0.105),
+      transparent 43%
+    ),
+    radial-gradient(
+      circle at 40% 67%,
+      rgba(255, 145, 26, 0.06),
+      transparent 39%
+    ),
+    radial-gradient(
+      circle at 70% 66%,
+      rgba(35, 205, 153, 0.075),
+      transparent 41%
+    );
+
+  filter: blur(27px);
+
+  opacity: 0.62;
+
+  pointer-events: none;
+}
+
+.outcomeImage {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  transform: translateZ(0);
+
+  filter: drop-shadow(0 22px 35px rgba(0, 0, 0, 0.13))
+    drop-shadow(0 0 26px rgba(64, 119, 255, 0.035));
+
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 320ms ease;
+}
+
+:global(.light) .outcomeImage,
+:global([data-theme="light"]) .outcomeImage {
+  filter: drop-shadow(0 20px 30px rgba(36, 68, 116, 0.1))
+    drop-shadow(0 0 20px rgba(70, 127, 229, 0.03));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .visual:hover .outcomeImage {
+    transform: translateY(-4px) scale(1.008);
+
+    filter: drop-shadow(0 25px 39px rgba(0, 0, 0, 0.15))
+      drop-shadow(0 0 30px rgba(64, 119, 255, 0.05));
+  }
+}
+
+/* ============================================================
+   MEDIUM DESKTOP
+   1100px → 1279px
+   ============================================================ */
+
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .container {
+    width: calc(100% - 40px);
+  }
+
+  .outcomesStage {
+    grid-template-columns:
+      minmax(230px, 0.86fr)
+      minmax(470px, 1.5fr)
+      minmax(230px, 0.86fr);
+
+    column-gap: 18px;
+    row-gap: 20px;
+
+    min-height: 510px;
+  }
+
+  .visual {
+    width: min(100%, 560px);
+  }
+
+  .outcomeItem {
+    max-width: 285px;
+
+    padding: 15px 16px 16px;
+  }
+
+  .skillsSlot,
+  .projectsSlot {
+    transform: translateY(6px);
+  }
+
+  .problemSolvingSlot,
+  .careerSlot {
+    transform: translateY(-6px);
+  }
+}
+
+/* ============================================================
+   TABLET
+   768px → 1099px
+
+   Stop surrounding the image.
+   Image becomes the first major visual, outcomes become 2 × 2.
+   ============================================================ */
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .section {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .container {
+    width: min(920px, calc(100% - 40px));
+  }
+
+  .outcomesStage {
+    margin-top: 2.6rem;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-rows:
+      auto
+      auto
+      auto;
+
+    grid-template-areas:
+      "visual visual"
+      "skills projects"
+      "problem career";
+
+    gap: 18px 20px;
+
+    min-height: 0;
+  }
+
+  .outcomesStage::before {
+    top: 26%;
+
+    width: min(700px, 88vw);
+    height: 390px;
+  }
+
+  .visualSlot {
+    width: 100%;
+
+    margin-bottom: 10px;
+  }
+
+  .visual {
+    width: min(600px, 78%);
+  }
+
+  .skillsSlot,
+  .projectsSlot,
+  .problemSolvingSlot,
+  .careerSlot {
+    align-self: stretch;
+
+    transform: none;
+  }
+
+  .outcomeItem {
+    max-width: none;
+    height: 100%;
+
+    padding: 14px 15px 15px;
+  }
+
+  .outcomeContent p {
+    max-width: 34rem;
+  }
+}
+
+/* ============================================================
+   MOBILE / SMALL TABLET
+   <= 767px
+   ============================================================ */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2.75rem 0 4.5rem;
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  /* heading remains centered everywhere */
+
+  .heading {
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+
+    font-size: 0.68rem;
+  }
+
+  .eyebrowLine {
+    width: 28px;
+  }
+
+  .heading h2 {
+    font-size: clamp(2.05rem, 7vw, 2.75rem);
+    line-height: 1.02;
+  }
+
+  .heading h2 span {
+    margin-top: 5px;
+  }
+
+  .heading > p {
+    margin-top: 19px;
+
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* ========================================================
+     STAGE
+     ======================================================== */
+
+  .outcomesStage {
+    margin-top: 2.3rem;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 0;
+
+    gap: 10px;
+  }
+
+  .outcomesStage::before {
+    top: 17%;
+
+    width: 100%;
+    height: 330px;
+  }
+
+  /* Image first */
+
+  .visualSlot {
+    order: 0;
+
+    width: 100%;
+
+    margin-bottom: 10px;
+  }
+
+  .skillsSlot {
+    order: 1;
+  }
+
+  .projectsSlot {
+    order: 2;
+  }
+
+  .problemSolvingSlot {
+    order: 3;
+  }
+
+  .careerSlot {
+    order: 4;
+  }
+
+  .skillsSlot,
+  .projectsSlot,
+  .problemSolvingSlot,
+  .careerSlot {
+    width: 100%;
+
+    transform: none;
+  }
+
+  /* ========================================================
+     IMAGE
+     ======================================================== */
+
+  .visual {
+    width: min(100%, 460px);
+  }
+
+  .visualAmbient {
+    width: 94%;
+    height: 79%;
+  }
+
+  .outcomeImage {
+    filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.1))
+      drop-shadow(0 0 18px rgba(64, 119, 255, 0.03));
+  }
+
+  /* ========================================================
+     MOBILE OUTCOME PANELS
+     ======================================================== */
+
+  .outcomeItem {
+    max-width: none;
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "top content";
+
+    gap: 15px;
+
+    padding: 15px 16px;
+
+    border-radius: 18px;
+  }
+
+  .outcomeTop {
+    grid-area: top;
+
+    display: block;
+
+    margin: 0;
+  }
+
+  .outcomeIcon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+  }
+
+  .outcomeIcon svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  /*
+   * On mobile the label moves into the content column
+   * visually via absolute placement inside the top row.
+   */
+  .outcomeLabel {
+    display: none;
+  }
+
+  .outcomeContent {
+    grid-area: content;
+
+    align-self: center;
+  }
+
+  .outcomeContent::before {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--outcome-color);
+
+    font-size: 0.59rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .skills .outcomeContent::before {
+    content: "PRACTICAL SKILLS";
+  }
+
+  .projects .outcomeContent::before {
+    content: "PROJECT EXPERIENCE";
+  }
+
+  .problemSolving .outcomeContent::before {
+    content: "PROBLEM SOLVING";
+  }
+
+  .career .outcomeContent::before {
+    content: "CAREER READINESS";
+  }
+
+  .outcomeContent h3 {
+    font-size: 1.25rem;
+  }
+
+  .outcomeContent p {
+    margin-top: 5px;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================================
+   NARROW MOBILE
+   <= 420px
+   ============================================================ */
+
+@media (max-width: 420px) {
+  .section {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .heading h2 {
+    font-size: clamp(1.95rem, 8.7vw, 2.35rem);
+  }
+
+  .heading > p {
+    font-size: 0.9rem;
+  }
+
+  .outcomesStage {
+    margin-top: 2.4rem;
+
+    gap: 10px;
+  }
+
+  .visualSlot {
+    margin-bottom: 8px;
+  }
+
+  .visual {
+    width: min(100%, 350px);
+  }
+
+  .outcomeItem {
+    grid-template-columns:
+      48px
+      minmax(0, 1fr);
+
+    gap: 13px;
+
+    padding: 14px 12px;
+  }
+
+  .outcomeIcon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+  }
+
+  .outcomeIcon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .outcomeContent h3 {
+    font-size: 1.17rem;
+  }
+
+  .outcomeContent p {
+    font-size: 0.81rem;
+    line-height: 1.55;
+  }
+}
+
+/* ============================================================
+   LARGE DESKTOP
+   >= 1440px
+   ============================================================ */
+
+@media (min-width: 1440px) {
+  .container {
+    width: min(1320px, calc(100% - 64px));
+  }
+
+  .outcomesStage {
+    grid-template-columns:
+      minmax(285px, 0.92fr)
+      minmax(560px, 1.5fr)
+      minmax(285px, 0.92fr);
+
+    min-height: 550px;
+
+    column-gap: 30px;
+    row-gap: 26px;
+  }
+
+  .visual {
+    width: min(100%, 630px);
+  }
+
+  .outcomeItem {
+    max-width: 320px;
+  }
+
+  .skillsSlot,
+  .projectsSlot {
+    transform: translateY(6px);
+  }
+
+  .problemSolvingSlot,
+  .careerSlot {
+    transform: translateY(-6px);
+  }
+}
+
+/* ============================================================
+   EXTRA LARGE DESKTOP
+   >= 1800px
+   ============================================================ */
+
+@media (min-width: 1800px) {
+  .container {
+    width: min(1380px, calc(100% - 72px));
+  }
+
+  .outcomesStage {
+    grid-template-columns:
+      310px
+      minmax(590px, 660px)
+      310px;
+
+    justify-content: center;
+
+    min-height: 565px;
+
+    column-gap: 38px;
+  }
+
+  .visual {
+    width: min(100%, 650px);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .outcomeItem,
+  .outcomeIcon,
+  .outcomeContent h3,
+  .outcomeImage {
+    transition: none;
+  }
+
+  .outcomeItem:hover,
+  .outcomeItem:hover .outcomeIcon,
+  .visual:hover .outcomeImage {
+    transform: none;
+  }
+}
