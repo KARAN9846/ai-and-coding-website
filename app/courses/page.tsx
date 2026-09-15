@@ -3,7 +3,7 @@ import { CoursesHero } from "@/components/courses/courses-hero/courses-hero";
 import { F2PJourney } from "@/components/courses/f2p-journey/f2p-journey";
 import { LearningPaths } from "@/components/courses/learning-paths/learning-paths";
 import { SkillDevelopment } from "@/components/courses/skill-development/skill-development";
-import { Enquiry } from "@/components/enquiry/enquiry";
+import { EnquiryCta } from "@/components/enquiry-cta/enquiry-cta";
 import { Footer } from "@/components/layout/footer/footer";
 import { Navbar } from "@/components/layout/navbar/navbar";
 
@@ -18,7 +18,7 @@ export default function CoursesPage() {
       <LearningPaths />
       <F2PJourney />
       <SkillDevelopment />
-      <Enquiry />
+      <EnquiryCta />
       <Footer />
     </main>
   );

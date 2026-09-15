@@ -1,0 +1,171 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  padding: clamp(46px, 6vw, 70px) 0 clamp(30px, 4vw, 42px);
+
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.shell {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--foreground) 2.3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 2.3%, transparent) 1px,
+      transparent 1px
+    );
+
+  background-size: 76px 76px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.72) 52%,
+    transparent 100%
+  );
+
+  opacity: 0.52;
+}
+
+.glow {
+  position: absolute;
+  z-index: -2;
+
+  top: -170px;
+  left: 50%;
+
+  width: min(760px, 82vw);
+  height: 360px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 44% 48%,
+      color-mix(in srgb, var(--primary) 12%, transparent),
+      transparent 46%
+    ),
+    radial-gradient(
+      circle at 66% 54%,
+      color-mix(in srgb, var(--cyan) 7%, transparent),
+      transparent 42%
+    );
+
+  filter: blur(42px);
+
+  pointer-events: none;
+}
+
+.content {
+  max-width: 760px;
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--primary);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.content h1 {
+  margin: 13px 0 0;
+
+  color: var(--foreground);
+
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 780;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.content h1 span {
+  color: var(--primary);
+}
+
+.content > p {
+  max-width: 610px;
+
+  margin: 15px auto 0;
+
+  color: var(--foreground-secondary);
+
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    width: min(820px, calc(100% - 36px));
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 42px 0 30px;
+  }
+
+  .shell {
+    width: calc(100% - 28px);
+  }
+
+  .content {
+    margin: 0;
+    text-align: left;
+  }
+
+  .content h1 {
+    max-width: 500px;
+
+    font-size: clamp(34px, 10.5vw, 46px);
+  }
+
+  .content > p {
+    max-width: 520px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .shell {
+    width: calc(100% - 20px);
+  }
+
+  .hero {
+    padding-top: 36px;
+  }
+
+  .content h1 {
+    font-size: clamp(32px, 10.8vw, 40px);
+  }
+
+  .content > p {
+    font-size: 13px;
+  }
+}

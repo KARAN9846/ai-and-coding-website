@@ -5,7 +5,7 @@ import { WhyChoose } from "@/components/why-us/why-choose/why-choose";
 import { HowYouLearn } from "@/components/why-us/how-you-learn/how-you-learn";
 import { LearningSupport } from "@/components/why-us/learning-support/learning-support";
 import { LearningOutcomes } from "@/components/why-us/learning-outcomes/learning-outcomes";
-import { Enquiry } from "@/components/enquiry/enquiry";
+import { EnquiryCta } from "@/components/enquiry-cta/enquiry-cta";
 import { Footer } from "@/components/layout/footer/footer";
 import styles from "./page.module.css";
 
@@ -20,7 +20,7 @@ export default function WhyUsPage() {
       <HowYouLearn />
       <LearningSupport />
       <LearningOutcomes />
-      <Enquiry />
+      <EnquiryCta />
       <Footer />
     </main>
   );

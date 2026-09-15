@@ -4,7 +4,7 @@ import { Hero } from "@/components/home/hero/hero";
 import { ChoosePath } from "@/components/home/choose-path/choose-path";
 import { Programs } from "@/components/home/programs/programs";
 import { WhyAiCoding } from "@/components/home/why-ai-coding/why-ai-coding";
-import { Enquiry } from "@/components/enquiry/enquiry";
+import { EnquiryCta } from "@/components/enquiry-cta/enquiry-cta";
 import { Footer } from "@/components/layout/footer/footer";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <ChoosePath />
       <Programs />
       <WhyAiCoding />
-      <Enquiry />
+      <EnquiryCta />
       <Footer />
     </main>
   );

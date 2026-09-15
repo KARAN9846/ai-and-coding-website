@@ -5,9 +5,9 @@ import { ArrowRight, MessageSquareText, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
 import { useAnimationVisibility } from "../motion/use-animation-visibility";
-import styles from "./enquiry.module.css";
+import styles from "./enquiry-cta.module.css";
 
-type EnquiryProps = {
+type EnquiryCtaProps = {
   eyebrow?: string;
   title?: string;
   highlight?: string;
@@ -19,12 +19,12 @@ const PHONE_HREF = "tel:+919904425105";
 const WHATSAPP_HREF =
   "https://wa.me/919904425105?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20%26%20Coding%20learning%20programs.";
 
-export function Enquiry({
+export function EnquiryCta({
   eyebrow = "READY TO START?",
   title = "Let’s Talk About",
   highlight = "What You Want to Build.",
   description = "Tell us your goal, ask your questions, and get a clear idea of the most practical next step for you.",
-}: EnquiryProps) {
+}: EnquiryCtaProps) {
   const motionRef = useAnimationVisibility();
 
   return (

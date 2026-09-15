@@ -98,7 +98,7 @@ export function Navbar() {
           <div className={styles.desktopNavigation}>
             <div className={styles.navLinks}>
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href}
                   className={`${styles.navLink} ${
@@ -106,7 +106,7 @@ export function Navbar() {
                   }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -134,11 +134,10 @@ export function Navbar() {
                 />
               </button>
 
-              <a href="#enquiry" className={styles.enquireButton}>
+              <Link href="/enquiry" className={styles.enquireButton}>
                 <span>Enquire Now</span>
-
                 <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -197,7 +196,7 @@ export function Navbar() {
           <div className={styles.mobileMenuInner}>
             <div className={styles.mobileLinks}>
               {navigation.map((item, index) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href}
                   className={`${styles.mobileLink} ${
@@ -209,22 +208,20 @@ export function Navbar() {
                   }}
                 >
                   <span>{item.label}</span>
-
                   <ArrowRight size={18} strokeWidth={1.7} aria-hidden="true" />
-                </a>
+                </Link>
               ))}
             </div>
 
             <div className={styles.mobileMenuFooter}>
-              <a
-                href="#enquiry"
+              <Link
+                href="/enquiry"
                 className={styles.mobileEnquireButton}
                 onClick={closeMenu}
               >
                 <span>Enquire Now</span>
-
                 <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
-              </a>
+              </Link>
 
               <p>Learn Today. Lead Tomorrow.</p>
             </div>
