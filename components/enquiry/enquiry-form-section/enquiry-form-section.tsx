@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { InstitutionForm } from "../institution-form/institution-form";
 import { LearnerForm } from "../learner-form/learner-form";
 import { useState } from "react";
 import {
@@ -252,11 +253,9 @@ export function EnquiryFormSection() {
             </div>
           </div>
         </div>
-        {type === "learner" ? (
-          <div className={styles.formSlot}>
-            <LearnerForm />
-          </div>
-        ) : null}
+        <div className={styles.formSlot}>
+          {type === "learner" ? <LearnerForm /> : <InstitutionForm />}
+        </div>
       </div>
     </section>
   );

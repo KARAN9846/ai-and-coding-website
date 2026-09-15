@@ -1,0 +1,1253 @@
+.section {
+  --form-violet: #9565ed;
+  --form-purple: #6f4cdd;
+  --form-orange: #ef9a52;
+  --form-cyan: #3cc4e5;
+  --form-teal: #28bfa9;
+  --form-blue: #668bf0;
+  --form-danger: #ff777f;
+  --form-control: color-mix(in srgb, var(--surface-elevated) 74%, #302b62);
+  --form-menu: color-mix(in srgb, var(--surface-elevated) 88%, #312b63);
+
+  position: relative;
+  overflow: visible;
+  border: 1px solid color-mix(in srgb, var(--form-violet) 24%, var(--border));
+  border-radius: 25px;
+  background:
+    radial-gradient(
+      circle at 4% 5%,
+      color-mix(in srgb, var(--form-violet) 9%, transparent),
+      transparent 29%
+    ),
+    color-mix(in srgb, var(--surface-elevated) 91%, #211d4b);
+  box-shadow:
+    0 24px 60px color-mix(in srgb, var(--shadow-color) 23%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 7%, transparent);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(275px, 0.72fr) minmax(0, 1.65fr);
+  min-width: 0;
+}
+
+.introPanel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  padding: clamp(28px, 3vw, 36px);
+  border-right: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+  border-radius: 24px 0 0 24px;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      color-mix(in srgb, var(--form-violet) 17%, transparent),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 18% 88%,
+      color-mix(in srgb, var(--form-orange) 10%, transparent),
+      transparent 31%
+    ),
+    color-mix(in srgb, var(--surface-elevated) 54%, #251f52);
+}
+
+.introIcon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #aa69ee, #754cdc 67%, #e58b54);
+  box-shadow:
+    0 13px 28px rgba(111, 76, 221, 0.27),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: color-mix(in srgb, var(--form-violet) 72%, var(--form-cyan));
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+}
+
+.introPanel h3 {
+  max-width: 335px;
+  margin: 10px 0 0;
+  color: var(--foreground);
+  font-size: clamp(30px, 3vw, 39px);
+  font-weight: 790;
+  line-height: 1.07;
+  letter-spacing: -0.045em;
+}
+
+.introCopy {
+  max-width: 340px;
+  margin: 15px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.trustList {
+  display: grid;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.trustList span {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: fit-content;
+  color: var(--foreground-secondary);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.trustList svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--form-teal);
+}
+
+.trustList span:first-child svg {
+  color: var(--form-orange);
+}
+
+.introAccent {
+  position: absolute;
+  z-index: -1;
+  right: 26px;
+  bottom: 28px;
+  width: 98px;
+  height: 98px;
+  border: 1px solid color-mix(in srgb, var(--form-violet) 20%, transparent);
+  border-radius: 22px;
+  opacity: 0.72;
+  transform: rotate(12deg);
+}
+
+.introAccent::before,
+.introAccent::after {
+  content: "";
+  position: absolute;
+  inset: 17px;
+  border: inherit;
+  border-radius: 16px;
+}
+
+.introAccent::after {
+  inset: 34px;
+  border-radius: 9px;
+}
+
+.introAccent span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--form-orange);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--form-orange) 58%, transparent);
+}
+
+.introAccent span:nth-child(1) {
+  top: 13px;
+  left: 20px;
+}
+
+.introAccent span:nth-child(2) {
+  top: 48px;
+  right: 11px;
+  background: var(--form-cyan);
+}
+
+.introAccent span:nth-child(3) {
+  bottom: 7px;
+  left: 43px;
+  background: var(--form-violet);
+}
+
+.form {
+  position: relative;
+  min-width: 0;
+  padding: clamp(26px, 2.7vw, 32px);
+}
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.formGroup {
+  min-width: 0;
+}
+
+.groupHeading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.groupHeading > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--form-violet);
+  background: color-mix(in srgb, var(--form-violet) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--form-violet) 18%, transparent);
+}
+
+.groupHeading > span.orangeHeadingIcon {
+  color: var(--form-orange);
+  background: color-mix(in srgb, var(--form-orange) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--form-orange) 18%, transparent);
+}
+
+.groupHeading > span.cyanHeadingIcon {
+  color: var(--form-cyan);
+  background: color-mix(in srgb, var(--form-cyan) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--form-cyan) 18%, transparent);
+}
+
+.groupHeading > span.tealHeadingIcon {
+  color: var(--form-teal);
+  background: color-mix(in srgb, var(--form-teal) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--form-teal) 18%, transparent);
+}
+
+.groupHeading h4 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 16px;
+  font-weight: 790;
+  line-height: 1.25;
+}
+
+.groupHeading p {
+  margin: 2px 0 0;
+  color: var(--foreground-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.groupDivider {
+  height: 1px;
+  margin: 20px 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--form-violet) 20%, transparent),
+    color-mix(in srgb, var(--foreground) 4%, transparent)
+  );
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  min-width: 0;
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+}
+
+.field > label {
+  width: fit-content;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.label > span {
+  color: var(--form-danger);
+}
+
+.controlWrap {
+  position: relative;
+  min-width: 0;
+}
+
+.field input,
+.field textarea,
+.selectButton {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  border-radius: 12px;
+  outline: none;
+  color: var(--foreground);
+  background: var(--form-control);
+  font: inherit;
+  font-size: 14px;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field input,
+.selectButton {
+  height: 49px;
+  padding: 0 42px 0 14px;
+}
+
+.field textarea {
+  min-height: 108px;
+  padding: 13px 42px 13px 14px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in srgb, var(--foreground) 42%, transparent);
+  opacity: 1;
+}
+
+.field input:hover,
+.field textarea:hover,
+.selectButton:hover,
+.phoneControl:hover {
+  border-color: color-mix(in srgb, var(--form-violet) 42%, var(--border-strong));
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible,
+.selectButton:focus-visible,
+.phoneControl:focus-within {
+  border-color: color-mix(in srgb, var(--form-cyan) 50%, var(--form-violet));
+  background: color-mix(in srgb, var(--form-control) 86%, #403574);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--form-violet) 17%, transparent);
+}
+
+.leadingIcon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: color-mix(in srgb, var(--foreground) 50%, transparent);
+  pointer-events: none;
+}
+
+.field input.withLeadingIcon {
+  padding-left: 40px;
+}
+
+.phoneControl {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  height: 49px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  border-radius: 12px;
+  background: var(--form-control);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.phonePrefix {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 6px;
+  padding: 0 12px;
+  border-right: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  color: var(--foreground-secondary);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.phonePrefix svg {
+  color: var(--form-violet);
+}
+
+.phoneControl input {
+  height: 47px;
+  padding-left: 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.phoneControl input:hover,
+.phoneControl input:focus-visible {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.validMark {
+  display: inline-grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: #ffffff;
+  background: var(--success);
+  box-shadow: 0 4px 11px color-mix(in srgb, var(--success) 22%, transparent);
+}
+
+.controlWrap > .validMark,
+.phoneControl > .validMark {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.controlWrap:has(textarea) > .validMark {
+  top: 12px;
+  transform: none;
+}
+
+.field .invalidControl,
+.phoneControl.invalidControl,
+.selectButton.invalidControl {
+  border-color: color-mix(in srgb, var(--form-danger) 70%, var(--border));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--form-danger) 9%, transparent);
+}
+
+.helperText,
+.errorText {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.helperText {
+  color: var(--foreground-muted);
+}
+
+.errorText {
+  color: color-mix(in srgb, var(--form-danger) 85%, var(--foreground));
+  font-weight: 650;
+}
+
+/* Custom dropdowns */
+
+.selectRoot {
+  position: relative;
+  min-width: 0;
+}
+
+.selectOpen {
+  z-index: 30;
+}
+
+.selectButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-left: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.selectButton > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectPlaceholder {
+  color: color-mix(in srgb, var(--foreground) 48%, transparent);
+}
+
+.selectStatus {
+  position: absolute;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  pointer-events: none;
+}
+
+.selectChevron {
+  color: color-mix(in srgb, var(--foreground) 65%, transparent);
+  transition: transform 160ms ease;
+}
+
+.selectOpen .selectButton {
+  border-color: color-mix(in srgb, var(--form-cyan) 48%, var(--form-violet));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--form-violet) 16%, transparent);
+}
+
+.selectOpen .selectChevron {
+  transform: rotate(180deg);
+}
+
+.selectMenu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  max-height: 232px;
+  margin: 0;
+  padding: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid color-mix(in srgb, var(--form-violet) 31%, var(--border-strong));
+  border-radius: 13px;
+  background: var(--form-menu);
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--shadow-color) 48%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 7%, transparent);
+  list-style: none;
+}
+
+.selectMenu li {
+  margin: 0;
+  padding: 0;
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 9px;
+  color: var(--foreground-secondary);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.selectOption span {
+  min-width: 0;
+}
+
+.selectOption svg {
+  flex: 0 0 auto;
+  color: var(--form-cyan);
+}
+
+.selectOptionActive,
+.selectOption[aria-selected="true"] {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--form-violet) 15%, transparent);
+}
+
+/* Interest cards */
+
+.choiceGroup {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choiceGroup legend {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.choiceGroup legend .validMark {
+  width: 18px;
+  height: 18px;
+}
+
+.interestGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
+  gap: 9px;
+}
+
+.choiceCard {
+  --choice-color: var(--form-violet);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 18px;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  min-height: 66px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 13%, transparent);
+  border-radius: 12px;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--form-control) 89%, transparent);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.checkboxInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.choiceCard:focus-within {
+  outline: 2px solid var(--form-cyan);
+  outline-offset: 2px;
+}
+
+.choiceIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--choice-color);
+  background: color-mix(in srgb, var(--choice-color) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--choice-color) 18%, transparent);
+}
+
+.choiceCopy {
+  min-width: 0;
+}
+
+.choiceCopy strong {
+  display: block;
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 770;
+  line-height: 1.3;
+}
+
+.checkboxMark {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 27%, transparent);
+  border-radius: 5px;
+  color: #ffffff;
+  background: color-mix(in srgb, var(--background) 36%, transparent);
+}
+
+.choiceSelected {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--choice-color) 63%, var(--border));
+  background: color-mix(in srgb, var(--choice-color) 10%, var(--form-control));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--choice-color) 10%, transparent),
+    0 8px 20px color-mix(in srgb, var(--choice-color) 9%, transparent);
+}
+
+.choiceSelected .checkboxMark {
+  border-color: var(--choice-color);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--choice-color) 76%, white),
+    var(--choice-color)
+  );
+}
+
+.choiceGroup[aria-invalid="true"] .choiceCard {
+  border-color: color-mix(in srgb, var(--form-danger) 43%, var(--border));
+}
+
+.choiceGroup > .errorText {
+  margin-top: 7px;
+}
+
+.interestOrange {
+  --choice-color: #efa04e;
+}
+
+.interestCyan {
+  --choice-color: #3ec4e5;
+}
+
+.interestViolet {
+  --choice-color: #a36bf0;
+}
+
+.interestTeal {
+  --choice-color: #28bea8;
+}
+
+.interestPurple {
+  --choice-color: #795ce5;
+}
+
+.interestBlue {
+  --choice-color: #668bf0;
+}
+
+.messageMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--foreground-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.messageMeta span:last-child {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.formError {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+  margin-top: 16px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--form-danger) 42%, var(--border));
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--form-danger) 9%, transparent);
+}
+
+.formError > span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: color-mix(in srgb, var(--form-danger) 84%, #ba3545);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.formError p {
+  margin: 2px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.formError a {
+  color: color-mix(in srgb, var(--form-cyan) 62%, var(--form-violet));
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.submitArea {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.submitNote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--foreground-muted);
+  font-size: 11px;
+  font-weight: 680;
+}
+
+.submitNote svg {
+  color: var(--form-teal);
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 18px;
+  border: 1px solid color-mix(in srgb, var(--form-orange) 44%, transparent);
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(100deg, #7044d7, #8954e2 57%, #da7b65 116%);
+  box-shadow:
+    0 12px 27px rgba(115, 75, 216, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  font-size: 13px;
+  font-weight: 810;
+  cursor: pointer;
+  transition:
+    transform 170ms ease,
+    filter 170ms ease,
+    box-shadow 170ms ease,
+    opacity 170ms ease;
+}
+
+.submitButton:focus-visible,
+.successActions a:focus-visible,
+.resetButton:focus-visible {
+  outline: 2px solid var(--form-cyan);
+  outline-offset: 3px;
+}
+
+.submitButton:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.spinner {
+  animation: spin 800ms linear infinite;
+}
+
+/* Success */
+
+.successPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 650px;
+  padding: clamp(34px, 5vw, 54px);
+  text-align: center;
+  animation: successIn 260ms ease both;
+}
+
+.successIcon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #32cc8a, #159f72);
+  box-shadow:
+    0 14px 30px color-mix(in srgb, var(--success) 23%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.successEyebrow {
+  margin: 0;
+  color: color-mix(in srgb, var(--form-violet) 68%, var(--form-cyan));
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.successPanel h4 {
+  margin: 7px 0 0;
+  outline: none;
+  color: var(--foreground);
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 790;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.successCopy {
+  max-width: 570px;
+  margin: 12px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.successCopy strong {
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.successActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.successActions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid color-mix(in srgb, #35cf8f 50%, transparent);
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #21b978, #159d6c);
+  box-shadow: 0 10px 23px rgba(27, 173, 113, 0.18);
+  font-size: 13px;
+  font-weight: 770;
+}
+
+.successActions a.secondaryAction {
+  border-color: color-mix(in srgb, var(--form-violet) 45%, var(--border));
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--form-violet) 10%, var(--form-control));
+  box-shadow: none;
+}
+
+.resetButton {
+  margin-top: 16px;
+  padding: 5px;
+  border: 0;
+  color: var(--foreground-secondary);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Light mode */
+
+:global([data-theme="light"]) .section {
+  --form-control: #f9f7fe;
+  --form-menu: #ffffff;
+
+  border-color: color-mix(in srgb, var(--form-violet) 19%, var(--border-strong));
+  background:
+    radial-gradient(
+      circle at 5% 5%,
+      color-mix(in srgb, var(--form-violet) 7%, transparent),
+      transparent 29%
+    ),
+    #ffffff;
+  box-shadow:
+    0 24px 60px color-mix(in srgb, var(--shadow-color) 27%, transparent),
+    0 7px 22px color-mix(in srgb, var(--form-violet) 4%, transparent),
+    inset 0 1px 0 #ffffff;
+}
+
+:global([data-theme="light"]) .introPanel {
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      color-mix(in srgb, var(--form-violet) 12%, transparent),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 18% 88%,
+      color-mix(in srgb, var(--form-orange) 8%, transparent),
+      transparent 30%
+    ),
+    #faf8ff;
+}
+
+:global([data-theme="light"]) .field input:focus-visible,
+:global([data-theme="light"]) .field textarea:focus-visible,
+:global([data-theme="light"]) .selectButton:focus-visible,
+:global([data-theme="light"]) .phoneControl:focus-within {
+  background: #ffffff;
+}
+
+:global([data-theme="light"]) .choiceCard {
+  background: #faf8ff;
+}
+
+:global([data-theme="light"]) .choiceSelected {
+  background: color-mix(in srgb, var(--choice-color) 7%, #ffffff);
+}
+
+:global([data-theme="light"]) .selectMenu {
+  box-shadow:
+    0 17px 38px rgba(55, 43, 91, 0.17),
+    inset 0 1px 0 #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .choiceCard:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--choice-color) 44%, var(--border));
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--choice-color) 8%, transparent);
+  }
+
+  .submitButton:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow:
+      0 15px 31px rgba(115, 75, 216, 0.31),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  .successActions a:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(265px, 0.68fr) minmax(0, 1.55fr);
+  }
+
+  .introPanel {
+    padding: 28px;
+  }
+
+  .form {
+    padding: 26px;
+  }
+
+  .interestGrid {
+    gap: 8px;
+  }
+
+  .choiceCard {
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .introPanel {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 24px 28px;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+    border-radius: 24px 24px 0 0;
+  }
+
+  .introIcon {
+    grid-row: 1 / 4;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+  }
+
+  .eyebrow,
+  .introPanel h3,
+  .introCopy {
+    grid-column: 2;
+  }
+
+  .introPanel h3 {
+    max-width: 760px;
+    margin-top: 5px;
+    font-size: clamp(27px, 4vw, 34px);
+  }
+
+  .introCopy {
+    max-width: 760px;
+    margin-top: 7px;
+  }
+
+  .trustList {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 15px;
+  }
+
+  .introAccent {
+    display: none;
+  }
+
+  .interestGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .successPanel {
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    border-radius: 21px;
+  }
+
+  .introPanel {
+    padding: 21px 20px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .form {
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fieldsGrid,
+  .interestGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldsGrid {
+    gap: 12px;
+  }
+
+  .interestGrid {
+    gap: 7px;
+  }
+
+  .choiceCard {
+    min-height: 56px;
+  }
+
+  .successPanel {
+    min-height: 400px;
+    padding: 38px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .introPanel {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 19px 16px;
+  }
+
+  .introIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+  }
+
+  .introPanel h3 {
+    font-size: clamp(24px, 7vw, 29px);
+  }
+
+  .introCopy {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .trustList {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .form {
+    padding: 20px 16px;
+  }
+
+  .groupDivider {
+    margin: 18px 0;
+  }
+
+  .choiceCard {
+    grid-template-columns: 32px minmax(0, 1fr) 18px;
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .choiceIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+
+  .choiceCopy strong {
+    font-size: 11.5px;
+  }
+
+  .messageMeta {
+    gap: 8px;
+  }
+
+  .successActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .successActions a {
+    width: 100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field input,
+  .field textarea,
+  .selectButton,
+  .selectChevron,
+  .phoneControl,
+  .choiceCard,
+  .submitButton,
+  .successActions a,
+  .successPanel {
+    transition: none;
+    animation: none;
+  }
+
+  .spinner {
+    animation-duration: 1.5s;
+  }
+
+  .choiceCard:hover,
+  .submitButton:hover,
+  .successActions a:hover {
+    transform: none;
+  }
+}
