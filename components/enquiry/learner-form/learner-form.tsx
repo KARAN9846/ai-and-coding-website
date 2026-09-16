@@ -171,7 +171,8 @@ function CompactSelect({
     }
 
     document.addEventListener("pointerdown", handleOutsidePointer);
-    return () => document.removeEventListener("pointerdown", handleOutsidePointer);
+    return () =>
+      document.removeEventListener("pointerdown", handleOutsidePointer);
   }, [isOpen, onTouched, value]);
 
   function openMenu() {
@@ -275,7 +276,10 @@ function CompactSelect({
         onKeyDown={handleKeyDown}
         onBlur={(event) => {
           const nextFocus = event.relatedTarget;
-          if (!(nextFocus instanceof Node) || !rootRef.current?.contains(nextFocus)) {
+          if (
+            !(nextFocus instanceof Node) ||
+            !rootRef.current?.contains(nextFocus)
+          ) {
             setIsOpen(false);
             onTouched(value);
           }
@@ -343,9 +347,7 @@ export function LearnerForm() {
   }, [success]);
 
   function isValid(field: LearnerField) {
-    return Boolean(
-      touched[field] && values[field].trim() && !errors[field],
-    );
+    return Boolean(touched[field] && values[field].trim() && !errors[field]);
   }
 
   function setFieldError(field: LearnerField, error?: string) {
@@ -385,7 +387,8 @@ export function LearnerForm() {
       if (focusTarget instanceof HTMLElement) {
         focusTarget.focus({ preventScroll: true });
         focusTarget.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
             ? "auto"
             : "smooth",
           block: "center",
@@ -576,7 +579,6 @@ export function LearnerForm() {
                       name="name"
                       type="text"
                       autoComplete="name"
-                      placeholder="Enter your full name"
                       maxLength={80}
                       required
                       value={values.name}
@@ -622,7 +624,6 @@ export function LearnerForm() {
                       type="tel"
                       inputMode="numeric"
                       autoComplete="tel-national"
-                      placeholder="9904425105"
                       maxLength={10}
                       required
                       value={values.phone}
@@ -671,7 +672,6 @@ export function LearnerForm() {
                       name="email"
                       type="email"
                       autoComplete="email"
-                      placeholder="you@example.com"
                       maxLength={254}
                       required
                       value={values.email}
@@ -776,9 +776,7 @@ export function LearnerForm() {
                             updateField("program", event.target.value)
                           }
                           aria-describedby={
-                            errors.program
-                              ? "learner-program-error"
-                              : undefined
+                            errors.program ? "learner-program-error" : undefined
                           }
                         />
                         <span className={styles.choiceIcon} aria-hidden="true">
@@ -813,19 +811,14 @@ export function LearnerForm() {
                   options={LEARNER_EXPERIENCE_LEVELS}
                   error={errors.experience}
                   describedBy={
-                    errors.experience
-                      ? "learner-experience-error"
-                      : undefined
+                    errors.experience ? "learner-experience-error" : undefined
                   }
                   valid={isValid("experience")}
                   onChange={(value) => updateField("experience", value)}
                   onTouched={(value) => handleBlur("experience", value)}
                 />
                 {errors.experience && (
-                  <p
-                    id="learner-experience-error"
-                    className={styles.errorText}
-                  >
+                  <p id="learner-experience-error" className={styles.errorText}>
                     {errors.experience}
                   </p>
                 )}
@@ -984,9 +977,7 @@ export function LearnerForm() {
                   <Send size={17} strokeWidth={1.9} aria-hidden="true" />
                 )}
                 <span>
-                  {isSubmitting
-                    ? "Sending Enquiry..."
-                    : "Send Learner Enquiry"}
+                  {isSubmitting ? "Sending Enquiry..." : "Send Learner Enquiry"}
                 </span>
                 {!isSubmitting && (
                   <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />

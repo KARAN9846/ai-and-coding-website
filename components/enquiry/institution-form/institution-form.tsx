@@ -204,7 +204,8 @@ function CompactSelect({
     }
 
     document.addEventListener("pointerdown", handleOutsidePointer);
-    return () => document.removeEventListener("pointerdown", handleOutsidePointer);
+    return () =>
+      document.removeEventListener("pointerdown", handleOutsidePointer);
   }, [isOpen, onTouched, value]);
 
   function openMenu() {
@@ -362,8 +363,7 @@ function CompactSelect({
 }
 
 export function InstitutionForm() {
-  const [values, setValues] =
-    useState<InstitutionEnquiryValues>(EMPTY_VALUES);
+  const [values, setValues] = useState<InstitutionEnquiryValues>(EMPTY_VALUES);
   const [touched, setTouched] = useState<
     Partial<Record<InstitutionField, boolean>>
   >({});
@@ -381,7 +381,9 @@ export function InstitutionForm() {
 
   function isValid(field: InstitutionField) {
     const value = values[field];
-    const hasValue = Array.isArray(value) ? value.length > 0 : Boolean(value.trim());
+    const hasValue = Array.isArray(value)
+      ? value.length > 0
+      : Boolean(value.trim());
     return Boolean(touched[field] && hasValue && !errors[field]);
   }
 
@@ -394,7 +396,10 @@ export function InstitutionForm() {
     });
   }
 
-  function updateField(field: Exclude<InstitutionField, "interests">, value: string) {
+  function updateField(
+    field: Exclude<InstitutionField, "interests">,
+    value: string,
+  ) {
     setValues((current) => ({ ...current, [field]: value }));
     setFormError(false);
 
@@ -441,7 +446,8 @@ export function InstitutionForm() {
       if (focusTarget instanceof HTMLElement) {
         focusTarget.focus({ preventScroll: true });
         focusTarget.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
             ? "auto"
             : "smooth",
           block: "center",
@@ -542,8 +548,9 @@ export function InstitutionForm() {
           </h3>
           <p className={styles.introCopy}>
             Tell us about your institution, students, and the kind of learning
-            experience you&apos;re planning. We&apos;ll use these details to understand
-            your requirement and discuss the most suitable way forward.
+            experience you&apos;re planning. We&apos;ll use these details to
+            understand your requirement and discuss the most suitable way
+            forward.
           </p>
 
           <div className={styles.trustList} aria-label="Form information">
@@ -576,8 +583,8 @@ export function InstitutionForm() {
             <p className={styles.successCopy}>
               Thanks, {success.contactName}. We&apos;ve received the enquiry
               from {success.institutionName} and sent a confirmation to{" "}
-              <strong>{success.email}</strong>. Our team will review the
-              details and get back to you.
+              <strong>{success.email}</strong>. Our team will review the details
+              and get back to you.
             </p>
 
             <div className={styles.successActions}>
@@ -608,7 +615,9 @@ export function InstitutionForm() {
             aria-busy={isSubmitting}
           >
             <div className={styles.honeypot} aria-hidden="true">
-              <label htmlFor="institution-website">Leave this field empty</label>
+              <label htmlFor="institution-website">
+                Leave this field empty
+              </label>
               <input
                 id="institution-website"
                 name="website"
@@ -692,9 +701,7 @@ export function InstitutionForm() {
                     }
                     valid={isValid("institutionType")}
                     onChange={(value) => updateField("institutionType", value)}
-                    onTouched={(value) =>
-                      handleBlur("institutionType", value)
-                    }
+                    onTouched={(value) => handleBlur("institutionType", value)}
                   />
                   {errors.institutionType && (
                     <p id="institution-type-error" className={styles.errorText}>
@@ -806,7 +813,9 @@ export function InstitutionForm() {
                   <UsersRound size={17} strokeWidth={1.9} />
                 </span>
                 <div>
-                  <h4 id="institution-students-title">Students &amp; Contact</h4>
+                  <h4 id="institution-students-title">
+                    Students &amp; Contact
+                  </h4>
                   <p>The essentials for a useful discussion.</p>
                 </div>
               </div>
@@ -831,12 +840,14 @@ export function InstitutionForm() {
                       type="tel"
                       inputMode="numeric"
                       autoComplete="tel-national"
-                      placeholder="9904425105"
                       maxLength={10}
                       required
                       value={values.phone}
                       onChange={(event) =>
-                        updateField("phone", sanitizeIndianPhone(event.target.value))
+                        updateField(
+                          "phone",
+                          sanitizeIndianPhone(event.target.value),
+                        )
                       }
                       onBlur={(event) =>
                         handleBlur("phone", event.currentTarget.value)
@@ -851,11 +862,17 @@ export function InstitutionForm() {
                     <ValidMark visible={isValid("phone")} />
                   </div>
                   {errors.phone ? (
-                    <p id="institution-phone-error" className={styles.errorText}>
+                    <p
+                      id="institution-phone-error"
+                      className={styles.errorText}
+                    >
                       {errors.phone}
                     </p>
                   ) : (
-                    <p id="institution-phone-help" className={styles.helperText}>
+                    <p
+                      id="institution-phone-help"
+                      className={styles.helperText}
+                    >
                       10 digits without +91
                     </p>
                   )}
@@ -877,7 +894,6 @@ export function InstitutionForm() {
                       name="email"
                       type="email"
                       autoComplete="email"
-                      placeholder="contact@institution.edu"
                       maxLength={254}
                       required
                       value={values.email}
@@ -898,7 +914,10 @@ export function InstitutionForm() {
                     <ValidMark visible={isValid("email")} />
                   </div>
                   {errors.email && (
-                    <p id="institution-email-error" className={styles.errorText}>
+                    <p
+                      id="institution-email-error"
+                      className={styles.errorText}
+                    >
                       {errors.email}
                     </p>
                   )}
@@ -920,7 +939,6 @@ export function InstitutionForm() {
                       name="city"
                       type="text"
                       autoComplete="address-level2"
-                      placeholder="Bharuch, Gujarat"
                       maxLength={100}
                       required
                       value={values.city}
@@ -979,7 +997,9 @@ export function InstitutionForm() {
 
                 <div className={styles.field}>
                   <label htmlFor="institution-student-count">
-                    <RequiredLabel>Approximate Number of Students</RequiredLabel>
+                    <RequiredLabel>
+                      Approximate Number of Students
+                    </RequiredLabel>
                   </label>
                   <CompactSelect
                     id="institution-student-count"
@@ -1118,7 +1138,10 @@ export function InstitutionForm() {
                         <span className={styles.choiceCopy}>
                           <strong>{interest}</strong>
                         </span>
-                        <span className={styles.checkboxMark} aria-hidden="true">
+                        <span
+                          className={styles.checkboxMark}
+                          aria-hidden="true"
+                        >
                           {selected && <Check size={12} strokeWidth={2.8} />}
                         </span>
                       </label>
@@ -1126,7 +1149,10 @@ export function InstitutionForm() {
                   })}
                 </div>
                 {errors.interests && (
-                  <p id="institution-interests-error" className={styles.errorText}>
+                  <p
+                    id="institution-interests-error"
+                    className={styles.errorText}
+                  >
                     {errors.interests}
                   </p>
                 )}
@@ -1151,7 +1177,9 @@ export function InstitutionForm() {
 
               <div className={styles.field}>
                 <label htmlFor="institution-message">
-                  <span className={styles.label}>Tell us what you&apos;re planning</span>
+                  <span className={styles.label}>
+                    Tell us what you&apos;re planning
+                  </span>
                 </label>
                 <div className={styles.controlWrap}>
                   <textarea
@@ -1175,7 +1203,10 @@ export function InstitutionForm() {
                   />
                   <ValidMark visible={isValid("message")} />
                 </div>
-                <div id="institution-message-help" className={styles.messageMeta}>
+                <div
+                  id="institution-message-help"
+                  className={styles.messageMeta}
+                >
                   <span>
                     {errors.message ?? "Share only what feels relevant."}
                   </span>
