@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+
+import { Mail, MapPin, Phone } from "lucide-react";
 import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
 import styles from "./footer.module.css";
@@ -7,6 +8,9 @@ import styles from "./footer.module.css";
 const PHONE_DISPLAY = "+91 99044 25105";
 const PHONE_HREF = "tel:+919904425105";
 const EMAIL = "nyalkarantechnosoft@gmail.com";
+const ADDRESS = "233, Harihar Shopping, Bharuch, Gujarat - 392012";
+const MAP_HREF = "https://maps.app.goo.gl/fbG4f3DzjqQ3CDzVA";
+
 const WHATSAPP_HREF =
   "https://wa.me/919904425105?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20%26%20Coding%20learning%20programs.";
 
@@ -94,6 +98,7 @@ export function Footer() {
 
           <nav className={styles.column} aria-label="Footer explore links">
             <h2>Explore</h2>
+
             <ul>
               {exploreLinks.map((link) => (
                 <li key={link.label}>
@@ -105,6 +110,7 @@ export function Footer() {
 
           <nav className={styles.column} aria-label="Footer program links">
             <h2>Programs</h2>
+
             <ul>
               {programLinks.map((link) => (
                 <li key={link.label}>
@@ -125,6 +131,7 @@ export function Footer() {
                 >
                   <Phone size={15} strokeWidth={1.9} />
                 </span>
+
                 <span>{PHONE_DISPLAY}</span>
               </a>
 
@@ -135,7 +142,28 @@ export function Footer() {
                 >
                   <Mail size={15} strokeWidth={1.9} />
                 </span>
+
                 <span>{EMAIL}</span>
+              </a>
+
+              <a
+                href={MAP_HREF}
+                className={`${styles.contactLink} ${styles.addressLink}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span
+                  className={`${styles.contactIcon} ${styles.addressIcon}`}
+                  aria-hidden="true"
+                >
+                  <MapPin size={15} strokeWidth={1.9} />
+                </span>
+
+                <span className={styles.addressText}>
+                  233, Harihar Shopping,
+                  <br />
+                  Bharuch, Gujarat - 392012
+                </span>
               </a>
             </div>
           </div>

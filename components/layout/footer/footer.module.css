@@ -2,13 +2,9 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-
   padding: clamp(34px, 4vw, 48px) 0 18px;
-
   border-top: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
-
   color: var(--foreground);
-
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--background-secondary) 24%, var(--background)),
@@ -20,9 +16,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-
   pointer-events: none;
-
   background-image:
     linear-gradient(
       color-mix(in srgb, var(--foreground) 2.2%, transparent) 1px,
@@ -33,11 +27,8 @@
       color-mix(in srgb, var(--foreground) 2.2%, transparent) 1px,
       transparent 1px
     );
-
   background-size: 72px 72px;
-
   mask-image: linear-gradient(to bottom, black, transparent 88%);
-
   opacity: 0.42;
 }
 
@@ -57,9 +48,7 @@
     minmax(110px, 0.52fr)
     minmax(205px, 0.82fr)
     minmax(280px, 1fr);
-
   gap: clamp(30px, 4vw, 54px);
-
   padding-bottom: 28px;
 }
 
@@ -76,27 +65,20 @@
   display: inline-flex;
   align-items: center;
   gap: 11px;
-
   width: fit-content;
-
   color: var(--foreground);
   text-decoration: none;
 }
 
 .brandMark {
   position: relative;
-
   display: grid;
   place-items: center;
-
   width: 38px;
   height: 38px;
-
   overflow: hidden;
-
   border: 1px solid color-mix(in srgb, var(--primary) 50%, var(--border));
   border-radius: 12px;
-
   background:
     radial-gradient(
       circle at 35% 30%,
@@ -109,16 +91,13 @@
       transparent 50%
     ),
     var(--surface);
-
   box-shadow: 0 0 20px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .brandMark::before,
 .brandMark::after {
   content: "";
-
   position: absolute;
-
   border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
   border-radius: 50%;
 }
@@ -126,30 +105,23 @@
 .brandMark::before {
   width: 24px;
   height: 24px;
-
   transform: rotate(34deg);
 }
 
 .brandMark::after {
   width: 13px;
   height: 27px;
-
   border-color: color-mix(in srgb, var(--primary) 48%, transparent);
-
   transform: rotate(-34deg);
 }
 
 .brandMarkCore {
   position: relative;
   z-index: 1;
-
   width: 6px;
   height: 6px;
-
   border-radius: 50%;
-
   background: var(--cyan);
-
   box-shadow:
     0 0 6px var(--cyan),
     0 0 12px color-mix(in srgb, var(--cyan) 70%, transparent);
@@ -167,9 +139,7 @@
 
 .tagline {
   margin: 15px 0 0;
-
   color: var(--foreground);
-
   font-size: 17px;
   font-weight: 760;
   letter-spacing: -0.02em;
@@ -177,11 +147,8 @@
 
 .description {
   max-width: 390px;
-
   margin: 8px 0 0;
-
   color: var(--foreground-secondary);
-
   font-size: 13px;
   line-height: 1.58;
 }
@@ -194,25 +161,19 @@
   display: flex;
   align-items: center;
   gap: 9px;
-
   margin-top: 17px;
 }
 
 .socialButton {
   display: grid;
   place-items: center;
-
   width: 40px;
   height: 40px;
-
   border-radius: 50%;
-
   color: #ffffff;
-
   box-shadow:
     0 8px 20px color-mix(in srgb, var(--shadow-color) 24%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
   transition:
     transform 180ms ease,
     filter 180ms ease,
@@ -264,9 +225,7 @@
 
 .column h2 {
   margin: 3px 0 13px;
-
   color: color-mix(in srgb, var(--foreground) 62%, transparent);
-
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -276,10 +235,8 @@
 .column ul {
   display: grid;
   gap: 9px;
-
   margin: 0;
   padding: 0;
-
   list-style: none;
 }
 
@@ -289,11 +246,9 @@
 
 .column a {
   color: var(--foreground-secondary);
-
   font-size: 13px;
   line-height: 1.45;
   text-decoration: none;
-
   transition:
     color 180ms ease,
     transform 180ms ease;
@@ -302,7 +257,6 @@
 @media (hover: hover) and (pointer: fine) {
   .column a:hover {
     color: var(--foreground);
-
     transform: translateX(2px);
   }
 }
@@ -318,30 +272,22 @@
 
 .contactLink {
   min-width: 0;
-
   display: flex;
   align-items: center;
   gap: 9px;
-
   width: fit-content;
   max-width: 100%;
-
   color: var(--foreground-secondary);
 }
 
 .contactIcon {
   display: grid;
   place-items: center;
-
   width: 32px;
   height: 32px;
-
   flex: 0 0 auto;
-
   border-radius: 10px;
-
   color: #ffffff;
-
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
     0 6px 14px color-mix(in srgb, var(--shadow-color) 18%, transparent);
@@ -355,11 +301,26 @@
   background: linear-gradient(145deg, #a75bf2, #6c46e8);
 }
 
+.addressIcon {
+  background: linear-gradient(145deg, #21c7a8, #168f9f);
+}
+
+.addressLink {
+  align-items: flex-start;
+}
+
+.addressText {
+  line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.addressLink > span:last-child {
+  line-height: 1.5;
+}
+
 .contactLink > span:last-child {
   min-width: 0;
-
-  overflow-wrap: anywhere;
-
   font-size: 12px;
 }
 
@@ -383,15 +344,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 18px;
-
   padding-top: 16px;
-
   border-top: 1px solid color-mix(in srgb, var(--foreground) 7%, transparent);
-
   color: var(--foreground-muted);
-
   font-size: 10px;
   line-height: 1.45;
 }
@@ -434,6 +390,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px 24px;
   }
+
+  .addressLink {
+    grid-column: 1 / -1;
+  }
 }
 
 /* ============================================================
@@ -452,7 +412,6 @@
   .main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px 20px;
-
     padding-bottom: 22px;
   }
 
@@ -472,7 +431,6 @@
 
   .tagline {
     margin-top: 13px;
-
     font-size: 16px;
   }
 
@@ -496,9 +454,7 @@
   .bottomBar {
     flex-direction: column;
     align-items: flex-start;
-
     gap: 6px;
-
     padding-top: 14px;
   }
 }
