@@ -136,19 +136,19 @@
   }
 
   .content {
-    margin: 0;
-    text-align: left;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .content h1 {
     max-width: 500px;
-
+    margin-inline: auto;
     font-size: clamp(34px, 10.5vw, 46px);
   }
 
   .content > p {
     max-width: 520px;
-    margin-left: 0;
+    margin: 15px auto 0;
   }
 }
 

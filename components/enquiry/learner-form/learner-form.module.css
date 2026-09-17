@@ -651,6 +651,10 @@
   line-height: 1.3;
 }
 
+.goalCard .choiceCopy strong {
+  overflow-wrap: anywhere;
+}
+
 .radioMark {
   display: grid;
   place-items: center;
@@ -1099,6 +1103,10 @@
 }
 
 @media (max-width: 640px) {
+  .goalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .fieldsGrid,
   .programGrid {
     grid-template-columns: 1fr;
