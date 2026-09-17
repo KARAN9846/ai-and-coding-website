@@ -67,7 +67,9 @@ function detailRow(label: string, value: string) {
 
 function formatInterestsHtml(interests: readonly string[]) {
   return `<ul style="margin:0;padding-left:18px;">${interests
-    .map((interest) => `<li style="margin:0 0 5px;">${escapeHtml(interest)}</li>`)
+    .map(
+      (interest) => `<li style="margin:0 0 5px;">${escapeHtml(interest)}</li>`,
+    )
     .join("")}</ul>`;
 }
 
@@ -126,6 +128,12 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
   const safeTimeframe = escapeHtml(data.timeframe);
   const interests = formatInterestsHtml(data.interests);
 
+  const whatsappMessage = `Hello, I've submitted an institution enquiry through the AI & Coding website on behalf of ${data.institutionName}. I'd like to continue the conversation here on WhatsApp.`;
+
+  const whatsappUrl = `https://wa.me/919904425105?text=${encodeURIComponent(
+    whatsappMessage,
+  )}`;
+
   const html = emailShell(
     `<p style="margin:0 0 8px;color:#7648dc;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Institution Enquiry</p>
     <h1 style="margin:0 0 16px;color:#211b38;font-size:27px;line-height:1.25;">Hello ${safeContactName},</h1>
@@ -140,7 +148,7 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
     <div style="padding:18px 20px;border:1px solid #e2daf2;border-radius:12px;background:#faf8ff;">
       <p style="margin:0 0 7px;color:#211b38;font-size:15px;font-weight:700;">AI &amp; Coding</p>
       <p style="margin:0;color:#655d79;font-size:14px;line-height:1.7;">Phone / WhatsApp: <a href="tel:+919904425105" style="color:#7048dd;text-decoration:none;">+91 99044 25105</a><br />
-      WhatsApp: <a href="https://wa.me/919904425105" style="color:#7048dd;text-decoration:none;">Chat with us</a></p>
+      WhatsApp: <a href="${whatsappUrl}" style="color:#7048dd;text-decoration:none;">Chat with us</a></p>
     </div>`,
     "We received your institution enquiry",
   );
@@ -161,7 +169,7 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
     "",
     "AI & Coding",
     "Phone / WhatsApp: +91 99044 25105",
-    "WhatsApp: https://wa.me/919904425105",
+    `WhatsApp: ${whatsappUrl}`,
   ].join("\n");
 
   return { html, text };
@@ -177,7 +185,10 @@ export async function POST(request: Request) {
   const contentLength = Number(request.headers.get("content-length") ?? "0");
 
   if (Number.isFinite(contentLength) && contentLength > 25_000) {
-    return Response.json({ message: "Request body is too large." }, { status: 413 });
+    return Response.json(
+      { message: "Request body is too large." },
+      { status: 413 },
+    );
   }
 
   let input: unknown;
