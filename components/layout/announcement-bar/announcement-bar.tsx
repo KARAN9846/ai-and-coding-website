@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./announcement-bar.module.css";
 
 export function AnnouncementBar() {
@@ -18,12 +19,12 @@ export function AnnouncementBar() {
           <span className={styles.description}>AI &amp; Coding Programs</span>
         </div>
 
-        <a className={styles.action} href="#enquiry">
+        <Link className={styles.action} href="/enquiry">
           <span>Enquire Now</span>
           <span className={styles.arrow} aria-hidden="true">
             →
           </span>
-        </a>
+        </Link>
       </div>
     </aside>
   );
