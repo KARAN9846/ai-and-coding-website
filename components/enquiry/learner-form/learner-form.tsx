@@ -87,6 +87,7 @@ const goalDetails = {
 type SuccessDetails = {
   name: string;
   email: string;
+  program: string;
 };
 
 type CompactSelectProps = {
@@ -442,6 +443,7 @@ export function LearnerForm() {
       setSuccess({
         name: validation.data.name,
         email: validation.data.email,
+        program: validation.data.program,
       });
     } catch {
       setFormError(true);
@@ -521,7 +523,13 @@ export function LearnerForm() {
             </p>
 
             <div className={styles.successActions}>
-              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+              <a
+                href={`${WHATSAPP_URL}?text=${encodeURIComponent(
+                  `Hello, I've submitted my learner enquiry through the AI & Coding website regarding ${success.program}. I'd like to continue the conversation here on WhatsApp.`,
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <MessageCircle size={18} strokeWidth={1.9} aria-hidden="true" />
                 Chat on WhatsApp
               </a>

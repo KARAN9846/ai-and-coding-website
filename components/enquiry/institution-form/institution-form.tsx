@@ -588,7 +588,13 @@ export function InstitutionForm() {
             </p>
 
             <div className={styles.successActions}>
-              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+              <a
+                href={`${WHATSAPP_URL}?text=${encodeURIComponent(
+                  `Hello, I've submitted an institution enquiry through the AI & Coding website on behalf of ${success.institutionName}. I'd like to continue the conversation here on WhatsApp.`,
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <MessageCircle size={18} strokeWidth={1.9} aria-hidden="true" />
                 Chat on WhatsApp
               </a>
