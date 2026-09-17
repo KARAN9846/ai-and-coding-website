@@ -46,14 +46,6 @@ export function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
-
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
@@ -222,8 +214,6 @@ export function Navbar() {
                 <span>Enquire Now</span>
                 <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
               </Link>
-
-              <p>Learn Today. Lead Tomorrow.</p>
             </div>
           </div>
         </div>
