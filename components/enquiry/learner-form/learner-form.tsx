@@ -465,7 +465,11 @@ export function LearnerForm() {
   }
 
   return (
-    <section className={styles.section} aria-labelledby="learner-form-title">
+    <section
+      id="learner-enquiry-form"
+      className={styles.section}
+      aria-labelledby="learner-form-title"
+    >
       <div className={styles.layout}>
         <aside className={styles.introPanel}>
           <div className={styles.introIcon} aria-hidden="true">
@@ -521,7 +525,10 @@ export function LearnerForm() {
                 <MessageCircle size={18} strokeWidth={1.9} aria-hidden="true" />
                 Chat on WhatsApp
               </a>
-              <Link href="/courses" className={styles.secondaryAction}>
+              <Link
+                href="/courses#explore-programs"
+                className={styles.secondaryAction}
+              >
                 Explore Courses
                 <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
               </Link>

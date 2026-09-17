@@ -23,11 +23,17 @@ export function WhyUsHero() {
           </p>
 
           <div className={styles.actions}>
-            <Link href="/courses" className={styles.primaryButton}>
+            <Link
+              href="/courses#explore-programs"
+              className={styles.primaryButton}
+            >
               Explore Courses
             </Link>
 
-            <Link href="#enquiry" className={styles.secondaryButton}>
+            <Link
+              href="/enquiry#learner-enquiry"
+              className={styles.secondaryButton}
+            >
               Enquire Now
             </Link>
           </div>

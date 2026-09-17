@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./hero.module.css";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import { HeroVisual } from "./hero-visual";
@@ -40,15 +41,21 @@ export function Hero() {
           </p>
 
           <div className={styles.actions}>
-            <a href="#programs" className={styles.primaryButton}>
+            <Link
+              href="/courses#explore-programs"
+              className={styles.primaryButton}
+            >
               <span>Explore Programs</span>
 
               <span className={styles.buttonArrow}>↗</span>
-            </a>
+            </Link>
 
-            <a href="#enquiry" className={styles.secondaryButton}>
+            <Link
+              href="/enquiry#learner-enquiry"
+              className={styles.secondaryButton}
+            >
               <span>Talk to Us</span>
-            </a>
+            </Link>
           </div>
 
           <div className={styles.highlights}>

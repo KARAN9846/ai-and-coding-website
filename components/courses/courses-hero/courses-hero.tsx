@@ -98,15 +98,18 @@ export function CoursesHero() {
           </p>
 
           <div className={styles.actions}>
-            <Link href="/#programs-title" className={styles.primaryButton}>
+            <Link href="#explore-programs" className={styles.primaryButton}>
               <span>Explore Programs</span>
               <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
             </Link>
 
-            <a href="#enquiry" className={styles.secondaryButton}>
+            <Link
+              href="/enquiry#learner-enquiry"
+              className={styles.secondaryButton}
+            >
               <span>Enquire Now</span>
               <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
-            </a>
+            </Link>
           </div>
         </div>
 

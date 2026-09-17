@@ -126,7 +126,10 @@ export function Navbar() {
                 />
               </button>
 
-              <Link href="/enquiry" className={styles.enquireButton}>
+              <Link
+                href="/enquiry#learner-enquiry"
+                className={styles.enquireButton}
+              >
                 <span>Enquire Now</span>
                 <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
               </Link>
@@ -207,7 +210,7 @@ export function Navbar() {
 
             <div className={styles.mobileMenuFooter}>
               <Link
-                href="/enquiry"
+                href="/enquiry#learner-enquiry"
                 className={styles.mobileEnquireButton}
                 onClick={closeMenu}
               >

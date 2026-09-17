@@ -592,7 +592,10 @@ export function InstitutionForm() {
                 <MessageCircle size={18} strokeWidth={1.9} aria-hidden="true" />
                 Chat on WhatsApp
               </a>
-              <Link href="/courses" className={styles.secondaryAction}>
+              <Link
+                href="/courses#explore-programs"
+                className={styles.secondaryAction}
+              >
                 Explore Programs
                 <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
               </Link>

@@ -1,4 +1,6 @@
 .section {
+  scroll-margin-top: var(--anchor-scroll-offset, 94px);
+
   --form-blue: #4f8cff;
   --form-cyan: #35c9ec;
   --form-violet: #9563f4;

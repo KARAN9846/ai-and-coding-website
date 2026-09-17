@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore, type CSSProperties } from "react";
 import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import type { LucideIcon } from "lucide-react";
@@ -217,7 +218,7 @@ export function F2PJourney() {
   return (
     <section
       ref={motionRef}
-      id="f2p-journey"
+      id="f2p-program"
       className={styles.section}
       aria-labelledby="f2p-journey-title"
     >
@@ -263,10 +264,13 @@ export function F2PJourney() {
                 </div>
 
                 <CourseTopicIcons topics={level.technologies} />
-                <a href="#enquiry" className={styles.levelLink}>
+                <Link
+                  href="/enquiry#learner-enquiry"
+                  className={styles.levelLink}
+                >
                   <span>Explore Level</span>
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-                </a>
+                </Link>
               </div>
 
               <div className={styles.milestone} aria-hidden="true">
@@ -348,10 +352,13 @@ export function F2PJourney() {
             ))}
           </div>
 
-          <a href="#enquiry" className={styles.specializationCta}>
+          <Link
+            href="/enquiry#learner-enquiry"
+            className={styles.specializationCta}
+          >
             <span>Discuss Your Path</span>
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         </article>
       </div>
     </section>

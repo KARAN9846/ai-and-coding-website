@@ -16,14 +16,14 @@ const WHATSAPP_HREF =
 
 const exploreLinks = [
   { label: "Home", href: "/" },
-  { label: "Courses", href: "/courses" },
+  { label: "Courses", href: "/courses#explore-programs" },
   { label: "Why Us", href: "/why-us" },
 ];
 
 const programLinks = [
-  { label: "F2P - Fresher to Professional", href: "/courses" },
-  { label: "Skill Development", href: "/courses" },
-  { label: "AI Tools for Creators", href: "/courses" },
+  { label: "F2P - Fresher to Professional", href: "/courses#f2p-program" },
+  { label: "Skill Development", href: "/courses#skill-development" },
+  { label: "AI Tools for Creators", href: "/courses#ai-tools-for-creators" },
 ];
 
 const socials = [

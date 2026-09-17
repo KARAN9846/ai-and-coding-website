@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { usePointerMotion } from "../../motion/use-pointer-motion";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 
@@ -159,10 +160,10 @@ export function Programs() {
               </span>
             </div>
 
-            <a href="#f2p" className={styles.cardLink}>
+            <Link href="/courses#f2p-program" className={styles.cardLink}>
               <span>Explore F2P</span>
               <ArrowUpRight size={18} />
-            </a>
+            </Link>
           </div>
           {/* F2P technology visual */}
           <div className={styles.f2pVisual} aria-hidden="true">
@@ -221,10 +222,10 @@ export function Programs() {
 
             <p>Photoshop · Canva · Figma</p>
 
-            <a href="#skill-development" className={styles.cardLink}>
+            <Link href="/courses#visual-design" className={styles.cardLink}>
               <span>Explore</span>
               <ArrowUpRight size={17} />
-            </a>
+            </Link>
           </article>
 
           <article
@@ -249,10 +250,10 @@ export function Programs() {
 
             <p>Content · Captions · Copywriting</p>
 
-            <a href="#skill-development" className={styles.cardLink}>
+            <Link href="/courses#content-creation" className={styles.cardLink}>
               <span>Explore</span>
               <ArrowUpRight size={17} />
-            </a>
+            </Link>
           </article>
 
           <article
@@ -279,10 +280,10 @@ export function Programs() {
 
             <p>CapCut · VN · Filmora</p>
 
-            <a href="#skill-development" className={styles.cardLink}>
+            <Link href="/courses#video-editing" className={styles.cardLink}>
               <span>Explore</span>
               <ArrowUpRight size={17} />
-            </a>
+            </Link>
           </article>
 
           <article
@@ -309,10 +310,10 @@ export function Programs() {
 
             <p>SEO · Social Media · Portfolio</p>
 
-            <a href="#skill-development" className={styles.cardLink}>
+            <Link href="/courses#digital-growth" className={styles.cardLink}>
               <span>Explore</span>
               <ArrowUpRight size={17} />
-            </a>
+            </Link>
           </article>
         </div>
 
@@ -342,18 +343,21 @@ export function Programs() {
             <span className={`${styles.aiToolsDot} ${styles.aiToolsDotTwo}`} />
           </div>
 
-          <a href="#skill-development" className={styles.cardLink}>
+          <Link
+            href="/courses#ai-tools-for-creators"
+            className={styles.cardLink}
+          >
             <span>Discover</span>
             <ArrowUpRight size={18} />
-          </a>
+          </Link>
         </article>
 
         {/* Section CTA */}
         <div className={styles.sectionCta}>
-          <a href="#courses" className={styles.viewAll}>
+          <Link href="/courses#f2p-program" className={styles.viewAll}>
             <span>View All Programs</span>
             <ArrowUpRight size={18} />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

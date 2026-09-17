@@ -253,7 +253,7 @@ export function EnquiryFormSection() {
             </div>
           </div>
         </div>
-        <div className={styles.formSlot}>
+        <div id="learner-enquiry" className={styles.formSlot}>
           {type === "learner" ? <LearnerForm /> : <InstitutionForm />}
         </div>
       </div>

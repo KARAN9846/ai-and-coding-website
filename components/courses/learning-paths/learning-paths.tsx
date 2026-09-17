@@ -59,7 +59,7 @@ export function LearningPaths() {
   return (
     <section
       ref={motionRef}
-      id="courses-programs"
+      id="explore-programs"
       className={styles.section}
       aria-labelledby="courses-programs-title"
     >
@@ -137,7 +137,7 @@ export function LearningPaths() {
 
             <div className={styles.cardFooter}>
               <span>Foundation, database, Java, specialization, and mobile learning.</span>
-              <Link href="/#programs-title" className={styles.cardLink}>
+              <Link href="#f2p-program" className={styles.cardLink}>
                 <span>Explore F2P</span>
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
               </Link>
@@ -197,10 +197,10 @@ export function LearningPaths() {
 
             <div className={styles.cardFooter}>
               <span>Design, content, video, SEO, social media, portfolio, and AI tools.</span>
-              <a href="#skill-development" className={styles.cardLink}>
+              <Link href="#skill-development" className={styles.cardLink}>
                 <span>Explore Skills</span>
                 <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </article>
         </div>

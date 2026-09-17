@@ -19,7 +19,7 @@ export function AnnouncementBar() {
           <span className={styles.description}>AI &amp; Coding Programs</span>
         </div>
 
-        <Link className={styles.action} href="/enquiry">
+        <Link className={styles.action} href="/enquiry#learner-enquiry">
           <span>Enquire Now</span>
           <span className={styles.arrow} aria-hidden="true">
             →

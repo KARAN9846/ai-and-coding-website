@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { usePointerMotion } from "../../motion/use-pointer-motion";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import computerImage from "@/public/images/courses/skill-development/basic-computer-foundation.png";
@@ -20,6 +21,7 @@ import { CourseTopicIcons, type CourseTopic } from "../course-topic-icons/course
 
 type Skill = {
   id: string;
+  anchorId?: string;
   title: string;
   description: string;
   topics: CourseTopic[];
@@ -39,6 +41,7 @@ const skills: Skill[] = [
   },
   {
     id: "visual-design",
+    anchorId: "visual-design",
     title: "Visual Design",
     description: "Create visual compositions with practical design tools.",
     topics: ["Photoshop", "Canva", "Figma"],
@@ -47,6 +50,7 @@ const skills: Skill[] = [
   },
   {
     id: "content-creation",
+    anchorId: "content-creation",
     title: "Content Creation",
     description: "Develop content through captions, blogs, and copywriting.",
     topics: ["Captions", "Blogs", "Copywriting"],
@@ -55,6 +59,7 @@ const skills: Skill[] = [
   },
   {
     id: "video-editing",
+    anchorId: "video-editing",
     title: "Video Editing",
     description: "Edit and assemble video content with creative tools.",
     topics: ["CapCut", "VN", "Canva", "Lightworks", "Filmora"],
@@ -63,6 +68,7 @@ const skills: Skill[] = [
   },
   {
     id: "social-media-handling",
+    anchorId: "digital-growth",
     title: "Social Media Handling",
     description: "Plan content and manage your social media presence.",
     topics: ["Strategy", "Reels", "Scheduling", "Social Media Account Management"],
@@ -90,6 +96,7 @@ const skills: Skill[] = [
 
 const creatorTools: Skill = {
   id: "ai-tools-for-creators",
+  anchorId: "ai-tools-for-creators",
   title: "AI Tools for Creators",
   description: "Explore AI tools for content, visual creation, and creative work.",
   topics: ["ChatGPT", "DALL\u00b7E", "Canva Magic Tools"],
@@ -145,6 +152,7 @@ function SkillStage({
 
   return (
     <article
+      id={skill.anchorId}
       className={`${styles.stage} ${reverse ? styles.reverse : ""} ${featured ? styles.featured : ""}`}
       aria-labelledby={titleId}
       {...pointer}
@@ -161,10 +169,13 @@ function SkillStage({
         )}
         <CourseTopicIcons topics={skill.iconTopics ?? skill.topics} />
         {featured && (
-          <a href="#enquiry" className={styles.enquiryLink}>
+          <Link
+            href="/enquiry#learner-enquiry"
+            className={styles.enquiryLink}
+          >
             <span>Enquire About Skills</span>
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         )}
       </div>
       <div className={styles.milestone} aria-hidden="true"><span /></div>

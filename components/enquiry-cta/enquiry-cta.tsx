@@ -30,7 +30,6 @@ export function EnquiryCta({
   return (
     <section
       ref={motionRef}
-      id="enquiry"
       className={styles.section}
       aria-labelledby="enquiry-title"
     >
@@ -61,7 +60,7 @@ export function EnquiryCta({
 
             <div className={styles.actions}>
               <Link
-                href="/enquiry"
+                href="/enquiry#learner-enquiry"
                 className={`${styles.action} ${styles.primaryAction}`}
               >
                 <span

@@ -90,10 +90,42 @@
 }
 
 html {
+  --anchor-scroll-offset: 94px;
+
   width: 100%;
   min-width: 0;
   scroll-behavior: smooth;
   background: var(--background);
+}
+
+#explore-programs,
+#f2p-program,
+#skill-development,
+#visual-design,
+#content-creation,
+#video-editing,
+#digital-growth,
+#ai-tools-for-creators,
+#learner-enquiry {
+  scroll-margin-top: var(--anchor-scroll-offset);
+}
+
+@media (max-width: 1100px) {
+  html {
+    --anchor-scroll-offset: 86px;
+  }
+}
+
+@media (max-width: 900px) {
+  html {
+    --anchor-scroll-offset: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    --anchor-scroll-offset: 76px;
+  }
 }
 
 body {

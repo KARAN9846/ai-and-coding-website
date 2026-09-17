@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent } from "react";
+import Link from "next/link";
 import { useAnimationVisibility } from "../../motion/use-animation-visibility";
 import {
   ArrowUpRight,
@@ -153,10 +154,10 @@ export function ChoosePath() {
                 </div>
               </div>
 
-              <a href="#f2p" className={styles.cardLink}>
+              <Link href="/courses#f2p-program" className={styles.cardLink}>
                 <span>Explore F2P</span>
                 <ArrowUpRight size={18} />
-              </a>
+              </Link>
             </div>
 
             {/* Decorative visual */}
@@ -237,10 +238,13 @@ export function ChoosePath() {
                   <span>Skill Areas</span>
                 </div>
 
-                <a href="#skill-development" className={styles.cardLink}>
+                <Link
+                  href="/courses#skill-development"
+                  className={styles.cardLink}
+                >
                   <span>Explore Skills</span>
                   <ArrowUpRight size={18} />
-                </a>
+                </Link>
               </div>
             </div>
 

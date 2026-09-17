@@ -1,0 +1,262 @@
+.section {
+  width: min(1100px, calc(100% - 48px));
+  margin: 0 auto clamp(24px, 3vw, 36px);
+}
+
+.banner {
+  --poster-surface: color-mix(in srgb, var(--surface-elevated) 94%, var(--primary));
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  border-radius: 22px;
+  color: var(--foreground);
+  background: var(--poster-surface);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--shadow-color) 32%, transparent);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.banner:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 5px;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: 28px 32px;
+  background: radial-gradient(ellipse at 0 0, color-mix(in srgb, var(--primary) 10%, transparent), transparent 75%);
+}
+
+.liveLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .13em;
+}
+
+.liveLabel svg {
+  width: 13px;
+  height: 13px;
+}
+
+.title {
+  margin: 12px 0 0;
+  font-size: clamp(29px, 3vw, 38px);
+  font-weight: 780;
+  letter-spacing: -.045em;
+  line-height: 1.06;
+}
+
+.title > span {
+  color: var(--primary);
+}
+
+.audience {
+  max-width: 360px;
+  margin: 10px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  margin-top: 18px;
+}
+
+.schedule {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding-right: 24px;
+  border-right: 1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
+}
+
+.schedule > span {
+  color: var(--foreground-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.schedule strong {
+  font-size: 28px;
+  font-weight: 780;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.schedule strong > span {
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--primary) 48%, transparent);
+  border-radius: 50%;
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+.arrow svg {
+  transition: transform 200ms ease;
+}
+
+.visual {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  background: #04113c;
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--poster-surface), transparent 24%);
+}
+
+.image {
+  object-fit: cover;
+  object-position: 65% 48%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .banner:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--primary) 65%, var(--border));
+    box-shadow: 0 16px 40px color-mix(in srgb, var(--shadow-color) 45%, transparent);
+  }
+
+  .banner:hover .arrow svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (max-width: 900px) {
+  .content {
+    padding: 24px;
+  }
+
+  .actions {
+    column-gap: 16px;
+  }
+
+  .schedule {
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    width: calc(100% - 32px);
+  }
+
+  .content {
+    padding: 22px 20px;
+  }
+
+  .actions {
+    column-gap: 12px;
+  }
+
+  .schedule {
+    padding-right: 12px;
+  }
+
+  .cta {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 620px) {
+  .banner {
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 18px;
+  }
+
+  .visual {
+    grid-row: 1;
+    height: clamp(160px, 42vw, 210px);
+    min-height: 0;
+  }
+
+  .visual::after {
+    background: linear-gradient(0deg, var(--poster-surface), transparent 28%);
+  }
+
+  .image {
+    object-position: 65% 44%;
+  }
+
+  .content {
+    padding: 14px 20px 20px;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: 30px;
+  }
+
+  .audience {
+    max-width: 400px;
+    margin-top: 8px;
+  }
+
+  .actions {
+    margin-top: 14px;
+    column-gap: 20px;
+  }
+
+  .schedule {
+    padding-right: 20px;
+  }
+
+  .schedule strong {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner,
+  .arrow svg {
+    transition: none;
+  }
+
+  .banner:hover,
+  .banner:hover .arrow svg {
+    transform: none;
+  }
+}

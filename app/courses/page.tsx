@@ -1,5 +1,6 @@
 import { AnnouncementBar } from "@/components/layout/announcement-bar/announcement-bar";
 import { CoursesHero } from "@/components/courses/courses-hero/courses-hero";
+import { DailyLiveBanner } from "@/components/courses/daily-live-banner/daily-live-banner";
 import { F2PJourney } from "@/components/courses/f2p-journey/f2p-journey";
 import { LearningPaths } from "@/components/courses/learning-paths/learning-paths";
 import { SkillDevelopment } from "@/components/courses/skill-development/skill-development";
@@ -15,6 +16,7 @@ export default function CoursesPage() {
       <AnnouncementBar />
       <Navbar />
       <CoursesHero />
+      <DailyLiveBanner />
       <LearningPaths />
       <F2PJourney />
       <SkillDevelopment />
