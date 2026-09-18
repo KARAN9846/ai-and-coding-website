@@ -25,7 +25,9 @@ export function DailyLiveBanner() {
           <div className={styles.actions}>
             <p className={styles.schedule}>
               <span>Every Day</span>
-              <strong>9:00 <span>PM</span></strong>
+              <strong>
+                9:30 <span>PM</span>
+              </strong>
             </p>
             <span className={styles.cta}>
               Enquire Now

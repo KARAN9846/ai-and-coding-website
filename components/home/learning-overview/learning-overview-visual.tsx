@@ -1,7 +1,7 @@
 import { BrainCircuit, Code2, Database, Blocks } from "lucide-react";
-import styles from "./hero-visual.module.css";
+import styles from "./learning-overview-visual.module.css";
 
-export function HeroVisual() {
+export function LearningOverviewVisual() {
   return (
     <div className={styles.visual}>
       <div className={styles.glow} />

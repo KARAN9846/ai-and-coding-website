@@ -107,6 +107,7 @@ export function EnquiryFormSection() {
 
       <div className={styles.shell}>
         <div
+          id="enquiry-options"
           className={styles.selector}
           role="tablist"
           aria-label="Choose enquiry type"

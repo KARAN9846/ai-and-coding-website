@@ -1,6 +1,7 @@
 import { AnnouncementBar } from "@/components/layout/announcement-bar/announcement-bar";
 import { Navbar } from "@/components/layout/navbar/navbar";
 import { Hero } from "@/components/home/hero/hero";
+import { LearningOverview } from "@/components/home/learning-overview/learning-overview";
 import { ChoosePath } from "@/components/home/choose-path/choose-path";
 import { Programs } from "@/components/home/programs/programs";
 import { WhyAiCoding } from "@/components/home/why-ai-coding/why-ai-coding";
@@ -13,6 +14,7 @@ export default function Home() {
       <AnnouncementBar />
       <Navbar />
       <Hero />
+      <LearningOverview />
       <ChoosePath />
       <Programs />
       <WhyAiCoding />
