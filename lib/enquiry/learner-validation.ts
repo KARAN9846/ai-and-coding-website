@@ -38,6 +38,7 @@ export type LearnerEnquiryValues = {
   phone: string;
   email: string;
   stage: string;
+  stageDetails: string;
   program: string;
   experience: string;
   primaryGoal: string;
@@ -62,6 +63,7 @@ export const LEARNER_FIELD_ORDER: LearnerField[] = [
   "phone",
   "email",
   "stage",
+  "stageDetails",
   "program",
   "experience",
   "primaryGoal",
@@ -70,6 +72,7 @@ export const LEARNER_FIELD_ORDER: LearnerField[] = [
 
 const NAME_MAX_LENGTH = 80;
 const EMAIL_MAX_LENGTH = 254;
+export const STAGE_DETAILS_MAX_LENGTH = 250;
 export const MESSAGE_MAX_LENGTH = 600;
 
 const NAME_ALLOWED_CHARACTERS = /^[\p{L}\p{M} .'-]+$/u;
@@ -142,6 +145,12 @@ export function validateLearnerField(
       }
       return undefined;
 
+    case "stageDetails":
+      if (normalizeMessage(rawValue).length > STAGE_DETAILS_MAX_LENGTH) {
+        return `Keep your current stage details under ${STAGE_DETAILS_MAX_LENGTH} characters.`;
+      }
+      return undefined;
+
     case "program":
       if (!value) return "Choose the program you are interested in.";
       if (!includesValue(LEARNER_PROGRAMS, value)) {
@@ -190,6 +199,7 @@ export function validateLearnerEnquiry(
     phone: readString(source, "phone"),
     email: readString(source, "email"),
     stage: readString(source, "stage"),
+    stageDetails: readString(source, "stageDetails"),
     program: readString(source, "program"),
     experience: readString(source, "experience"),
     primaryGoal: readString(source, "primaryGoal"),
@@ -214,6 +224,7 @@ export function validateLearnerEnquiry(
       phone: values.phone.trim(),
       email: values.email.trim().toLowerCase(),
       stage: values.stage.trim() as LearnerStage,
+      stageDetails: normalizeMessage(values.stageDetails),
       program: values.program.trim() as LearnerProgram,
       experience: values.experience.trim() as LearnerExperience,
       primaryGoal: values.primaryGoal.trim() as LearnerPrimaryGoal,

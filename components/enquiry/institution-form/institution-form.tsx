@@ -817,18 +817,6 @@ export function InstitutionForm() {
               className={styles.formGroup}
               aria-labelledby="institution-students-title"
             >
-              <div className={styles.groupHeading}>
-                <span className={styles.orangeHeadingIcon} aria-hidden="true">
-                  <UsersRound size={17} strokeWidth={1.9} />
-                </span>
-                <div>
-                  <h4 id="institution-students-title">
-                    Students &amp; Contact
-                  </h4>
-                  <p>The essentials for a useful discussion.</p>
-                </div>
-              </div>
-
               <div className={styles.fieldsGrid}>
                 <div className={styles.field}>
                   <label htmlFor="institution-phone">

@@ -66,6 +66,9 @@ function detailRow(label: string, value: string) {
 }
 
 function buildInternalEmail(data: LearnerEnquiryData) {
+  const stageDetails = data.stageDetails
+    ? escapeHtml(data.stageDetails).replace(/\n/g, "<br />")
+    : '<span style="color:#7b8498;">Not provided</span>';
   const message = data.message
     ? escapeHtml(data.message).replace(/\n/g, "<br />")
     : '<span style="color:#7b8498;">Not provided</span>';
@@ -79,6 +82,7 @@ function buildInternalEmail(data: LearnerEnquiryData) {
       ${detailRow("Phone / WhatsApp", escapeHtml(formatPhone(data.phone)))}
       ${detailRow("Email", escapeHtml(data.email))}
       ${detailRow("Current Stage", escapeHtml(data.stage))}
+      ${detailRow("Current Stage Details", stageDetails)}
       ${detailRow("Interested Program", escapeHtml(data.program))}
       ${detailRow("Current Experience", escapeHtml(data.experience))}
       ${detailRow("Primary Goal", escapeHtml(data.primaryGoal))}
@@ -94,6 +98,7 @@ function buildInternalEmail(data: LearnerEnquiryData) {
     `Phone / WhatsApp: ${formatPhone(data.phone)}`,
     `Email: ${data.email}`,
     `Current Stage: ${data.stage}`,
+    `Current Stage Details: ${data.stageDetails || "Not provided"}`,
     `Interested Program: ${data.program}`,
     `Current Experience: ${data.experience}`,
     `Primary Goal: ${data.primaryGoal}`,
@@ -107,6 +112,9 @@ function buildConfirmationEmail(data: LearnerEnquiryData) {
   const firstName = data.name.split(" ")[0];
   const safeFirstName = escapeHtml(firstName);
   const safeProgram = escapeHtml(data.program);
+  const stageDetailsHtml = data.stageDetails
+    ? `<p style="margin:0 0 24px;color:#46516a;font-size:15px;line-height:1.7;"><strong style="color:#17213a;">Current Stage Details:</strong><br />${escapeHtml(data.stageDetails).replace(/\n/g, "<br />")}</p>`
+    : "";
   const whatsappMessage = `Hello, I've submitted my learner enquiry through the AI & Coding website regarding ${data.program}. I'd like to continue the conversation here on WhatsApp.`;
 
   const whatsappUrl = `https://wa.me/919904425105?text=${encodeURIComponent(
@@ -118,6 +126,7 @@ function buildConfirmationEmail(data: LearnerEnquiryData) {
     <h1 style="margin:0 0 16px;color:#10182c;font-size:27px;line-height:1.25;">Thanks, ${safeFirstName}.</h1>
     <p style="margin:0 0 14px;color:#46516a;font-size:15px;line-height:1.7;">We&rsquo;ve received your enquiry about <strong style="color:#17213a;">${safeProgram}</strong>.</p>
     <p style="margin:0 0 24px;color:#46516a;font-size:15px;line-height:1.7;">Our team will review your learning goals and follow up with guidance on the most relevant next step.</p>
+    ${stageDetailsHtml}
     <div style="padding:18px 20px;border:1px solid #dce6f7;border-radius:12px;background:#f7faff;">
       <p style="margin:0 0 7px;color:#17213a;font-size:15px;font-weight:700;">AI &amp; Coding</p>
       <p style="margin:0;color:#5b6680;font-size:14px;line-height:1.7;">Phone / WhatsApp: <a href="tel:+919904425105" style="color:#245bdb;text-decoration:none;">+91 99044 25105</a><br />
@@ -131,6 +140,9 @@ function buildConfirmationEmail(data: LearnerEnquiryData) {
     "",
     `We've received your enquiry about ${data.program}.`,
     "Our team will review your learning goals and follow up with guidance on the most relevant next step.",
+    ...(data.stageDetails
+      ? ["", `Current Stage Details: ${data.stageDetails}`]
+      : []),
     "",
     "AI & Coding",
     "Phone / WhatsApp: +91 99044 25105",

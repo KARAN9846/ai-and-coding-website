@@ -40,6 +40,7 @@ import {
   LEARNER_PROGRAMS,
   LEARNER_STAGES,
   MESSAGE_MAX_LENGTH,
+  STAGE_DETAILS_MAX_LENGTH,
   type LearnerEnquiryValues,
   type LearnerField,
   type LearnerFieldErrors,
@@ -56,6 +57,7 @@ const EMPTY_VALUES: LearnerEnquiryValues = {
   phone: "",
   email: "",
   stage: "",
+  stageDetails: "",
   program: "",
   experience: "",
   primaryGoal: "",
@@ -737,6 +739,62 @@ export function LearnerForm() {
                     </p>
                   )}
                 </div>
+
+                {values.stage.trim().length > 0 && (
+                  <div
+                    className={`${styles.field} ${styles.stageDetailsField}`}
+                  >
+                    <label htmlFor="learner-stage-details">
+                      <span className={styles.label}>
+                        Tell us more about your current stage
+                      </span>
+                    </label>
+                    <div className={styles.controlWrap}>
+                      <textarea
+                        id="learner-stage-details"
+                        name="stageDetails"
+                        rows={3}
+                        maxLength={STAGE_DETAILS_MAX_LENGTH}
+                        value={values.stageDetails}
+                        onChange={(event) =>
+                          updateField("stageDetails", event.target.value)
+                        }
+                        onBlur={(event) =>
+                          handleBlur("stageDetails", event.currentTarget.value)
+                        }
+                        aria-invalid={Boolean(errors.stageDetails)}
+                        aria-describedby={`learner-stage-details-help learner-stage-details-count${
+                          errors.stageDetails
+                            ? " learner-stage-details-error"
+                            : ""
+                        }`}
+                        className={
+                          errors.stageDetails
+                            ? styles.invalidControl
+                            : undefined
+                        }
+                      />
+                    </div>
+                    <div className={styles.messageMeta}>
+                      <span id="learner-stage-details-help">
+                        For example: Standard 8 student, second-year BCA
+                        learner, working professional, or currently looking for
+                        a job.
+                      </span>
+                      <span id="learner-stage-details-count">
+                        {values.stageDetails.length}/{STAGE_DETAILS_MAX_LENGTH}
+                      </span>
+                    </div>
+                    {errors.stageDetails && (
+                      <p
+                        id="learner-stage-details-error"
+                        className={styles.errorText}
+                      >
+                        {errors.stageDetails}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             </section>
 
