@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { flushSync } from "react-dom";
 import {
   ArrowRight,
   Building2,
@@ -35,6 +36,9 @@ import {
 } from "lucide-react";
 
 import {
+  EXACT_DATE_TIMEFRAME,
+  formatDateOnly,
+  getTodayInKolkata,
   INSTITUTION_FIELD_ORDER,
   INSTITUTION_INTERESTS,
   INSTITUTION_STUDENT_COUNTS,
@@ -65,6 +69,7 @@ const EMPTY_VALUES: InstitutionEnquiryValues = {
   studentGroup: "",
   studentCount: "",
   timeframe: "",
+  preferredDate: "",
   interests: [],
   message: "",
 };
@@ -118,10 +123,12 @@ type CompactSelectProps = {
   value: string;
   placeholder: string;
   options: readonly string[];
+  displayValue?: string;
   error?: string;
   describedBy?: string;
   valid: boolean;
   onChange: (value: string) => void;
+  onSpecialOption?: (value: string) => boolean;
   onTouched: (value: string) => void;
 };
 
@@ -177,10 +184,12 @@ function CompactSelect({
   value,
   placeholder,
   options,
+  displayValue,
   error,
   describedBy,
   valid,
   onChange,
+  onSpecialOption,
   onTouched,
 }: CompactSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -217,10 +226,13 @@ function CompactSelect({
     const option = options[index];
     if (!option) return;
 
-    onChange(option);
-    onTouched(option);
     setActiveIndex(index);
     setIsOpen(false);
+
+    if (onSpecialOption?.(option)) return;
+
+    onChange(option);
+    onTouched(option);
     requestAnimationFrame(() => buttonRef.current?.focus());
   }
 
@@ -318,7 +330,7 @@ function CompactSelect({
           }
         }}
       >
-        <span>{value || placeholder}</span>
+        <span>{displayValue || value || placeholder}</span>
         <span className={styles.selectStatus} aria-hidden="true">
           <ValidMark visible={valid} />
           <ChevronDown
@@ -364,6 +376,9 @@ function CompactSelect({
 
 export function InstitutionForm() {
   const [values, setValues] = useState<InstitutionEnquiryValues>(EMPTY_VALUES);
+  const [isChoosingPreferredDate, setIsChoosingPreferredDate] =
+    useState(false);
+  const [pendingPreferredDate, setPendingPreferredDate] = useState("");
   const [touched, setTouched] = useState<
     Partial<Record<InstitutionField, boolean>>
   >({});
@@ -372,8 +387,15 @@ export function InstitutionForm() {
   const [formError, setFormError] = useState(false);
   const [success, setSuccess] = useState<SuccessDetails | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const preferredDateRef = useRef<HTMLInputElement>(null);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
   const submittingRef = useRef(false);
+  const minimumPreferredDate = getTodayInKolkata();
+  const timeframeError = errors.preferredDate ?? errors.timeframe;
+  const timeframeDisplayValue =
+    values.timeframe === EXACT_DATE_TIMEFRAME && values.preferredDate
+      ? `Exact date — ${formatDateOnly(values.preferredDate)}`
+      : values.timeframe;
 
   useEffect(() => {
     if (success) successHeadingRef.current?.focus();
@@ -384,7 +406,17 @@ export function InstitutionForm() {
     const hasValue = Array.isArray(value)
       ? value.length > 0
       : Boolean(value.trim());
-    return Boolean(touched[field] && hasValue && !errors[field]);
+    const hasConditionalValue =
+      field !== "timeframe" ||
+      values.timeframe !== EXACT_DATE_TIMEFRAME ||
+      Boolean(values.preferredDate);
+    return Boolean(
+      touched[field] &&
+        hasValue &&
+        hasConditionalValue &&
+        !errors[field] &&
+        (field !== "timeframe" || !errors.preferredDate),
+    );
   }
 
   function setFieldError(field: InstitutionField, error?: string) {
@@ -404,7 +436,7 @@ export function InstitutionForm() {
     setFormError(false);
 
     if (touched[field]) {
-      setFieldError(field, validateInstitutionField(field, value));
+      setFieldError(field, validateInstitutionField(field, value, values));
     }
   }
 
@@ -429,7 +461,97 @@ export function InstitutionForm() {
     value: string | readonly string[] = values[field],
   ) {
     setTouched((current) => ({ ...current, [field]: true }));
-    setFieldError(field, validateInstitutionField(field, value));
+    setFieldError(field, validateInstitutionField(field, value, values));
+  }
+
+  function clearFieldErrors(...fields: InstitutionField[]) {
+    setErrors((current) => {
+      const next = { ...current };
+      for (const field of fields) delete next[field];
+      return next;
+    });
+  }
+
+  function beginPreferredDateSelection() {
+    flushSync(() => {
+      setPendingPreferredDate(values.preferredDate);
+      setIsChoosingPreferredDate(true);
+      clearFieldErrors("timeframe", "preferredDate");
+      setFormError(false);
+    });
+
+    const dateInput = preferredDateRef.current;
+    dateInput?.focus();
+
+    try {
+      dateInput?.showPicker?.();
+    } catch {
+      // The visible, focused date input remains available as the fallback.
+    }
+  }
+
+  function cancelPreferredDateSelection(restoreDropdownFocus = false) {
+    setPendingPreferredDate("");
+    setIsChoosingPreferredDate(false);
+    clearFieldErrors("preferredDate");
+
+    if (restoreDropdownFocus) {
+      requestAnimationFrame(() => {
+        const timeframeControl =
+          formRef.current?.elements.namedItem("timeframe");
+        if (timeframeControl instanceof HTMLElement) timeframeControl.focus();
+      });
+    }
+  }
+
+  function selectPreferredDate(preferredDate: string) {
+    setPendingPreferredDate(preferredDate);
+    if (!preferredDate) return;
+
+    const nextValues = {
+      ...values,
+      timeframe: EXACT_DATE_TIMEFRAME,
+      preferredDate,
+    };
+    const error = validateInstitutionField(
+      "preferredDate",
+      preferredDate,
+      nextValues,
+    );
+
+    setTouched((current) => ({
+      ...current,
+      timeframe: true,
+      preferredDate: true,
+    }));
+    setErrors((current) => {
+      const next = { ...current };
+      delete next.timeframe;
+      if (error) next.preferredDate = error;
+      else delete next.preferredDate;
+      return next;
+    });
+
+    if (error) return;
+
+    setValues(nextValues);
+    setIsChoosingPreferredDate(false);
+    setPendingPreferredDate("");
+    setFormError(false);
+    requestAnimationFrame(() => {
+      const timeframeControl = formRef.current?.elements.namedItem("timeframe");
+      if (timeframeControl instanceof HTMLElement) timeframeControl.focus();
+    });
+  }
+
+  function selectTimeframe(timeframe: string) {
+    setValues((current) => ({
+      ...current,
+      timeframe,
+      preferredDate: "",
+    }));
+    clearFieldErrors("preferredDate");
+    setFormError(false);
   }
 
   function focusFirstInvalid(fieldErrors: InstitutionFieldErrors) {
@@ -437,6 +559,13 @@ export function InstitutionForm() {
       (field) => fieldErrors[field],
     );
     if (!firstInvalidField) return;
+
+    if (firstInvalidField === "preferredDate") {
+      flushSync(() => {
+        setPendingPreferredDate(values.preferredDate);
+        setIsChoosingPreferredDate(true);
+      });
+    }
 
     requestAnimationFrame(() => {
       const control = formRef.current?.elements.namedItem(firstInvalidField);
@@ -513,6 +642,8 @@ export function InstitutionForm() {
 
   function resetForm() {
     setValues(EMPTY_VALUES);
+    setIsChoosingPreferredDate(false);
+    setPendingPreferredDate("");
     setTouched({});
     setErrors({});
     setFormError(false);
@@ -1025,38 +1156,89 @@ export function InstitutionForm() {
                 </div>
 
                 <div className={styles.field}>
-                  <label htmlFor="institution-timeframe">
+                  <label
+                    htmlFor={
+                      isChoosingPreferredDate
+                        ? "institution-preferred-date"
+                        : "institution-timeframe"
+                    }
+                  >
                     <RequiredLabel>Preferred Date / Timeframe</RequiredLabel>
                   </label>
-                  <CompactSelect
-                    id="institution-timeframe"
-                    name="timeframe"
-                    value={values.timeframe}
-                    placeholder="Select a preferred timeframe"
-                    options={INSTITUTION_TIMEFRAMES}
-                    error={errors.timeframe}
-                    describedBy={
-                      errors.timeframe
-                        ? "institution-timeframe-error"
-                        : "institution-timeframe-help"
-                    }
-                    valid={isValid("timeframe")}
-                    onChange={(value) => updateField("timeframe", value)}
-                    onTouched={(value) => handleBlur("timeframe", value)}
-                  />
-                  {errors.timeframe ? (
+                  {isChoosingPreferredDate ? (
+                    <div className={styles.preferredDateControl}>
+                      <input
+                        ref={preferredDateRef}
+                        id="institution-preferred-date"
+                        name="preferredDate"
+                        type="date"
+                        min={minimumPreferredDate}
+                        value={pendingPreferredDate}
+                        aria-label="Choose an exact preferred date"
+                        aria-required="true"
+                        aria-invalid={Boolean(errors.preferredDate)}
+                        aria-describedby={`institution-timeframe-help${
+                          errors.preferredDate
+                            ? " institution-preferred-date-error"
+                            : ""
+                        }`}
+                        className={`${styles.preferredDateInput} ${
+                          errors.preferredDate ? styles.invalidControl : ""
+                        }`}
+                        onChange={(event) =>
+                          selectPreferredDate(event.currentTarget.value)
+                        }
+                        onBlur={() => cancelPreferredDateSelection()}
+                        onKeyDown={(event) => {
+                          if (event.key === "Escape") {
+                            event.preventDefault();
+                            cancelPreferredDateSelection(true);
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <CompactSelect
+                      id="institution-timeframe"
+                      name="timeframe"
+                      value={values.timeframe}
+                      displayValue={timeframeDisplayValue}
+                      placeholder="Select a preferred timeframe"
+                      options={INSTITUTION_TIMEFRAMES}
+                      error={timeframeError}
+                      describedBy={`institution-timeframe-help${
+                        timeframeError
+                          ? errors.preferredDate
+                            ? " institution-preferred-date-error"
+                            : " institution-timeframe-error"
+                          : ""
+                      }`}
+                      valid={isValid("timeframe")}
+                      onChange={selectTimeframe}
+                      onSpecialOption={(value) => {
+                        if (value !== EXACT_DATE_TIMEFRAME) return false;
+                        beginPreferredDateSelection();
+                        return true;
+                      }}
+                      onTouched={(value) => handleBlur("timeframe", value)}
+                    />
+                  )}
+                  <p
+                    id="institution-timeframe-help"
+                    className={styles.helperText}
+                  >
+                    A preference only—nothing is booked yet.
+                  </p>
+                  {timeframeError && (
                     <p
-                      id="institution-timeframe-error"
+                      id={
+                        errors.preferredDate
+                          ? "institution-preferred-date-error"
+                          : "institution-timeframe-error"
+                      }
                       className={styles.errorText}
                     >
-                      {errors.timeframe}
-                    </p>
-                  ) : (
-                    <p
-                      id="institution-timeframe-help"
-                      className={styles.helperText}
-                    >
-                      A preference only—nothing is booked yet.
+                      {timeframeError}
                     </p>
                   )}
                 </div>

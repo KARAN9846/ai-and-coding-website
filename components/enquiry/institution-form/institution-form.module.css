@@ -575,6 +575,21 @@
   background: color-mix(in srgb, var(--form-violet) 15%, transparent);
 }
 
+.preferredDateControl {
+  min-width: 0;
+}
+
+.field input.preferredDateInput {
+  padding-right: 14px;
+  color-scheme: dark;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.preferredDateInput::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
 /* Interest cards */
 
 .choiceGroup {
@@ -998,6 +1013,10 @@
   box-shadow:
     0 17px 38px rgba(55, 43, 91, 0.17),
     inset 0 1px 0 #ffffff;
+}
+
+:global([data-theme="light"]) .field input.preferredDateInput {
+  color-scheme: light;
 }
 
 @media (hover: hover) and (pointer: fine) {

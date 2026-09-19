@@ -1,0 +1,5 @@
+2026/09/19-12:03:45.864 16fc Creating DB D:\nyalkaran\ai-and-coding\ai-and-coding\.tmp-edge-institution-date\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/09/19-12:03:45.918 16fc Reusing MANIFEST D:\nyalkaran\ai-and-coding\ai-and-coding\.tmp-edge-institution-date\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/09/19-12:03:47.657 3e30 Level-0 table #5: started
+2026/09/19-12:03:47.660 3e30 Level-0 table #5: 683273 bytes OK
+2026/09/19-12:03:47.661 3e30 Delete type=0 #3

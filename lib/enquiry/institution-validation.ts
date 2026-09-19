@@ -26,8 +26,10 @@ export const INSTITUTION_TIMEFRAMES = [
   "As soon as possible",
   "Within 2–4 weeks",
   "Next month",
-  "Flexible / To be discussed",
+  "Choose an exact date",
 ] as const;
+
+export const EXACT_DATE_TIMEFRAME = "Choose an exact date";
 
 export const INSTITUTION_INTERESTS = [
   "AI & Coding Career Awareness Session",
@@ -57,6 +59,7 @@ export type InstitutionEnquiryValues = {
   studentGroup: string;
   studentCount: string;
   timeframe: string;
+  preferredDate: string;
   interests: string[];
   message: string;
 };
@@ -92,6 +95,7 @@ export const INSTITUTION_FIELD_ORDER: InstitutionField[] = [
   "studentGroup",
   "studentCount",
   "timeframe",
+  "preferredDate",
   "interests",
   "message",
 ];
@@ -125,6 +129,69 @@ function normalizeMessage(value: string) {
   return value.replace(/\r\n?/g, "\n").trim();
 }
 
+export function getTodayInKolkata(now = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(now);
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((item) => item.type === type)?.value ?? "";
+
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
+function isValidDateOnly(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (year < 1 || month < 1 || month > 12) return false;
+
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const daysInMonth = [
+    31,
+    leapYear ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+
+  return day >= 1 && day <= daysInMonth[month - 1];
+}
+
+export function formatDateOnly(value: string) {
+  if (!isValidDateOnly(value)) return value;
+
+  const [year, month, day] = value.split("-").map(Number);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  return `${day} ${months[month - 1]} ${year}`;
+}
+
 function meaningfulCharacterCount(value: string) {
   return value.match(/[\p{L}\p{M}\p{N}]/gu)?.length ?? 0;
 }
@@ -132,6 +199,7 @@ function meaningfulCharacterCount(value: string) {
 export function validateInstitutionField(
   field: InstitutionField,
   rawValue: string | readonly string[],
+  context?: Pick<InstitutionEnquiryValues, "timeframe">,
 ): string | undefined {
   if (field === "interests") {
     if (!Array.isArray(rawValue) || rawValue.length === 0) {
@@ -265,6 +333,17 @@ export function validateInstitutionField(
       }
       return undefined;
 
+    case "preferredDate":
+      if (context?.timeframe.trim() !== EXACT_DATE_TIMEFRAME) return undefined;
+      if (!value) return "Please choose an exact preferred date.";
+      if (!isValidDateOnly(value)) {
+        return "Please choose a valid exact preferred date.";
+      }
+      if (value < getTodayInKolkata()) {
+        return "Please choose today or a future date.";
+      }
+      return undefined;
+
     case "message":
       if (normalizeMessage(stringValue).length > MESSAGE_MAX_LENGTH) {
         return `Keep your message under ${MESSAGE_MAX_LENGTH} characters.`;
@@ -306,6 +385,7 @@ export function validateInstitutionEnquiry(
     studentGroup: readString(source, "studentGroup"),
     studentCount: readString(source, "studentCount"),
     timeframe: readString(source, "timeframe"),
+    preferredDate: readString(source, "preferredDate"),
     interests: readStringArray(source, "interests"),
     message: readString(source, "message"),
   };
@@ -313,7 +393,7 @@ export function validateInstitutionEnquiry(
   const errors: InstitutionFieldErrors = {};
 
   for (const field of INSTITUTION_FIELD_ORDER) {
-    const error = validateInstitutionField(field, values[field]);
+    const error = validateInstitutionField(field, values[field], values);
     if (error) errors[field] = error;
   }
 
@@ -334,6 +414,10 @@ export function validateInstitutionEnquiry(
       studentGroup: values.studentGroup.trim() as InstitutionStudentGroup,
       studentCount: values.studentCount.trim() as InstitutionStudentCount,
       timeframe: values.timeframe.trim() as InstitutionTimeframe,
+      preferredDate:
+        values.timeframe.trim() === EXACT_DATE_TIMEFRAME
+          ? values.preferredDate.trim()
+          : "",
       interests: Array.from(
         new Set(values.interests.map((interest) => interest.trim())),
       ) as InstitutionInterest[],

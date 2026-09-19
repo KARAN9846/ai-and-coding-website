@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
 import {
+  EXACT_DATE_TIMEFRAME,
+  formatDateOnly,
   type InstitutionEnquiryData,
   validateInstitutionEnquiry,
 } from "@/lib/enquiry/institution-validation";
@@ -74,6 +76,9 @@ function formatInterestsHtml(interests: readonly string[]) {
 }
 
 function buildInternalEmail(data: InstitutionEnquiryData) {
+  const hasExactDate = data.timeframe === EXACT_DATE_TIMEFRAME;
+  const timeframe = hasExactDate ? "Exact date" : data.timeframe;
+  const preferredDate = hasExactDate ? formatDateOnly(data.preferredDate) : "";
   const message = data.message
     ? escapeHtml(data.message).replace(/\n/g, "<br />")
     : '<span style="color:#81788f;">Not provided</span>';
@@ -93,7 +98,8 @@ function buildInternalEmail(data: InstitutionEnquiryData) {
       ${detailRow("City / Location", escapeHtml(data.city))}
       ${detailRow("Student Group / Level", escapeHtml(data.studentGroup))}
       ${detailRow("Approximate Number of Students", escapeHtml(data.studentCount))}
-      ${detailRow("Preferred Date / Timeframe", escapeHtml(data.timeframe))}
+      ${detailRow("Preferred Date / Timeframe", escapeHtml(timeframe))}
+      ${hasExactDate ? detailRow("Exact Preferred Date", escapeHtml(preferredDate)) : ""}
       ${detailRow("Selected Interests", interests)}
       ${detailRow("Additional Context", message)}
     </table>`,
@@ -112,7 +118,8 @@ function buildInternalEmail(data: InstitutionEnquiryData) {
     `City / Location: ${data.city}`,
     `Student Group / Level: ${data.studentGroup}`,
     `Approximate Number of Students: ${data.studentCount}`,
-    `Preferred Date / Timeframe: ${data.timeframe}`,
+    `Preferred Date / Timeframe: ${timeframe}`,
+    ...(hasExactDate ? [`Exact Preferred Date: ${preferredDate}`] : []),
     "Selected Interests:",
     ...data.interests.map((interest) => `- ${interest}`),
     `Additional Context: ${data.message || "Not provided"}`,
@@ -125,7 +132,10 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
   const safeContactName = escapeHtml(data.contactName);
   const safeInstitutionName = escapeHtml(data.institutionName);
   const safeStudentGroup = escapeHtml(data.studentGroup);
-  const safeTimeframe = escapeHtml(data.timeframe);
+  const hasExactDate = data.timeframe === EXACT_DATE_TIMEFRAME;
+  const timeframe = hasExactDate ? "Exact date" : data.timeframe;
+  const preferredDate = hasExactDate ? formatDateOnly(data.preferredDate) : "";
+  const safeTimeframe = escapeHtml(timeframe);
   const interests = formatInterestsHtml(data.interests);
 
   const whatsappMessage = `Hello, I've submitted an institution enquiry through the AI & Coding website on behalf of ${data.institutionName}. I'd like to continue the conversation here on WhatsApp.`;
@@ -143,6 +153,7 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
       ${detailRow("Institution", safeInstitutionName)}
       ${detailRow("Student Group", safeStudentGroup)}
       ${detailRow("Preferred Timeframe", safeTimeframe)}
+      ${hasExactDate ? detailRow("Exact Preferred Date", escapeHtml(preferredDate)) : ""}
       ${detailRow("Interests", interests)}
     </table>
     <div style="padding:18px 20px;border:1px solid #e2daf2;border-radius:12px;background:#faf8ff;">
@@ -163,7 +174,8 @@ function buildConfirmationEmail(data: InstitutionEnquiryData) {
     "",
     `Institution: ${data.institutionName}`,
     `Student Group: ${data.studentGroup}`,
-    `Preferred Timeframe: ${data.timeframe}`,
+    `Preferred Timeframe: ${timeframe}`,
+    ...(hasExactDate ? [`Exact Preferred Date: ${preferredDate}`] : []),
     "Interests:",
     ...data.interests.map((interest) => `- ${interest}`),
     "",
