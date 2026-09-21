@@ -78,12 +78,59 @@
   -webkit-text-fill-color: transparent;
 }
 
-.description {
-  max-width: 56ch;
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
   margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audienceItem {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 13%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+
+.audienceIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #79cfff;
+  background: color-mix(in srgb, var(--cyan) 14%, transparent);
+}
+
+.audienceText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
   color: var(--foreground-secondary);
-  font-size: clamp(16px, 1.08vw, 17px);
-  line-height: 1.62;
+  text-align: left;
+}
+
+.audienceLabel {
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.audienceDescription {
+  color: var(--foreground-secondary);
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .cta {
@@ -160,6 +207,16 @@
   background-image: linear-gradient(110deg, #245bdb, #087e96);
 }
 
+:global([data-theme="light"]) .audienceIcon {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+:global([data-theme="light"]) .audienceItem {
+  border-color: color-mix(in srgb, var(--primary) 13%, transparent);
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
 :global([data-theme="light"]) .banner:focus-visible {
   outline-color: var(--primary);
 }
@@ -196,6 +253,7 @@
   }
 
   .content {
+    width: 100%;
     max-width: 700px;
   }
 
@@ -212,8 +270,8 @@
     margin-inline: auto;
   }
 
-  .description {
-    max-width: 62ch;
+  .audiences {
+    width: min(100%, 650px);
     margin: 16px auto 0;
   }
 
@@ -244,6 +302,23 @@
   }
 }
 
+@media (max-width: 560px) {
+  .audiences {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    width: min(100%, 390px);
+  }
+
+  .audienceItem {
+    min-height: 58px;
+    padding: 9px 11px;
+  }
+
+  .audienceLabel {
+    font-size: 15px;
+  }
+}
+
 @media (max-width: 480px) {
   .hero {
     width: calc(100% - 20px);
@@ -265,9 +340,8 @@
     font-size: clamp(30px, 8vw, 36px);
   }
 
-  .description {
+  .audiences {
     margin-top: 15px;
-    line-height: 1.58;
   }
 
   .cta {

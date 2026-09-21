@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  BriefcaseBusiness,
+  GraduationCap,
+  Sparkles,
+} from "lucide-react";
 import learningForEveryone from "@/public/images/home/learning-for-everyone.png";
 import styles from "./hero.module.css";
 
@@ -23,11 +29,54 @@ export function Hero() {
             <span className={styles.titleAccent}>Everyone Can Grow.</span>
           </h1>
 
-          <p className={styles.description}>
-            From Standard 6–7 students taking their first step to college learners
-            and working professionals building new capabilities—everyone has room
-            to learn, evolve, and grow.
-          </p>
+          <ul className={styles.audiences}>
+            <li className={styles.audienceItem}>
+              <span className={styles.audienceIcon} aria-hidden="true">
+                <GraduationCap size={18} strokeWidth={2} />
+              </span>
+              <span className={styles.audienceText}>
+                <span className={styles.audienceLabel}>School Students</span>
+                <span className={styles.audienceDescription}>
+                  From Standard 5 onwards
+                </span>
+              </span>
+            </li>
+            <li className={styles.audienceItem}>
+              <span className={styles.audienceIcon} aria-hidden="true">
+                <BookOpen size={18} strokeWidth={2} />
+              </span>
+              <span className={styles.audienceText}>
+                <span className={styles.audienceLabel}>College Students</span>
+                <span className={styles.audienceDescription}>
+                  Build career-ready skills
+                </span>
+              </span>
+            </li>
+            <li className={styles.audienceItem}>
+              <span className={styles.audienceIcon} aria-hidden="true">
+                <BriefcaseBusiness size={18} strokeWidth={2} />
+              </span>
+              <span className={styles.audienceText}>
+                <span className={styles.audienceLabel}>Working Professionals</span>
+                <span className={styles.audienceDescription}>
+                  Upskill in AI &amp; coding
+                </span>
+              </span>
+            </li>
+            <li className={styles.audienceItem}>
+              <span className={styles.audienceIcon} aria-hidden="true">
+                <Sparkles size={18} strokeWidth={2} />
+              </span>
+              <span className={styles.audienceText}>
+                <span className={styles.audienceLabel}>
+                  Beginners &amp; Tech Enthusiasts
+                </span>
+                <span className={styles.audienceDescription}>
+                  Start your learning journey
+                </span>
+              </span>
+            </li>
+          </ul>
 
           <span className={styles.cta}>
             Find Your Learning Path
