@@ -1,25 +1,37 @@
 import { NextResponse } from "next/server";
 
 import { getCurrentAdmin } from "@/lib/admin/auth";
+import {
+  consumeRecoveryAuthorization,
+  RECOVERY_AUTHORIZATION_COOKIE,
+} from "@/lib/admin/recovery-authorization";
 import { createClient } from "@/lib/supabase/server";
 
-export async function POST(request: Request) {
-  const headers = {
-    "Cache-Control": "no-store",
-  };
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store",
+};
 
+function recoveryErrorResponse() {
+  const response = NextResponse.json(
+    {
+      error: "Your recovery session is invalid or has expired.",
+    },
+    {
+      status: 401,
+      headers: NO_STORE_HEADERS,
+    },
+  );
+
+  response.cookies.delete(RECOVERY_AUTHORIZATION_COOKIE);
+
+  return response;
+}
+
+export async function POST(request: Request) {
   const admin = await getCurrentAdmin();
 
   if (!admin) {
-    return NextResponse.json(
-      {
-        error: "Your recovery session is invalid or has expired.",
-      },
-      {
-        status: 401,
-        headers,
-      },
-    );
+    return recoveryErrorResponse();
   }
 
   let body: unknown;
@@ -33,7 +45,7 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-        headers,
+        headers: NO_STORE_HEADERS,
       },
     );
   }
@@ -50,7 +62,7 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-        headers,
+        headers: NO_STORE_HEADERS,
       },
     );
   }
@@ -64,9 +76,13 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-        headers,
+        headers: NO_STORE_HEADERS,
       },
     );
+  }
+
+  if (!(await consumeRecoveryAuthorization(admin.id))) {
+    return recoveryErrorResponse();
   }
 
   const supabase = await createClient();
@@ -78,15 +94,19 @@ export async function POST(request: Request) {
   if (error) {
     console.error("Admin password update failed:", error);
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         error: "Unable to update the password.",
       },
       {
         status: 500,
-        headers,
+        headers: NO_STORE_HEADERS,
       },
     );
+
+    response.cookies.delete(RECOVERY_AUTHORIZATION_COOKIE);
+
+    return response;
   }
 
   /*
@@ -101,13 +121,17 @@ export async function POST(request: Request) {
     scope: "global",
   });
 
-  return NextResponse.json(
+  const response = NextResponse.json(
     {
       success: true,
     },
     {
       status: 200,
-      headers,
+      headers: NO_STORE_HEADERS,
     },
   );
+
+  response.cookies.delete(RECOVERY_AUTHORIZATION_COOKIE);
+
+  return response;
 }

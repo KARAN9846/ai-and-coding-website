@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
 
 import {
   Check,
@@ -64,9 +70,107 @@ export function AdminLinksDashboard() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  const formDialogRef = useRef<HTMLElement>(null);
+  const formFirstFieldRef = useRef<HTMLInputElement>(null);
+  const deleteDialogRef = useRef<HTMLElement>(null);
+  const deleteCancelRef = useRef<HTMLButtonElement>(null);
+  const addButtonRef = useRef<HTMLButtonElement>(null);
+  const formTriggerRef = useRef<HTMLElement | null>(null);
+  const deleteTriggerRef = useRef<HTMLElement | null>(null);
+  const isSavingRef = useRef(false);
+  const isDeletingRef = useRef(false);
+
   useEffect(() => {
     void loadLinks();
   }, []);
+
+  useEffect(() => {
+    isSavingRef.current = isSaving;
+  }, [isSaving]);
+
+  useEffect(() => {
+    isDeletingRef.current = isDeleting;
+  }, [isDeleting]);
+
+  useEffect(() => {
+    const dialog = isFormOpen
+      ? formDialogRef.current
+      : deleteTarget
+        ? deleteDialogRef.current
+        : null;
+
+    if (!dialog) {
+      return;
+    }
+
+    const activeDialog = dialog;
+
+    const restoreTarget = isFormOpen
+      ? formTriggerRef.current
+      : deleteTriggerRef.current;
+    const fallbackRestoreTarget = addButtonRef.current;
+    const initialTarget = isFormOpen
+      ? formFirstFieldRef.current
+      : deleteCancelRef.current;
+
+    initialTarget?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        if (isFormOpen && !isSavingRef.current) {
+          event.preventDefault();
+          setIsFormOpen(false);
+          setEditingLink(null);
+          setFormData(EMPTY_FORM);
+          setFormError("");
+        } else if (deleteTarget && !isDeletingRef.current) {
+          event.preventDefault();
+          setDeleteTarget(null);
+        }
+
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = Array.from(
+        activeDialog.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        activeDialog.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+
+      const focusTarget = restoreTarget?.isConnected
+        ? restoreTarget
+        : fallbackRestoreTarget;
+
+      focusTarget?.focus();
+    };
+  }, [isFormOpen, deleteTarget]);
 
   async function loadLinks() {
     setIsLoading(true);
@@ -138,6 +242,7 @@ export function AdminLinksDashboard() {
   }, [links, searchQuery, activeCategory]);
 
   function openAddForm() {
+    formTriggerRef.current = document.activeElement as HTMLElement | null;
     setEditingLink(null);
     setFormData(EMPTY_FORM);
     setFormError("");
@@ -145,6 +250,7 @@ export function AdminLinksDashboard() {
   }
 
   function openEditForm(link: AdminLink) {
+    formTriggerRef.current = document.activeElement as HTMLElement | null;
     setEditingLink(link);
 
     setFormData({
@@ -167,6 +273,11 @@ export function AdminLinksDashboard() {
     setEditingLink(null);
     setFormData(EMPTY_FORM);
     setFormError("");
+  }
+
+  function openDeleteDialog(link: AdminLink) {
+    deleteTriggerRef.current = document.activeElement as HTMLElement | null;
+    setDeleteTarget(link);
   }
 
   async function handleSaveLink(event: FormEvent<HTMLFormElement>) {
@@ -227,7 +338,10 @@ export function AdminLinksDashboard() {
         setLinks((currentLinks) => [savedLink, ...currentLinks]);
       }
 
-      closeForm();
+      setIsFormOpen(false);
+      setEditingLink(null);
+      setFormData(EMPTY_FORM);
+      setFormError("");
     } catch {
       setFormError("Unable to connect to the server. Please try again.");
     } finally {
@@ -290,7 +404,10 @@ export function AdminLinksDashboard() {
     <main className={styles.page}>
       <div className={styles.backgroundGlow} aria-hidden="true" />
 
-      <div className={styles.shell}>
+      <div
+        className={styles.shell}
+        inert={isFormOpen || deleteTarget !== null ? true : undefined}
+      >
         <header className={styles.header}>
           <div className={styles.brandArea}>
             <div className={styles.brandMark} aria-hidden="true">
@@ -331,6 +448,7 @@ export function AdminLinksDashboard() {
           </div>
 
           <button
+            ref={addButtonRef}
             type="button"
             className={styles.addButton}
             onClick={openAddForm}
@@ -504,7 +622,7 @@ export function AdminLinksDashboard() {
 
                   <button
                     type="button"
-                    onClick={() => setDeleteTarget(link)}
+                    onClick={() => openDeleteDialog(link)}
                     className={styles.deleteAction}
                   >
                     <Trash2 size={15} strokeWidth={1.9} aria-hidden="true" />
@@ -528,10 +646,12 @@ export function AdminLinksDashboard() {
           }}
         >
           <section
+            ref={formDialogRef}
             className={styles.modal}
             role="dialog"
             aria-modal="true"
             aria-labelledby="link-form-title"
+            tabIndex={-1}
           >
             <div className={styles.modalHeader}>
               <div>
@@ -563,6 +683,7 @@ export function AdminLinksDashboard() {
                 </label>
 
                 <input
+                  ref={formFirstFieldRef}
                   id="link-title"
                   type="text"
                   required
@@ -693,13 +814,23 @@ export function AdminLinksDashboard() {
       )}
 
       {deleteTarget && (
-        <div className={styles.modalBackdrop} role="presentation">
+        <div
+          className={styles.modalBackdrop}
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !isDeleting) {
+              setDeleteTarget(null);
+            }
+          }}
+        >
           <section
+            ref={deleteDialogRef}
             className={styles.deleteDialog}
             role="alertdialog"
             aria-modal="true"
             aria-labelledby="delete-link-title"
             aria-describedby="delete-link-description"
+            tabIndex={-1}
           >
             <div className={styles.deleteIcon} aria-hidden="true">
               <Trash2 size={23} strokeWidth={1.8} />
@@ -714,6 +845,7 @@ export function AdminLinksDashboard() {
 
             <div className={styles.deleteDialogActions}>
               <button
+                ref={deleteCancelRef}
                 type="button"
                 className={styles.cancelButton}
                 onClick={() => setDeleteTarget(null)}

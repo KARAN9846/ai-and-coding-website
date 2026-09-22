@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createAuthClient } from "@/lib/supabase/auth-server";
 
-export async function POST() {
+export async function POST(request: Request) {
   const adminEmail = process.env.ADMIN_EMAIL;
   const siteUrl = process.env.ADMIN_SITE_URL;
 
@@ -25,14 +25,26 @@ export async function POST() {
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAuthClient(request);
 
     const { error } = await supabase.auth.resetPasswordForEmail(adminEmail, {
-      redirectTo: `${siteUrl}/api/admin/recovery/callback`,
+      redirectTo: new URL("/api/admin/recovery/callback", siteUrl).toString(),
     });
 
     if (error) {
-      console.error("Admin password recovery failed:", error);
+      if (error.status === 429) {
+        return NextResponse.json(
+          {
+            error: "Too many recovery requests. Please try again later.",
+          },
+          {
+            status: 429,
+            headers,
+          },
+        );
+      }
+
+      console.error("Admin password recovery request failed.");
 
       return NextResponse.json(
         {

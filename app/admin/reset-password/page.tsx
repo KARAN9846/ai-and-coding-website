@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { getCurrentAdmin } from "@/lib/admin/auth";
+import { hasValidRecoveryAuthorization } from "@/lib/admin/recovery-authorization";
 
 import { ResetPasswordForm } from "./reset-password-form";
 
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
 export default async function ResetPasswordPage() {
   const admin = await getCurrentAdmin();
 
-  if (!admin) {
-    redirect("/admin");
+  if (!admin || !(await hasValidRecoveryAuthorization(admin.id))) {
+    redirect("/admin?recovery=invalid");
   }
 
   return (

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createAuthClient } from "@/lib/supabase/auth-server";
 
 export async function POST(request: Request) {
   const adminEmail = process.env.ADMIN_EMAIL;
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   // Authenticate through Supabase.
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAuthClient(request);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: adminEmail,
@@ -76,6 +76,18 @@ export async function POST(request: Request) {
     });
 
     // Reject invalid credentials or unauthorized accounts.
+
+    if (error?.status === 429) {
+      return NextResponse.json(
+        {
+          error: "Too many login attempts. Please try again later.",
+        },
+        {
+          status: 429,
+          headers: responseHeaders,
+        },
+      );
+    }
 
     if (error || !data.user || data.user.id !== adminUserId) {
       // Ensure no unauthorized session remains active.
