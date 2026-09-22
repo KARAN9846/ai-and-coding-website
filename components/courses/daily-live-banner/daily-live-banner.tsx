@@ -11,8 +11,18 @@ export function DailyLiveBanner() {
       <Link href="/enquiry#learner-enquiry-form" className={styles.banner}>
         <div className={styles.content}>
           <span className={styles.liveLabel}>
-            <Radio size={16} strokeWidth={1.8} aria-hidden="true" />
-            ONLINE · LIVE
+            <Radio
+              size={16}
+              strokeWidth={1.8}
+              aria-hidden="true"
+              className={styles.onlineIcon}
+            />
+
+            <span className={styles.onlineText}>ONLINE</span>
+            <span className={styles.liveText}>
+              <span className={styles.liveDot} aria-hidden="true" />
+              LIVE
+            </span>
           </span>
           <h2 className={styles.title}>
             Daily Live
