@@ -1,29 +1,49 @@
 import Link from "next/link";
 
-import { Mail, MapPin, Phone } from "lucide-react";
+import { LockKeyhole, Mail, MapPin, Phone } from "lucide-react";
+
 import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
 import styles from "./footer.module.css";
 
 const PHONE_DISPLAY = "+91 99044 25105";
 const PHONE_HREF = "tel:+919904425105";
+
 const EMAIL = "nyalkarantechnosoft@gmail.com";
-const ADDRESS = "233, Harihar Shopping, Bharuch, Gujarat - 392012";
+
 const MAP_HREF = "https://maps.app.goo.gl/fbG4f3DzjqQ3CDzVA";
 
 const WHATSAPP_HREF =
-  "https://wa.me/919904425105?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20%26%20Coding%20learning%20programs.";
+  "https://wa.me/919904425105?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20the%20AI%20%26%20Coding%20learning%20programs";
 
 const exploreLinks = [
-  { label: "Home", href: "/" },
-  { label: "Courses", href: "/courses#explore-programs" },
-  { label: "Why Us", href: "/why-us" },
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Courses",
+    href: "/courses#explore-programs",
+  },
+  {
+    label: "Why Us",
+    href: "/why-us",
+  },
 ];
 
 const programLinks = [
-  { label: "F2P - Fresher to Professional", href: "/courses#f2p-program" },
-  { label: "Skill Development", href: "/courses#skill-development" },
-  { label: "AI Tools for Creators", href: "/courses#ai-tools-for-creators" },
+  {
+    label: "F2P - Fresher to Professional",
+    href: "/courses#f2p-program",
+  },
+  {
+    label: "Skill Development",
+    href: "/courses#skill-development",
+  },
+  {
+    label: "AI Tools for Creators",
+    href: "/courses#ai-tools-for-creators",
+  },
 ];
 
 const socials = [
@@ -54,6 +74,10 @@ export function Footer() {
 
       <div className={styles.shell}>
         <div className={styles.main}>
+          {/* ========================================
+              BRAND
+          ======================================== */}
+
           <div className={styles.brandArea}>
             <Link
               href="/"
@@ -96,6 +120,10 @@ export function Footer() {
             </div>
           </div>
 
+          {/* ========================================
+              EXPLORE
+          ======================================== */}
+
           <nav className={styles.column} aria-label="Footer explore links">
             <h2>Explore</h2>
 
@@ -108,6 +136,10 @@ export function Footer() {
             </ul>
           </nav>
 
+          {/* ========================================
+              PROGRAMS
+          ======================================== */}
+
           <nav className={styles.column} aria-label="Footer program links">
             <h2>Programs</h2>
 
@@ -119,6 +151,10 @@ export function Footer() {
               ))}
             </ul>
           </nav>
+
+          {/* ========================================
+              CONTACT
+          ======================================== */}
 
           <div className={`${styles.column} ${styles.contactColumn}`}>
             <h2>Contact</h2>
@@ -169,9 +205,26 @@ export function Footer() {
           </div>
         </div>
 
+        {/* ========================================
+            BOTTOM BAR
+        ======================================== */}
+
         <div className={styles.bottomBar}>
           <p>&copy; 2026 AI &amp; Coding. All rights reserved.</p>
-          <p>A Nyalkaran Technosoft LLP Initiative</p>
+
+          <div className={styles.bottomMeta}>
+            <p>A Nyalkaran Technosoft LLP Initiative</p>
+
+            <Link
+              href="/admin"
+              className={styles.adminAccess}
+              aria-label="Open AI & Coding admin access"
+            >
+              <LockKeyhole size={13} strokeWidth={1.9} aria-hidden="true" />
+
+              <span>Admin Access</span>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
