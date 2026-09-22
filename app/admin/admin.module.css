@@ -208,6 +208,16 @@
     box-shadow 180ms ease;
 }
 
+/* Reset-password inputs do not have a left icon */
+.field > .input {
+  padding-left: 15px;
+}
+
+.input::placeholder {
+  color: var(--foreground-secondary);
+  opacity: 0.7;
+}
+
 .input::placeholder {
   color: var(--foreground-secondary);
   opacity: 0.7;
@@ -488,6 +498,68 @@
 
 @media (prefers-reduced-motion: reduce) {
   .dashboardCard button {
+    transition: none;
+  }
+}
+
+.forgotPassword {
+  width: fit-content;
+  margin: -6px auto 0;
+  padding: 4px;
+
+  border: 0;
+
+  color: var(--primary);
+  background: transparent;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.forgotPassword:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.forgotPassword:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.recoveryMessage {
+  margin: -5px 0 0;
+
+  padding: 11px 13px;
+
+  border: 1px solid color-mix(in srgb, #22c55e 30%, var(--border));
+
+  border-radius: 9px;
+
+  color: color-mix(in srgb, #22c55e 78%, var(--foreground));
+
+  background: color-mix(in srgb, #22c55e 8%, transparent);
+
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .forgotPassword:not(:disabled):hover {
+    color: var(--foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forgotPassword {
     transition: none;
   }
 }

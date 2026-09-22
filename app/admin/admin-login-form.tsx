@@ -15,15 +15,20 @@ export function AdminLoginForm() {
 
   const [error, setError] = useState("");
 
+  const [recoveryMessage, setRecoveryMessage] = useState("");
+
+  const [isRecovering, setIsRecovering] = useState(false);
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!password || isSubmitting) {
+    if (!password || isSubmitting || isRecovering) {
       return;
     }
 
     setIsSubmitting(true);
     setError("");
+    setRecoveryMessage("");
 
     try {
       const response = await fetch("/api/admin/login", {
@@ -40,9 +45,9 @@ export function AdminLoginForm() {
         }),
       });
 
-      if (!response.ok) {
-        const result = await response.json();
+      const result = await response.json();
 
+      if (!response.ok) {
         setError(
           typeof result.error === "string"
             ? result.error
@@ -54,9 +59,10 @@ export function AdminLoginForm() {
         return;
       }
 
-      // Use a full navigation so that the
-      // dashboard receives the latest auth cookies.
-
+      /*
+       * Use a full navigation so the dashboard
+       * receives the latest authentication cookies.
+       */
       window.location.assign("/admin/dashboard");
     } catch {
       setError("Unable to connect. Please try again.");
@@ -64,6 +70,46 @@ export function AdminLoginForm() {
       setPassword("");
     } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  async function handleForgotPassword() {
+    if (isRecovering || isSubmitting) {
+      return;
+    }
+
+    setIsRecovering(true);
+    setError("");
+    setRecoveryMessage("");
+
+    try {
+      const response = await fetch("/api/admin/forgot-password", {
+        method: "POST",
+
+        credentials: "same-origin",
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setError(
+          typeof result.error === "string"
+            ? result.error
+            : "Unable to send the recovery email. Please try again.",
+        );
+
+        return;
+      }
+
+      setRecoveryMessage(
+        typeof result.message === "string"
+          ? result.message
+          : "Password reset instructions have been sent to the registered admin email.",
+      );
+    } catch {
+      setError("Unable to send the recovery email. Please try again.");
+    } finally {
+      setIsRecovering(false);
     }
   }
 
@@ -117,12 +163,22 @@ export function AdminLoginForm() {
                 if (error) {
                   setError("");
                 }
+
+                if (recoveryMessage) {
+                  setRecoveryMessage("");
+                }
               }}
               placeholder="Enter your password"
               className={styles.input}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isRecovering}
               aria-invalid={Boolean(error)}
-              aria-describedby={error ? "admin-login-error" : undefined}
+              aria-describedby={
+                error
+                  ? "admin-login-error"
+                  : recoveryMessage
+                    ? "admin-recovery-message"
+                    : undefined
+              }
             />
           </div>
         </div>
@@ -136,7 +192,7 @@ export function AdminLoginForm() {
         <button
           type="submit"
           className={styles.submitButton}
-          disabled={isSubmitting || !password}
+          disabled={isSubmitting || isRecovering || !password}
         >
           <span>{isSubmitting ? "Signing In..." : "Sign In"}</span>
 
@@ -144,6 +200,26 @@ export function AdminLoginForm() {
             <ArrowRight size={19} strokeWidth={2} aria-hidden="true" />
           )}
         </button>
+
+        <button
+          type="button"
+          className={styles.forgotPassword}
+          onClick={handleForgotPassword}
+          disabled={isRecovering || isSubmitting}
+        >
+          {isRecovering ? "Sending recovery email..." : "Forgot password?"}
+        </button>
+
+        {recoveryMessage && (
+          <p
+            id="admin-recovery-message"
+            className={styles.recoveryMessage}
+            role="status"
+            aria-live="polite"
+          >
+            {recoveryMessage}
+          </p>
+        )}
       </form>
 
       <div className={styles.loginFooter}>
