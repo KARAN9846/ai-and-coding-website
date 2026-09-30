@@ -1,6 +1,7 @@
 import { AnnouncementBar } from "@/components/layout/announcement-bar/announcement-bar";
 import { Navbar } from "@/components/layout/navbar/navbar";
 import { WhyUsHero } from "@/components/why-us/why-us-hero/why-us-hero";
+import { CompanyFoundation } from "@/components/why-us/company-foundation/company-foundation";
 import { WhyChoose } from "@/components/why-us/why-choose/why-choose";
 import { HowYouLearn } from "@/components/why-us/how-you-learn/how-you-learn";
 import { LearningSupport } from "@/components/why-us/learning-support/learning-support";
@@ -16,6 +17,7 @@ export default function WhyUsPage() {
       <Navbar />
 
       <WhyUsHero />
+      <CompanyFoundation />
       <WhyChoose />
       <HowYouLearn />
       <LearningSupport />
