@@ -418,6 +418,140 @@
   content: none;
 }
 
+.navLabel,
+.mobileLinkLabel,
+.openStatus {
+  display: inline-flex;
+  align-items: center;
+}
+
+.navLabel,
+.mobileLinkLabel {
+  min-width: 0;
+
+  white-space: nowrap;
+}
+
+.navLabel {
+  gap: 5px;
+}
+
+.linkText {
+  display: inline-block;
+  flex: 0 0 auto;
+
+  transition: transform 180ms ease;
+}
+
+.workshopLink:not(.workshopOpen) .linkText {
+  transform: translateX(1.25rem);
+}
+
+.workshopOpen .linkText {
+  background: linear-gradient(
+    105deg,
+    var(--cyan) 0%,
+    #3e8cff 32%,
+    #9a6cff 67%,
+    #ff9a4d 100%
+  );
+  background-clip: text;
+  background-size: 100% 100%;
+
+  color: transparent;
+
+  filter: brightness(1.04)
+    drop-shadow(0 0 6px color-mix(in srgb, var(--cyan) 28%, transparent));
+
+  animation: workshopOpenBreath 3.4s ease-in-out infinite;
+
+  -webkit-background-clip: text;
+}
+
+.navLink.workshopOpen:not(.active) {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cyan) 9%, transparent),
+    color-mix(in srgb, #8b5cf6 8%, transparent),
+    color-mix(in srgb, #ff8a3d 5%, transparent)
+  );
+
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--cyan) 14%, transparent);
+}
+
+.openStatus {
+  gap: 3px;
+
+  flex: 0 0 auto;
+
+  padding: 2px 5px;
+
+  border: 1px solid color-mix(in srgb, var(--cyan) 31%, transparent);
+  border-radius: 999px;
+
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--cyan) 15%, transparent),
+    color-mix(in srgb, #8b5cf6 13%, transparent)
+  );
+
+  color: color-mix(in srgb, var(--cyan) 84%, white);
+
+  font-size: 8px;
+  font-weight: 850;
+  line-height: 1.25;
+
+  letter-spacing: 0.08em;
+
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--cyan) 22%, transparent)
+  );
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 180ms ease;
+
+  -webkit-text-fill-color: currentColor;
+}
+
+.workshopOpen .openStatus {
+  visibility: visible;
+  opacity: 1;
+}
+
+.statusBullet {
+  color: #7bf2b0;
+
+  font-size: 10px;
+  line-height: 1;
+}
+
+[data-theme="light"] .workshopOpen .linkText {
+  background-image: linear-gradient(
+    105deg,
+    #087ea4 0%,
+    #175dcc 32%,
+    #6d38c7 68%,
+    #b94f13 100%
+  );
+}
+
+[data-theme="light"] .openStatus {
+  border-color: color-mix(in srgb, #1769d2 30%, transparent);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, #0b82ab 12%, white),
+    color-mix(in srgb, #7142cc 10%, white)
+  );
+  color: #145fc0;
+}
+
+[data-theme="light"] .statusBullet {
+  color: #118852;
+}
+
 /* =========================================================
    ACTIONS
    ========================================================= */
@@ -734,6 +868,15 @@
   white-space: nowrap;
 }
 
+.mobileLinkLabel {
+  gap: 8px;
+}
+
+.mobileLinkLabel .openStatus {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
 .mobileLink > svg {
   flex: 0 0 auto;
   margin-left: auto;
@@ -855,6 +998,19 @@
     box-shadow:
       0 0 8px var(--cyan),
       0 0 17px color-mix(in srgb, var(--cyan) 75%, transparent);
+  }
+}
+
+@keyframes workshopOpenBreath {
+  0%,
+  100% {
+    filter: brightness(1.02)
+      drop-shadow(0 0 5px color-mix(in srgb, var(--cyan) 22%, transparent));
+  }
+
+  50% {
+    filter: brightness(1.15)
+      drop-shadow(0 0 11px color-mix(in srgb, var(--cyan) 42%, transparent));
   }
 }
 
@@ -1133,13 +1289,16 @@
   .mobileMenu,
   .mobileLink,
   .mobileEnquireButton,
+  .openStatus,
+  .linkText,
   .brand,
   .brandMark {
     transition: none;
   }
 
   .brandMarkCore,
-  .navLink.active::after {
+  .navLink.active::after,
+  .workshopOpen .linkText {
     animation: none;
   }
 

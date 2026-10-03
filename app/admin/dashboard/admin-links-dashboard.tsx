@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 
 import styles from "./dashboard.module.css";
+import { WorkshopConfigurationSettings } from "./workshop-configuration-settings";
 
 type AdminLink = {
   id: string;
@@ -457,6 +458,8 @@ export function AdminLinksDashboard() {
             Add New Link
           </button>
         </section>
+
+        <WorkshopConfigurationSettings />
 
         <section className={styles.controls} aria-label="Link filters">
           <div className={styles.searchWrapper}>

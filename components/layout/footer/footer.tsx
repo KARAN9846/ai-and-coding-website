@@ -29,6 +29,10 @@ const exploreLinks = [
     label: "Why Us",
     href: "/why-us",
   },
+  {
+    label: "Workshops",
+    href: "/workshops",
+  },
 ];
 
 const programLinks = [

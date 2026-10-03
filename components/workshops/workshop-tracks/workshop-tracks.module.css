@@ -1,0 +1,353 @@
+.section {
+  padding: 22px 0 clamp(40px, 4.5vw, 56px);
+  scroll-margin-top: 7rem;
+}
+
+.shell {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.heading h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(26px, 2.65vw, 36px);
+  font-weight: 780;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.heading p {
+  max-width: 520px;
+  margin: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--cyan) 78%, var(--foreground)), color-mix(in srgb, #9a75ff 64%, var(--foreground-secondary)));
+  background-clip: text;
+  color: transparent;
+  font-size: 13px;
+  font-weight: 590;
+  letter-spacing: 0.005em;
+  line-height: 1.5;
+  text-align: right;
+  -webkit-background-clip: text;
+}
+
+.programs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+}
+
+.program {
+  --program-accent: var(--cyan);
+  --program-accent-secondary: var(--primary);
+  --program-title-start: #67ecff;
+  --program-title-end: #5591ff;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 25px;
+  border: 1px solid color-mix(in srgb, var(--program-accent) 24%, var(--border));
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 96% 2%, color-mix(in srgb, var(--program-accent-secondary) 17%, transparent), transparent 36%),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--program-accent) 9%, transparent), transparent 28%),
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-elevated) 89%, transparent), color-mix(in srgb, var(--surface) 95%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--program-accent) 8%, transparent),
+    0 16px 40px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.program::before {
+  position: absolute;
+  inset: 0 auto auto 25px;
+  width: 98px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--program-accent), var(--program-accent-secondary));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--program-accent) 35%, transparent);
+  content: "";
+}
+
+.toolsProgram {
+  --program-accent: var(--cyan);
+  --program-accent-secondary: var(--primary);
+  --program-title-start: #68edff;
+  --program-title-end: #5590ff;
+}
+
+.developerProgram {
+  --program-accent: #9a75ff;
+  --program-accent-secondary: #4f8cff;
+  --program-title-start: #67a2ff;
+  --program-title-end: #b084ff;
+}
+
+.roboticsProgram {
+  --program-accent: var(--orange);
+  --program-accent-secondary: var(--cyan);
+  --program-title-start: #ffae35;
+  --program-title-end: #64deff;
+}
+
+.programHeader {
+  display: grid;
+  min-height: 68px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 15px;
+}
+
+.programIcon {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--program-accent) 30%, var(--border));
+  border-radius: 17px;
+  color: var(--program-accent);
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--program-accent) 18%, transparent), transparent 52%),
+    linear-gradient(145deg, color-mix(in srgb, var(--program-accent) 12%, var(--surface)), color-mix(in srgb, var(--program-accent-secondary) 7%, var(--surface)));
+  box-shadow:
+    inset 0 0 17px color-mix(in srgb, var(--program-accent) 8%, transparent),
+    0 8px 22px color-mix(in srgb, var(--program-accent) 16%, transparent);
+}
+
+.programHeader h3 {
+  margin: 0;
+  background: linear-gradient(95deg, var(--program-title-start), var(--program-title-end));
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(20px, 1.8vw, 25px);
+  font-weight: 790;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  -webkit-background-clip: text;
+}
+
+.description {
+  min-height: 88px;
+  margin: 14px 0 0;
+  background: linear-gradient(100deg, color-mix(in srgb, var(--foreground) 76%, var(--program-accent)), color-mix(in srgb, var(--foreground-secondary) 74%, var(--program-accent-secondary)));
+  background-clip: text;
+  color: transparent;
+  font-size: 12.5px;
+  font-weight: 540;
+  letter-spacing: 0.002em;
+  line-height: 1.62;
+  -webkit-background-clip: text;
+}
+
+.developerProgram .description {
+  background-image: linear-gradient(100deg, color-mix(in srgb, var(--foreground) 78%, var(--program-accent-secondary)), color-mix(in srgb, var(--foreground-secondary) 74%, var(--program-accent)));
+}
+
+.focusAreas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 17px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.focusAreas li {
+  display: flex;
+  min-width: 0;
+  min-height: 47px;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--program-accent) 12%, var(--border));
+  border-radius: 11px;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 38%, transparent);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.focusAreas li span {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--program-accent);
+  border: 1px solid color-mix(in srgb, var(--program-accent) 16%, transparent);
+  background: color-mix(in srgb, var(--program-accent) 11%, transparent);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.roboticsProgram .focusAreas li:nth-child(even) span {
+  color: var(--program-accent-secondary);
+  border-color: color-mix(in srgb, var(--program-accent-secondary) 17%, transparent);
+  background: color-mix(in srgb, var(--program-accent-secondary) 9%, transparent);
+}
+
+:global([data-theme="light"]) .program {
+  border-color: color-mix(in srgb, var(--program-accent) 21%, var(--border));
+  background:
+    radial-gradient(circle at 96% 2%, color-mix(in srgb, var(--program-accent-secondary) 11%, transparent), transparent 36%),
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--program-accent) 7%, transparent), transparent 28%),
+    linear-gradient(145deg, white, color-mix(in srgb, var(--program-accent-secondary) 2%, white));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--program-accent) 7%, transparent),
+    0 15px 34px rgba(35, 62, 111, 0.1);
+}
+
+:global([data-theme="light"]) .programHeader h3 {
+  --program-title-start: color-mix(in srgb, var(--program-accent) 84%, #17213d);
+  --program-title-end: color-mix(in srgb, var(--program-accent-secondary) 82%, #17213d);
+}
+
+:global([data-theme="light"]) .heading p {
+  background-image: linear-gradient(90deg, #087da0, #5b51ad);
+}
+
+:global([data-theme="light"]) .description {
+  background-image: linear-gradient(100deg, color-mix(in srgb, #17213d 86%, var(--program-accent)), color-mix(in srgb, #48536f 84%, var(--program-accent-secondary)));
+}
+
+:global([data-theme="light"]) .developerProgram .description {
+  background-image: linear-gradient(100deg, color-mix(in srgb, #17213d 88%, var(--program-accent-secondary)), color-mix(in srgb, #48536f 85%, var(--program-accent)));
+}
+
+:global([data-theme="light"]) .programIcon {
+  box-shadow:
+    inset 0 0 12px color-mix(in srgb, var(--program-accent) 5%, transparent),
+    0 7px 16px color-mix(in srgb, var(--program-accent) 10%, transparent);
+}
+
+:global([data-theme="light"]) .focusAreas li {
+  border-color: color-mix(in srgb, var(--program-accent) 12%, var(--border));
+  background: color-mix(in srgb, white 93%, var(--program-accent-secondary));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .program:hover {
+    border-color: color-mix(in srgb, var(--program-accent) 32%, var(--border));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--program-accent) 10%, transparent),
+      0 20px 46px color-mix(in srgb, var(--shadow-color) 19%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .focusAreas li:hover {
+    border-color: color-mix(in srgb, var(--program-accent) 24%, var(--border));
+    background: color-mix(in srgb, var(--program-accent-secondary) 5%, var(--surface));
+  }
+
+  .focusAreas li:hover span {
+    color: color-mix(in srgb, var(--program-accent) 82%, white);
+    background: color-mix(in srgb, var(--program-accent) 16%, transparent);
+  }
+}
+
+@media (max-width: 1023px) {
+  .programs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .program {
+    min-height: 422px;
+  }
+
+  .program:last-child:nth-child(odd) {
+    width: calc(50% - 8px);
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .heading p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  .programs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .program {
+    min-height: 353px;
+  }
+
+  .program:last-child:nth-child(odd) {
+    width: auto;
+    grid-column: auto;
+    justify-self: stretch;
+  }
+
+  .description {
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 19px 0 40px;
+  }
+
+  .shell {
+    width: calc(100% - 20px);
+  }
+
+  .program {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .program::before {
+    left: 20px;
+  }
+
+  .programHeader {
+    min-height: 66px;
+  }
+}
+
+@media (max-width: 390px) {
+  .shell {
+    width: calc(100% - 16px);
+  }
+
+  .focusAreas {
+    gap: 6px;
+  }
+
+  .focusAreas li {
+    padding-inline: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .program,
+  .focusAreas li,
+  .focusAreas li span {
+    transition: none;
+  }
+}

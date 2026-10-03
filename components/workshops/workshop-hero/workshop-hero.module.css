@@ -1,0 +1,363 @@
+.hero {
+  width: min(1240px, calc(100% - clamp(20px, 3.2vw, 48px)));
+  margin: clamp(10px, 1.3vw, 18px) auto 0;
+}
+
+.shell {
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  min-height: 340px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr);
+  align-items: center;
+  gap: clamp(4px, 1.4vw, 18px);
+  overflow: hidden;
+  padding: clamp(28px, 3.2vw, 42px);
+  border: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--cyan) 13%, transparent), transparent 28%),
+    radial-gradient(circle at 72% 100%, color-mix(in srgb, #8b5cf6 11%, transparent), transparent 35%),
+    linear-gradient(138deg, color-mix(in srgb, var(--surface-elevated) 92%, transparent), color-mix(in srgb, var(--surface) 94%, var(--background)));
+  box-shadow: 0 22px 65px color-mix(in srgb, var(--shadow-color) 32%, transparent);
+}
+
+.grid {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 3%, transparent) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(90deg, black, transparent 88%);
+  opacity: 0.56;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  max-width: 690px;
+}
+
+.visual {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 275px;
+  align-self: stretch;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-block: -14px -24px;
+}
+
+.imageGlow {
+  position: absolute;
+  inset: 13% 2% 4% 5%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 54% 44%, color-mix(in srgb, var(--cyan) 20%, transparent), transparent 49%),
+    radial-gradient(circle at 72% 66%, color-mix(in srgb, #8b6cff 16%, transparent), transparent 58%);
+  filter: blur(22px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.artwork {
+  position: relative;
+  z-index: 1;
+  width: min(128%, 640px);
+  max-width: none;
+  height: auto;
+  max-height: 365px;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 18px 25px color-mix(in srgb, #020717 34%, transparent));
+}
+
+.topline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 14px;
+  margin-bottom: 13px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--foreground-muted);
+  font-size: 9px;
+  font-weight: 820;
+  letter-spacing: 0.17em;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--orange) 27%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--orange) 78%, var(--foreground));
+  background: color-mix(in srgb, var(--orange) 7%, transparent);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.status span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 9px currentColor;
+}
+
+.statusOpen {
+  border-color: color-mix(in srgb, #65e9a1 30%, transparent);
+  color: #71ecaa;
+  background: color-mix(in srgb, #36c77b 8%, transparent);
+}
+
+.content h1 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(40px, 5vw, 66px);
+  font-weight: 790;
+  letter-spacing: -0.058em;
+  line-height: 0.98;
+}
+
+.content h1 span {
+  background: linear-gradient(100deg, var(--primary), var(--cyan) 68%, #8b6cff);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+}
+
+.headline {
+  margin: 15px 0 0;
+  color: var(--foreground);
+  font-size: clamp(16px, 1.7vw, 21px);
+  font-weight: 740;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin: 6px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.philosophy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  color: color-mix(in srgb, var(--foreground-secondary) 88%, var(--cyan));
+  font-size: 10px;
+  font-weight: 720;
+}
+
+.philosophy svg {
+  color: var(--cyan);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 19px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 780;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.primaryCta {
+  border: 1px solid color-mix(in srgb, var(--primary) 62%, transparent);
+  color: white;
+  background: linear-gradient(110deg, var(--primary), color-mix(in srgb, var(--primary) 62%, var(--cyan)));
+  box-shadow: 0 11px 26px color-mix(in srgb, var(--primary) 21%, transparent);
+}
+
+.secondaryCta {
+  border: 1px solid var(--border-strong);
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.primaryCta:focus-visible,
+.secondaryCta:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+:global([data-theme="light"]) .shell {
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--cyan) 11%, transparent), transparent 28%),
+    radial-gradient(circle at 72% 100%, color-mix(in srgb, #8b5cf6 9%, transparent), transparent 35%),
+    linear-gradient(138deg, white, color-mix(in srgb, var(--primary) 4%, white));
+}
+
+:global([data-theme="light"]) .imageGlow {
+  background:
+    radial-gradient(circle at 54% 44%, color-mix(in srgb, #22bfe9 20%, transparent), transparent 49%),
+    radial-gradient(circle at 72% 66%, color-mix(in srgb, #7457e9 13%, transparent), transparent 58%);
+  filter: blur(20px);
+  opacity: 0.72;
+}
+
+:global([data-theme="light"]) .artwork {
+  filter: drop-shadow(0 17px 23px rgba(28, 54, 111, 0.2));
+}
+
+:global([data-theme="light"]) .statusOpen {
+  color: #08783f;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryCta:hover,
+  .secondaryCta:hover {
+    transform: translateY(-2px);
+  }
+
+  .primaryCta:hover {
+    box-shadow: 0 15px 32px color-mix(in srgb, var(--primary) 29%, transparent);
+  }
+
+  .secondaryCta:hover {
+    border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+    background: color-mix(in srgb, var(--primary) 7%, var(--surface));
+  }
+}
+
+@media (max-width: 1023px) {
+  .shell {
+    min-height: 320px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+    padding: 28px;
+  }
+
+  .visual {
+    min-height: 245px;
+    margin-right: -10px;
+  }
+
+  .artwork {
+    width: 132%;
+    max-height: 320px;
+  }
+
+  .content h1 {
+    font-size: clamp(40px, 5.7vw, 56px);
+  }
+}
+
+@media (max-width: 760px) {
+  .shell {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .content {
+    max-width: 620px;
+    text-align: center;
+  }
+
+  .topline,
+  .philosophy,
+  .actions {
+    justify-content: center;
+  }
+
+  .visual {
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    margin: -10px 0 -20px;
+  }
+
+  .imageGlow {
+    inset: 8% 10% 3%;
+  }
+
+  .artwork {
+    width: min(90%, 520px);
+    max-height: 270px;
+    object-position: center bottom;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    width: calc(100% - 20px);
+  }
+
+  .shell {
+    padding: 27px 19px 20px;
+    border-radius: 21px;
+  }
+
+  .content h1 {
+    font-size: clamp(38px, 11.5vw, 52px);
+  }
+
+  .content h1 span {
+    display: block;
+  }
+
+  .visual {
+    margin: -12px 0 -14px;
+  }
+
+  .artwork {
+    width: min(90%, 430px);
+    max-height: 230px;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero {
+    width: calc(100% - 16px);
+  }
+
+  .shell {
+    padding-inline: 16px;
+  }
+
+  .artwork {
+    max-height: 205px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryCta,
+  .secondaryCta {
+    transition: none;
+  }
+}

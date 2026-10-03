@@ -1,0 +1,43 @@
+.card { margin-bottom: 18px; padding: 20px; border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border)); border-radius: 18px; background: color-mix(in srgb, var(--surface) 95%, transparent); }
+.card > header { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
+.card > header > svg { width: 42px; height: 42px; padding: 9px; border: 1px solid var(--border); border-radius: 12px; color: var(--primary); }
+.card header p { margin: 0; color: var(--primary); font-size: 9px; font-weight: 800; letter-spacing: .13em; }
+.card h2 { margin: 3px 0 0; font-size: 19px; }
+.state { display: flex; min-height: 80px; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--border); border-radius: 12px; color: var(--foreground-secondary); }
+.state button, .save { display: flex; align-items: center; gap: 6px; }
+.global { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.global fieldset, .option { min-width: 0; padding: 15px; border: 1px solid var(--border); border-radius: 14px; background: color-mix(in srgb, var(--background) 68%, transparent); }
+.global legend { font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.toggleRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.toggleRow small, .card label small { display: block; margin-top: 3px; color: var(--foreground-secondary); font-size: 8.5px; }
+.toggle { display: flex; align-items: center; gap: 7px; font-size: 9px; font-weight: 800; }
+.toggle button { position: relative; width: 46px; height: 26px; border: 1px solid var(--border); border-radius: 99px; background: var(--surface); }
+.toggle button span { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--foreground-secondary); }
+.toggle button[aria-checked="true"] { background: var(--primary); }
+.toggle button[aria-checked="true"] span { transform: translateX(20px); background: #fff; }
+.card label { display: grid; gap: 5px; font-size: 10px; font-weight: 700; }
+.card input, .card textarea, .card select { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--border); border-radius: 9px; color: var(--foreground); background: var(--background); font: inherit; font-size: 10px; }
+.card textarea { resize: vertical; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wide { grid-column: 1 / -1; }
+.footer { grid-column: 1 / -1; display: flex; min-height: 44px; align-items: center; justify-content: flex-end; gap: 10px; }
+.feedback { margin-right: auto; }
+.feedback p, .error { margin: 0; font-size: 9px; }
+.feedback p:first-child, .error { color: #ef4444; }
+.feedback p:last-child { color: #18a66a; }
+.save { min-height: 38px; padding: 8px 13px; border: 0; border-radius: 9px; color: #fff; background: var(--primary); font-size: 10px; font-weight: 750; }
+.save:disabled { opacity: .5; }
+.workshops { display: grid; gap: 12px; margin-top: 16px; }
+.option[data-program="ai-tools-prompting"] { --accent: var(--cyan); }
+.option[data-program="ai-coding-developer-growth"] { --accent: #8b72ff; }
+.option[data-program="ai-robotics"] { --accent: var(--orange); }
+.optionHead { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 9px; margin-bottom: 12px; }
+.optionHead svg { width: 36px; height: 36px; padding: 7px; border-radius: 10px; color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.optionHead h3 { margin: 0; font-size: 14px; }
+.optionHead strong { padding: 5px 8px; border-radius: 99px; color: #7c879f; background: color-mix(in srgb, #7c879f 10%, transparent); font-size: 8px; }
+.optionHead strong[data-status="open"] { color: #18a978; }
+.optionHead strong[data-status="full"] { color: #d88b24; }
+.card input:focus-visible, .card textarea:focus-visible, .card select:focus-visible, .card button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.card [aria-invalid="true"] { border-color: #ef4444; }
+@media (max-width: 850px) { .global { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; } .wide, .footer { grid-column: 1; } }
+@media (max-width: 520px) { .card { padding: 14px 12px; } .toggleRow, .footer { align-items: stretch; flex-direction: column; } .toggle { justify-content: space-between; } .save { width: 100%; } .optionHead { grid-template-columns: auto 1fr; } .optionHead strong { grid-column: 1 / -1; width: max-content; } }

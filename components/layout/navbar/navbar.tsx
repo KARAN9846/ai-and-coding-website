@@ -12,12 +12,60 @@ const navigation = [
   { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
   { label: "Why Us", href: "/why-us" },
+  { label: "Workshops", href: "/workshops" },
 ];
+
+type WorkshopStatusListener = (registrationOpen: boolean) => void;
+
+let cachedWorkshopRegistrationOpen: boolean | null = null;
+let workshopStatusRequest: Promise<void> | null = null;
+const workshopStatusListeners = new Set<WorkshopStatusListener>();
+
+function publishWorkshopStatus(registrationOpen: boolean) {
+  cachedWorkshopRegistrationOpen = registrationOpen;
+
+  for (const listener of workshopStatusListeners) {
+    listener(registrationOpen);
+  }
+}
+
+function revalidateWorkshopStatus() {
+  if (workshopStatusRequest) return workshopStatusRequest;
+
+  workshopStatusRequest = (async () => {
+    try {
+      const response = await fetch("/api/workshops/status", {
+        cache: "no-store",
+      });
+      const result: unknown = await response.json();
+
+      if (!response.ok || typeof result !== "object" || result === null) {
+        return;
+      }
+
+      const registrationOpen = (
+        result as Record<string, unknown>
+      ).registrationOpen;
+
+      if (typeof registrationOpen === "boolean") {
+        publishWorkshopStatus(registrationOpen);
+      }
+    } catch {
+      // Retain the last successfully known state when revalidation fails.
+    }
+  })().finally(() => {
+    workshopStatusRequest = null;
+  });
+
+  return workshopStatusRequest;
+}
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] =
+    useState(() => cachedWorkshopRegistrationOpen === true);
 
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
@@ -43,6 +91,15 @@ export function Navbar() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    workshopStatusListeners.add(setIsWorkshopRegistrationOpen);
+    void revalidateWorkshopStatus();
+
+    return () => {
+      workshopStatusListeners.delete(setIsWorkshopRegistrationOpen);
     };
   }, []);
 
@@ -95,9 +152,32 @@ export function Navbar() {
                   href={item.href}
                   className={`${styles.navLink} ${
                     isActiveLink(item.href) ? styles.active : ""
+                  } ${
+                    item.href === "/workshops" ? styles.workshopLink : ""
+                  } ${
+                    item.href === "/workshops" &&
+                    isWorkshopRegistrationOpen
+                      ? styles.workshopOpen
+                      : ""
                   }`}
                 >
-                  {item.label}
+                  <span className={styles.navLabel}>
+                    <span className={styles.linkText}>{item.label}</span>
+                    {item.href === "/workshops" && (
+                      <span
+                        className={styles.openStatus}
+                        aria-hidden={!isWorkshopRegistrationOpen}
+                      >
+                        <span
+                          className={styles.statusBullet}
+                          aria-hidden="true"
+                        >
+                          •
+                        </span>
+                        OPEN
+                      </span>
+                    )}
+                  </span>
                 </Link>
               ))}
             </div>
@@ -196,13 +276,32 @@ export function Navbar() {
                   href={item.href}
                   className={`${styles.mobileLink} ${
                     isActiveLink(item.href) ? styles.mobileLinkActive : ""
+                  } ${
+                    item.href === "/workshops" &&
+                    isWorkshopRegistrationOpen
+                      ? styles.workshopOpen
+                      : ""
                   }`}
                   onClick={closeMenu}
                   style={{
                     transitionDelay: isMenuOpen ? `${index * 45}ms` : "0ms",
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span className={styles.mobileLinkLabel}>
+                    <span className={styles.linkText}>{item.label}</span>
+                    {item.href === "/workshops" &&
+                      isWorkshopRegistrationOpen && (
+                        <span className={styles.openStatus}>
+                          <span
+                            className={styles.statusBullet}
+                            aria-hidden="true"
+                          >
+                            •
+                          </span>
+                          OPEN
+                        </span>
+                      )}
+                  </span>
                   <ArrowRight size={18} strokeWidth={1.7} aria-hidden="true" />
                 </Link>
               ))}

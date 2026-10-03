@@ -1,0 +1,423 @@
+.section {
+  padding: clamp(22px, 3.5vw, 44px) 0 clamp(42px, 5vw, 66px);
+  scroll-margin-top: 7rem;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(20px, 2.7vw, 30px);
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--border));
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 5% 0%, color-mix(in srgb, var(--cyan) 7%, transparent), transparent 28%),
+    radial-gradient(circle at 96% 100%, color-mix(in srgb, #8f70ff 7%, transparent), transparent 30%),
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-elevated) 90%, transparent), color-mix(in srgb, var(--surface) 96%, transparent));
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+}
+
+.heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--cyan);
+  font-size: 9px;
+  font-weight: 840;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+}
+
+.heading h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(24px, 2.7vw, 34px);
+  font-weight: 790;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.introCopy {
+  max-width: 560px;
+  text-align: right;
+}
+
+.introCopy p,
+.introCopy small {
+  display: block;
+  margin: 0;
+  line-height: 1.58;
+}
+
+.introCopy p {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 78%, var(--cyan)), color-mix(in srgb, var(--foreground-secondary) 76%, #9276ff));
+  background-clip: text;
+  color: transparent;
+  font-size: 13px;
+  font-weight: 570;
+  -webkit-background-clip: text;
+}
+
+.introCopy small {
+  margin-top: 3px;
+  color: color-mix(in srgb, var(--foreground-secondary) 73%, #8f78e8);
+  font-size: 10.5px;
+  font-weight: 530;
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  --option-accent: var(--cyan);
+  --option-secondary: var(--primary);
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(300px, 1fr) minmax(250px, 0.72fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 13px 14px;
+  border: 1px solid color-mix(in srgb, var(--option-accent) 19%, var(--border));
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--option-accent) 7%, transparent), transparent 30%),
+    color-mix(in srgb, var(--background) 42%, transparent);
+}
+
+.toolsOption {
+  --option-accent: var(--cyan);
+  --option-secondary: var(--primary);
+}
+
+.developerOption {
+  --option-accent: #9374ff;
+  --option-secondary: #4e91ff;
+}
+
+.roboticsOption {
+  --option-accent: var(--orange);
+  --option-secondary: var(--cyan);
+}
+
+.identity {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.icon,
+.unavailableIcon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--option-accent) 32%, var(--border));
+  border-radius: 14px;
+  color: var(--option-accent);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--option-accent) 14%, var(--surface)), color-mix(in srgb, var(--option-secondary) 7%, var(--surface)));
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--option-accent) 11%, transparent);
+}
+
+.identity h3 {
+  margin: 0;
+  color: color-mix(in srgb, var(--foreground) 82%, var(--option-accent));
+  font-size: clamp(14px, 1.4vw, 17px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.availability {
+  min-width: 0;
+}
+
+.statusBadge {
+  display: block;
+  width: fit-content;
+  margin: 0 0 3px;
+  color: color-mix(in srgb, var(--option-accent, var(--cyan)) 90%, white);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--option-accent, var(--cyan)) 25%, transparent);
+}
+
+.availability p {
+  margin: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 80%, var(--option-accent)), color-mix(in srgb, var(--foreground-secondary) 78%, var(--option-secondary)));
+  background-clip: text;
+  color: transparent;
+  font-size: 11.5px;
+  font-weight: 560;
+  line-height: 1.5;
+  -webkit-background-clip: text;
+}
+
+.fullOption {
+  --option-accent: #e9a23b;
+  --option-secondary: #bf7d27;
+}
+
+.fullOption .statusBadge {
+  color: #e9a23b;
+  text-shadow: none;
+}
+
+.action,
+.contactActions a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 16px;
+  border: 1px solid color-mix(in srgb, var(--option-accent, var(--primary)) 35%, var(--border));
+  border-radius: 999px;
+  color: var(--foreground);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--option-accent, var(--primary)) 13%, var(--surface)), color-mix(in srgb, var(--option-secondary, var(--cyan)) 8%, var(--surface)));
+  font: inherit;
+  font-size: 10px;
+  font-weight: 740;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.action:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.openOption .action {
+  border-color: color-mix(in srgb, var(--primary) 66%, transparent);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary) 0%, #657cff 52%, var(--cyan) 150%);
+  box-shadow:
+    0 7px 22px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.23);
+  font-weight: 750;
+}
+
+.openOption .action:disabled {
+  opacity: 1;
+}
+
+.fullOption .action {
+  color: var(--foreground-secondary);
+  background: color-mix(in srgb, var(--surface) 92%, #e9a23b);
+  box-shadow: none;
+}
+
+.action:focus-visible,
+.contactActions a:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--option-accent, var(--cyan)) 65%, transparent);
+  outline-offset: 3px;
+}
+
+.unavailablePanel {
+  --option-accent: var(--cyan);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 20%, var(--border));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--background) 42%, transparent);
+}
+
+.unavailableIcon {
+  --option-secondary: var(--primary);
+}
+
+.unavailableCopy h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.unavailableCopy > p:not(.statusBadge) {
+  max-width: 720px;
+  margin: 4px 0 0;
+  color: var(--foreground-secondary);
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.unavailableCopy strong {
+  display: block;
+  margin-top: 4px;
+  color: color-mix(in srgb, var(--foreground) 80%, var(--cyan));
+  font-size: 11px;
+}
+
+.contactActions {
+  display: flex;
+  gap: 7px;
+}
+
+:global([data-theme="light"]) .shell {
+  border-color: color-mix(in srgb, var(--primary) 17%, var(--border));
+  background:
+    radial-gradient(circle at 5% 0%, color-mix(in srgb, var(--cyan) 6%, transparent), transparent 28%),
+    radial-gradient(circle at 96% 100%, color-mix(in srgb, #7658df 5%, transparent), transparent 30%),
+    linear-gradient(145deg, white, color-mix(in srgb, var(--primary) 2%, white));
+  box-shadow: 0 16px 38px rgba(35, 62, 111, 0.09);
+}
+
+:global([data-theme="light"]) .option,
+:global([data-theme="light"]) .unavailablePanel {
+  background:
+    radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--option-accent) 6%, transparent), transparent 30%),
+    color-mix(in srgb, white 96%, var(--option-accent));
+}
+
+:global([data-theme="light"]) .identity h3 {
+  color: color-mix(in srgb, var(--foreground) 89%, var(--option-accent));
+}
+
+:global([data-theme="light"]) .introCopy p {
+  background-image: linear-gradient(90deg, #176aa7, #6253ae);
+}
+
+:global([data-theme="light"]) .introCopy small {
+  color: #62698a;
+}
+
+:global([data-theme="light"]) .statusBadge {
+  color: color-mix(in srgb, var(--option-accent, var(--primary)) 76%, #17213d);
+  text-shadow: none;
+}
+
+:global([data-theme="light"]) .availability p {
+  background-image: linear-gradient(90deg, color-mix(in srgb, #17213d 86%, var(--option-accent)), color-mix(in srgb, #4c5773 84%, var(--option-secondary)));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .openOption .action[href]:hover {
+    border-color: color-mix(in srgb, var(--cyan) 45%, var(--primary));
+    background: linear-gradient(135deg, #358dff 0%, #6e78ff 52%, var(--cyan) 150%);
+    box-shadow:
+      0 11px 30px color-mix(in srgb, var(--primary) 32%, transparent),
+      0 0 22px color-mix(in srgb, var(--cyan) 11%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .contactActions a:hover {
+    border-color: color-mix(in srgb, var(--option-accent, var(--cyan)) 55%, var(--border));
+    background: color-mix(in srgb, var(--option-accent, var(--primary)) 12%, var(--surface));
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 900px) {
+  .heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .introCopy {
+    text-align: left;
+  }
+
+  .option {
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 0.75fr) auto;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .option {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .availability {
+    grid-column: 1;
+    padding-left: 58px;
+  }
+
+  .action {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .unavailablePanel {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .contactActions {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 20px 0 42px;
+  }
+
+  .shell {
+    width: calc(100% - 20px);
+    padding: 17px;
+    border-radius: 19px;
+  }
+}
+
+@media (max-width: 500px) {
+  .option {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+    padding: 13px;
+  }
+
+  .availability {
+    grid-column: 1;
+    padding-left: 0;
+  }
+
+  .action {
+    width: 100%;
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .unavailablePanel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contactActions {
+    grid-column: 1;
+  }
+
+  .contactActions a {
+    flex: 1;
+  }
+}
+
+@media (max-width: 390px) {
+  .shell {
+    width: calc(100% - 16px);
+    padding-inline: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .contactActions a {
+    transition: none;
+  }
+}
