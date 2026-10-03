@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useTheme } from "next-themes";
 import {
   useEffect,
   useMemo,
@@ -9,16 +11,19 @@ import {
 } from "react";
 
 import {
+  ArrowLeft,
   Check,
   Copy,
   ExternalLink,
   Link2,
   LoaderCircle,
   LogOut,
+  Moon,
   Pencil,
   Plus,
   Search,
   ShieldCheck,
+  Sun,
   Trash2,
   X,
 } from "lucide-react";
@@ -51,6 +56,7 @@ const EMPTY_FORM: LinkFormData = {
 };
 
 export function AdminLinksDashboard() {
+  const { resolvedTheme, setTheme } = useTheme();
   const [links, setLinks] = useState<AdminLink[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -424,44 +430,87 @@ export function AdminLinksDashboard() {
             </div>
           </div>
 
-          <form action="/api/admin/logout" method="POST">
-            <button type="submit" className={styles.logoutButton}>
-              <LogOut size={16} strokeWidth={1.9} aria-hidden="true" />
+          <div className={styles.headerActions}>
+            <Link href="/" className={styles.backButton}>
+              <ArrowLeft size={16} strokeWidth={1.9} aria-hidden="true" />
+              <span>Back to Website</span>
+            </Link>
 
-              <span>Logout</span>
+            <button
+              type="button"
+              className={styles.themeButton}
+              onClick={() =>
+                setTheme(resolvedTheme === "light" ? "dark" : "light")
+              }
+              aria-label={
+                resolvedTheme === "light"
+                  ? "Switch to dark theme"
+                  : "Switch to light theme"
+              }
+            >
+              {resolvedTheme === "light" ? (
+                <Moon size={17} strokeWidth={1.9} aria-hidden="true" />
+              ) : (
+                <Sun size={17} strokeWidth={1.9} aria-hidden="true" />
+              )}
             </button>
-          </form>
+
+            <form action="/api/admin/logout" method="POST">
+              <button type="submit" className={styles.logoutButton}>
+                <LogOut size={16} strokeWidth={1.9} aria-hidden="true" />
+
+                <span>Logout</span>
+              </button>
+            </form>
+          </div>
         </header>
 
-        <section className={styles.hero}>
+        <section className={styles.adminIntro}>
           <div>
             <div className={styles.secureLabel}>
               <ShieldCheck size={15} strokeWidth={1.9} aria-hidden="true" />
-              SECURE LINK MANAGEMENT
+              SECURE WORKSHOP ADMINISTRATION
             </div>
 
-            <h1>Manage Your Links</h1>
+            <h1>Workshop &amp; Link Administration</h1>
 
             <p>
-              Add and organize forms, resources, registrations, documents, and
-              other important links from one place.
+              Configure the public Workshop experience first, then manage your
+              supporting links and resources below.
             </p>
           </div>
-
-          <button
-            ref={addButtonRef}
-            type="button"
-            className={styles.addButton}
-            onClick={openAddForm}
-          >
-            <Plus size={18} strokeWidth={2} aria-hidden="true" />
-            Add New Link
-          </button>
         </section>
 
         <WorkshopConfigurationSettings />
 
-        <section className={styles.controls} aria-label="Link filters">
+        <section className={styles.linksSection} aria-labelledby="links-title">
+          <div className={styles.hero}>
+            <div>
+              <div className={styles.secureLabel}>
+                <Link2 size={15} strokeWidth={1.9} aria-hidden="true" />
+                LINK MANAGEMENT
+              </div>
+
+              <h2 id="links-title">Manage Your Links</h2>
+
+              <p>
+                Add and organize forms, resources, registrations, documents,
+                and other important links from one place.
+              </p>
+            </div>
+
+            <button
+              ref={addButtonRef}
+              type="button"
+              className={styles.addButton}
+              onClick={openAddForm}
+            >
+              <Plus size={18} strokeWidth={2} aria-hidden="true" />
+              Add New Link
+            </button>
+          </div>
+
+          <section className={styles.controls} aria-label="Link filters">
           <div className={styles.searchWrapper}>
             <Search size={18} strokeWidth={1.8} aria-hidden="true" />
 
@@ -493,7 +542,7 @@ export function AdminLinksDashboard() {
               </button>
             ))}
           </div>
-        </section>
+          </section>
 
         {isLoading && (
           <section className={styles.stateCard} aria-live="polite">
@@ -636,6 +685,7 @@ export function AdminLinksDashboard() {
             ))}
           </section>
         )}
+        </section>
       </div>
 
       {isFormOpen && (

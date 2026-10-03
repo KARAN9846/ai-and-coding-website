@@ -16,6 +16,18 @@
   box-shadow: 0 18px 46px color-mix(in srgb, var(--shadow-color) 14%, transparent);
 }
 
+.unavailableShell {
+  padding: clamp(16px, 2.2vw, 23px);
+  border-color: color-mix(in srgb, var(--orange) 34%, var(--cyan));
+  background:
+    radial-gradient(circle at 4% 15%, color-mix(in srgb, var(--orange) 13%, transparent), transparent 28%),
+    radial-gradient(circle at 96% 85%, color-mix(in srgb, var(--cyan) 13%, transparent), transparent 32%),
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-elevated) 91%, transparent), color-mix(in srgb, var(--surface) 96%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--orange) 10%, transparent),
+    0 17px 42px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+}
+
 .heading {
   display: flex;
   align-items: flex-end;
@@ -89,6 +101,7 @@
   background:
     radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--option-accent) 7%, transparent), transparent 30%),
     color-mix(in srgb, var(--background) 42%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--option-accent) 7%, transparent);
 }
 
 .toolsOption {
@@ -106,6 +119,11 @@
   --option-secondary: var(--cyan);
 }
 
+.emeraldOption {
+  --option-accent: #27c996;
+  --option-secondary: #438cff;
+}
+
 .identity {
   display: grid;
   min-width: 0;
@@ -114,8 +132,7 @@
   gap: 12px;
 }
 
-.icon,
-.unavailableIcon {
+.icon {
   display: grid;
   width: 46px;
   height: 46px;
@@ -139,6 +156,10 @@
 
 .availability {
   min-width: 0;
+  padding: 7px 10px;
+  border-left: 2px solid color-mix(in srgb, var(--option-accent) 54%, transparent);
+  border-radius: 0 9px 9px 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--option-accent) 7%, transparent), transparent);
 }
 
 .statusBadge {
@@ -146,7 +167,7 @@
   width: fit-content;
   margin: 0 0 3px;
   color: color-mix(in srgb, var(--option-accent, var(--cyan)) 90%, white);
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 850;
   letter-spacing: 0.12em;
   line-height: 1.3;
@@ -158,20 +179,21 @@
   background: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 80%, var(--option-accent)), color-mix(in srgb, var(--foreground-secondary) 78%, var(--option-secondary)));
   background-clip: text;
   color: transparent;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 560;
   line-height: 1.5;
   -webkit-background-clip: text;
 }
 
 .fullOption {
-  --option-accent: #e9a23b;
-  --option-secondary: #bf7d27;
+  --option-accent: #ef5b68;
+  --option-secondary: #b82d43;
+  border-color: color-mix(in srgb, #ef5b68 25%, var(--border));
 }
 
 .fullOption .statusBadge {
-  color: #e9a23b;
-  text-shadow: none;
+  color: #ff7a84;
+  text-shadow: 0 0 12px color-mix(in srgb, #ef5b68 22%, transparent);
 }
 
 .action,
@@ -215,9 +237,14 @@
 }
 
 .fullOption .action {
-  color: var(--foreground-secondary);
-  background: color-mix(in srgb, var(--surface) 92%, #e9a23b);
-  box-shadow: none;
+  border-color: #ff5263;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff4055 0%, #ed2545 52%, #c90f31 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 7px 22px rgba(220, 24, 58, 0.3),
+    0 0 18px rgba(255, 64, 85, 0.12);
+  opacity: 1;
 }
 
 .action:focus-visible,
@@ -228,45 +255,98 @@
 
 .unavailablePanel {
   --option-accent: var(--cyan);
+  position: relative;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: 1px solid color-mix(in srgb, var(--cyan) 20%, var(--border));
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--background) 42%, transparent);
+  gap: 18px;
+  overflow: hidden;
+  padding: 20px 21px;
+  border: 1px solid color-mix(in srgb, var(--orange) 35%, var(--cyan));
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 2% 20%, color-mix(in srgb, var(--orange) 14%, transparent), transparent 34%),
+    radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--cyan) 13%, transparent), transparent 38%),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-elevated) 88%, transparent), color-mix(in srgb, var(--background) 55%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--orange) 12%, transparent),
+    0 14px 34px color-mix(in srgb, var(--shadow-color) 13%, transparent);
 }
 
-.unavailableIcon {
-  --option-secondary: var(--primary);
+.unavailablePanel::before {
+  position: absolute;
+  inset: 0 22px auto;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--orange), var(--cyan));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--orange) 24%, transparent);
+  content: "";
+}
+
+.unavailableCopy .statusBadge {
+  margin-bottom: 5px;
+  background: linear-gradient(90deg, #ffad32, #66e9ff);
+  background-clip: text;
+  color: transparent;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-shadow: none;
+  -webkit-background-clip: text;
 }
 
 .unavailableCopy h3 {
   margin: 0;
-  color: var(--foreground);
-  font-size: 16px;
-  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 74%, var(--orange)), color-mix(in srgb, var(--foreground) 76%, var(--cyan)));
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 770;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  -webkit-background-clip: text;
 }
 
 .unavailableCopy > p:not(.statusBadge) {
   max-width: 720px;
-  margin: 4px 0 0;
-  color: var(--foreground-secondary);
-  font-size: 10.5px;
-  line-height: 1.5;
+  margin: 6px 0 0;
+  color: color-mix(in srgb, var(--foreground-secondary) 83%, var(--cyan));
+  font-size: 11.5px;
+  line-height: 1.58;
 }
 
 .unavailableCopy strong {
   display: block;
-  margin-top: 4px;
-  color: color-mix(in srgb, var(--foreground) 80%, var(--cyan));
-  font-size: 11px;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 23%, var(--border));
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--foreground) 65%, var(--cyan));
+  background: color-mix(in srgb, var(--cyan) 7%, transparent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
 }
 
 .contactActions {
   display: flex;
-  gap: 7px;
+  gap: 9px;
+}
+
+.contactActions .callAction {
+  border-color: color-mix(in srgb, var(--cyan) 40%, var(--border));
+  color: color-mix(in srgb, var(--foreground) 80%, var(--cyan));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, var(--surface)), color-mix(in srgb, var(--cyan) 10%, var(--surface)));
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--primary) 11%, transparent);
+}
+
+.contactActions .whatsappAction {
+  border-color: color-mix(in srgb, #25d366 54%, var(--border));
+  color: #d9ffe7;
+  background: linear-gradient(135deg, color-mix(in srgb, #128c4a 72%, var(--surface)), color-mix(in srgb, #25d366 58%, var(--surface)));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 7px 20px color-mix(in srgb, #25d366 17%, transparent);
 }
 
 :global([data-theme="light"]) .shell {
@@ -278,11 +358,41 @@
   box-shadow: 0 16px 38px rgba(35, 62, 111, 0.09);
 }
 
+:global([data-theme="light"]) .unavailableShell {
+  border-color: color-mix(in srgb, var(--orange) 30%, var(--cyan));
+  background:
+    radial-gradient(circle at 4% 15%, color-mix(in srgb, var(--orange) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 96% 85%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 32%),
+    linear-gradient(145deg, color-mix(in srgb, white 96%, var(--orange)), color-mix(in srgb, white 96%, var(--cyan)));
+}
+
+:global([data-theme="light"]) .unavailableCopy h3 {
+  background-image: linear-gradient(90deg, #b85f00, #087da0);
+}
+
 :global([data-theme="light"]) .option,
 :global([data-theme="light"]) .unavailablePanel {
   background:
     radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--option-accent) 6%, transparent), transparent 30%),
     color-mix(in srgb, white 96%, var(--option-accent));
+}
+
+:global([data-theme="light"]) .unavailablePanel {
+  border-color: color-mix(in srgb, var(--orange) 30%, var(--cyan));
+  background:
+    radial-gradient(circle at 2% 20%, color-mix(in srgb, var(--orange) 10%, transparent), transparent 34%),
+    radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 38%),
+    linear-gradient(135deg, color-mix(in srgb, white 96%, var(--orange)), color-mix(in srgb, white 96%, var(--cyan)));
+}
+
+:global([data-theme="light"]) .unavailableCopy > p:not(.statusBadge) {
+  color: #53617a;
+}
+
+:global([data-theme="light"]) .contactActions .whatsappAction {
+  border-color: #20a956;
+  color: #ffffff;
+  background: linear-gradient(135deg, #168c48, #21b95c);
 }
 
 :global([data-theme="light"]) .identity h3 {
@@ -306,6 +416,19 @@
   background-image: linear-gradient(90deg, color-mix(in srgb, #17213d 86%, var(--option-accent)), color-mix(in srgb, #4c5773 84%, var(--option-secondary)));
 }
 
+:global([data-theme="light"]) .fullOption .statusBadge {
+  color: #b5223a;
+}
+
+:global([data-theme="light"]) .fullOption .action {
+  border-color: #e92b48;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff4055 0%, #e92042 55%, #c90f31 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 7px 20px rgba(201, 15, 49, 0.24);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .openOption .action[href]:hover {
     border-color: color-mix(in srgb, var(--cyan) 45%, var(--primary));
@@ -321,6 +444,12 @@
     border-color: color-mix(in srgb, var(--option-accent, var(--cyan)) 55%, var(--border));
     background: color-mix(in srgb, var(--option-accent, var(--primary)) 12%, var(--surface));
     transform: translateY(-1px);
+  }
+
+  .contactActions .whatsappAction:hover {
+    border-color: #35dc73;
+    background: linear-gradient(135deg, #14964d, #27c964);
+    box-shadow: 0 10px 24px color-mix(in srgb, #25d366 22%, transparent);
   }
 }
 
@@ -348,7 +477,7 @@
 
   .availability {
     grid-column: 1;
-    padding-left: 58px;
+    margin-left: 58px;
   }
 
   .action {
@@ -357,11 +486,12 @@
   }
 
   .unavailablePanel {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .contactActions {
-    grid-column: 2;
+    grid-column: 1;
+    justify-content: flex-start;
   }
 }
 
@@ -386,7 +516,7 @@
 
   .availability {
     grid-column: 1;
-    padding-left: 0;
+    margin-left: 0;
   }
 
   .action {
@@ -397,6 +527,8 @@
 
   .unavailablePanel {
     grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+    padding: 17px;
   }
 
   .contactActions {

@@ -4,35 +4,29 @@ import { useEffect, useState } from "react";
 
 import type {
   PublicWorkshopConfiguration,
-  PublicWorkshopRegistrationOption,
+  PublicWorkshopProgram,
+  PublicWorkshopRegistration,
 } from "@/lib/workshops/public-configuration";
+import { validateGoogleFormUrl } from "@/lib/workshops/configuration-validation";
 import {
-  isWorkshopProgramId,
-  validateGoogleFormUrl,
-} from "@/lib/workshops/configuration-validation";
-import { WORKSHOP_PROGRAMS } from "@/lib/workshops/workshop-data";
+  isWorkshopAudienceKey,
+  isWorkshopIconKey,
+  isWorkshopSlotId,
+  isWorkshopTheme,
+} from "@/lib/workshops/workshop-data";
 
-type WorkshopConfigurationSnapshot =
+type Snapshot =
   | { phase: "loading"; configuration: null }
   | { phase: "ready"; configuration: PublicWorkshopConfiguration }
   | { phase: "unavailable"; configuration: null };
+type Listener = (snapshot: Snapshot) => void;
 
-type ConfigurationListener = (
-  snapshot: WorkshopConfigurationSnapshot,
-) => void;
+let snapshot: Snapshot = { phase: "loading", configuration: null };
+let request: Promise<void> | null = null;
+const listeners = new Set<Listener>();
 
-const REGISTRATION_STATUSES = new Set(["open", "full", "hidden"]);
-
-let snapshot: WorkshopConfigurationSnapshot = {
-  phase: "loading",
-  configuration: null,
-};
-let configurationRequest: Promise<void> | null = null;
-const listeners = new Set<ConfigurationListener>();
-
-function publish(nextSnapshot: WorkshopConfigurationSnapshot) {
-  snapshot = nextSnapshot;
-
+function publish(next: Snapshot) {
+  snapshot = next;
   for (const listener of listeners) listener(snapshot);
 }
 
@@ -40,155 +34,129 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function readOption(value: unknown): PublicWorkshopRegistrationOption | null {
-  if (!isRecord(value)) return null;
-
-  const {
-    workshopId,
-    status,
-    registrationHeading,
-    googleFormUrl,
-    buttonLabel,
-    fullMessage,
-  } = value;
-
-  if (
-    typeof workshopId !== "string" ||
-    !isWorkshopProgramId(workshopId) ||
-    typeof status !== "string" ||
-    !REGISTRATION_STATUSES.has(status) ||
-    typeof registrationHeading !== "string" ||
-    typeof buttonLabel !== "string" ||
-    typeof fullMessage !== "string"
-  ) {
-    return null;
+function readRegistration(value: unknown): PublicWorkshopRegistration | null | false {
+  if (value === null) return null;
+  if (!isRecord(value) || (value.status !== "open" && value.status !== "full") ||
+      typeof value.heading !== "string" || typeof value.icon !== "string" ||
+      !isWorkshopIconKey(value.icon)) {
+    return false;
   }
-
-  const validatedUrl = validateGoogleFormUrl(googleFormUrl);
-
-  if (
-    !validatedUrl.success ||
-    (status === "open" && validatedUrl.data === null) ||
-    (status !== "open" && validatedUrl.data !== null)
-  ) {
-    return null;
+  if (value.status === "open") {
+    const url = validateGoogleFormUrl(value.googleFormUrl);
+    if (!url.success || !url.data || typeof value.buttonLabel !== "string") return false;
+    return {
+      status: "open",
+      heading: value.heading,
+      icon: value.icon,
+      googleFormUrl: url.data,
+      buttonLabel: value.buttonLabel,
+    };
   }
+  if (typeof value.fullMessage !== "string" || "googleFormUrl" in value) return false;
+  return { status: "full", heading: value.heading, icon: value.icon, fullMessage: value.fullMessage };
+}
 
+function readWorkshop(value: unknown): PublicWorkshopProgram | null {
+  if (!isRecord(value) || typeof value.id !== "string" || !isWorkshopSlotId(value.id) ||
+      typeof value.title !== "string" || typeof value.description !== "string" ||
+      typeof value.mainIcon !== "string" || !isWorkshopIconKey(value.mainIcon) ||
+      typeof value.theme !== "string" || !isWorkshopTheme(value.theme) ||
+      !Array.isArray(value.focusAreas) || !isRecord(value.targeting)) return null;
+
+  const focusAreas = value.focusAreas.map((focus) => {
+    if (!isRecord(focus) || typeof focus.label !== "string" ||
+        typeof focus.icon !== "string" || !isWorkshopIconKey(focus.icon)) return null;
+    return { label: focus.label, icon: focus.icon };
+  });
+  if (focusAreas.some((focus) => focus === null) || focusAreas.length > 6) return null;
+
+  const audiences = value.targeting.audiences;
+  const standards = value.targeting.standards;
+  const ageRange = value.targeting.ageRange;
+  if (audiences !== null && (!Array.isArray(audiences) ||
+      audiences.some((audience) => typeof audience !== "string" || !isWorkshopAudienceKey(audience)))) return null;
+  if (standards !== null && (!Array.isArray(standards) ||
+      standards.some((standard) => !Number.isInteger(standard) || standard < 5 || standard > 12))) return null;
+  if (ageRange !== null && (!isRecord(ageRange) || !Number.isInteger(ageRange.min) ||
+      !Number.isInteger(ageRange.max) || (ageRange.min as number) > (ageRange.max as number))) return null;
+
+  const registration = readRegistration(value.registration);
+  if (registration === false) return null;
   return {
-    workshopId,
-    status: status as PublicWorkshopRegistrationOption["status"],
-    registrationHeading,
-    googleFormUrl: validatedUrl.data,
-    buttonLabel,
-    fullMessage,
+    id: value.id,
+    title: value.title,
+    description: value.description,
+    mainIcon: value.mainIcon,
+    theme: value.theme,
+    focusAreas: focusAreas as PublicWorkshopProgram["focusAreas"],
+    targeting: {
+      audiences: audiences as PublicWorkshopProgram["targeting"]["audiences"],
+      standards: standards as PublicWorkshopProgram["targeting"]["standards"],
+      ageRange: ageRange as PublicWorkshopProgram["targeting"]["ageRange"],
+    },
+    registration,
   };
 }
 
 function readConfiguration(value: unknown): PublicWorkshopConfiguration | null {
-  if (!isRecord(value) || !isRecord(value.discount)) return null;
+  if (!isRecord(value) || !isRecord(value.discount) || !Array.isArray(value.workshops) ||
+      typeof value.registrationsEnabled !== "boolean" ||
+      typeof value.noRegistrationMessage !== "string" ||
+      typeof value.registrationOpen !== "boolean" ||
+      typeof value.discount.enabled !== "boolean" ||
+      typeof value.discount.message !== "string" ||
+      (value.discount.deadline !== null && typeof value.discount.deadline !== "string") ||
+      typeof value.discount.expiredMessage !== "string") return null;
+  if (value.discount.enabled && (value.discount.deadline === null ||
+      !Number.isFinite(new Date(value.discount.deadline).getTime()))) return null;
 
-  const { discount } = value;
-
-  if (
-    typeof value.registrationsEnabled !== "boolean" ||
-    typeof value.noRegistrationMessage !== "string" ||
-    typeof value.registrationOpen !== "boolean" ||
-    typeof discount.enabled !== "boolean" ||
-    typeof discount.message !== "string" ||
-    (discount.deadline !== null && typeof discount.deadline !== "string") ||
-    typeof discount.expiredMessage !== "string" ||
-    !Array.isArray(value.options)
-  ) {
-    return null;
-  }
-
-  if (
-    discount.enabled &&
-    (discount.deadline === null ||
-      !Number.isFinite(new Date(discount.deadline).getTime()))
-  ) {
-    return null;
-  }
-
-  const options = value.options.map(readOption);
-
-  if (options.some((option) => option === null)) return null;
-
-  const safeOptions = options as PublicWorkshopRegistrationOption[];
-  const optionIds = new Set(safeOptions.map((option) => option.workshopId));
-
-  if (
-    safeOptions.length !== WORKSHOP_PROGRAMS.length ||
-    optionIds.size !== WORKSHOP_PROGRAMS.length ||
-    WORKSHOP_PROGRAMS.some((program) => !optionIds.has(program.id))
-  ) {
-    return null;
-  }
-
-  const registrationOpen =
-    value.registrationsEnabled &&
-    safeOptions.some(
-      (option) => option.status === "open" && option.googleFormUrl !== null,
-    );
-
-  if (value.registrationOpen !== registrationOpen) return null;
+  const workshops = value.workshops.map(readWorkshop);
+  if (workshops.some((workshop) => workshop === null) || workshops.length > 4) return null;
+  const safeWorkshops = workshops as PublicWorkshopProgram[];
+  if (new Set(safeWorkshops.map((workshop) => workshop.id)).size !== safeWorkshops.length) return null;
+  const derivedOpen = value.registrationsEnabled &&
+    safeWorkshops.some((workshop) => workshop.registration?.status === "open");
+  if (value.registrationOpen !== derivedOpen ||
+      (!value.registrationsEnabled && safeWorkshops.some((workshop) => workshop.registration !== null))) return null;
 
   return {
     registrationsEnabled: value.registrationsEnabled,
     noRegistrationMessage: value.noRegistrationMessage,
     discount: {
-      enabled: discount.enabled,
-      message: discount.message,
-      deadline: discount.deadline,
-      expiredMessage: discount.expiredMessage,
+      enabled: value.discount.enabled,
+      message: value.discount.message,
+      deadline: value.discount.deadline,
+      expiredMessage: value.discount.expiredMessage,
     },
-    registrationOpen,
-    options: safeOptions,
+    registrationOpen: derivedOpen,
+    workshops: safeWorkshops,
   };
 }
 
 export function revalidateWorkshopConfiguration() {
-  if (configurationRequest) return configurationRequest;
-
-  configurationRequest = (async () => {
+  if (request) return request;
+  request = (async () => {
     try {
-      const response = await fetch("/api/workshops/configuration", {
-        cache: "no-store",
-      });
-      const body: unknown = await response.json().catch(() => null);
-      const configuration = readConfiguration(body);
-
+      const response = await fetch("/api/workshops/configuration", { cache: "no-store" });
+      const configuration = readConfiguration(await response.json().catch(() => null));
       if (!response.ok || !configuration) {
-        if (snapshot.phase !== "ready") {
-          publish({ phase: "unavailable", configuration: null });
-        }
+        if (snapshot.phase !== "ready") publish({ phase: "unavailable", configuration: null });
         return;
       }
-
       publish({ phase: "ready", configuration });
     } catch {
-      if (snapshot.phase !== "ready") {
-        publish({ phase: "unavailable", configuration: null });
-      }
+      if (snapshot.phase !== "ready") publish({ phase: "unavailable", configuration: null });
     }
-  })().finally(() => {
-    configurationRequest = null;
-  });
-
-  return configurationRequest;
+  })().finally(() => { request = null; });
+  return request;
 }
 
 export function useWorkshopConfiguration() {
-  const [currentSnapshot, setCurrentSnapshot] = useState(snapshot);
-
+  const [current, setCurrent] = useState(snapshot);
   useEffect(() => {
-    listeners.add(setCurrentSnapshot);
+    listeners.add(setCurrent);
     void revalidateWorkshopConfiguration();
-
-    return () => {
-      listeners.delete(setCurrentSnapshot);
-    };
+    return () => { listeners.delete(setCurrent); };
   }, []);
-
-  return currentSnapshot;
+  return current;
 }

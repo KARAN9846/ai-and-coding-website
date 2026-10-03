@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowRight, Clock3 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useWorkshopConfiguration } from "@/components/workshops/use-workshop-configuration";
@@ -91,10 +89,6 @@ export function WorkshopDiscountCountdown() {
     <section className={styles.section} aria-labelledby="workshop-offer-title">
       <div className={`${styles.strip} ${expired ? styles.expiredStrip : ""}`}>
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>
-            <Clock3 size={13} strokeWidth={2} aria-hidden="true" />
-            LIMITED-TIME WORKSHOP OFFER
-          </p>
           <h2 id="workshop-offer-title">
             {expired ? discount.expiredMessage : discount.message}
           </h2>
@@ -126,12 +120,6 @@ export function WorkshopDiscountCountdown() {
           </div>
         )}
 
-        {!expired && (
-          <Link className={styles.cta} href="#workshop-registration">
-            View Registrations
-            <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
-          </Link>
-        )}
       </div>
     </section>
   );

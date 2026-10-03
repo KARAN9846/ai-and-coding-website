@@ -1,17 +1,16 @@
 import "server-only";
 
 import { createAdminClient } from "@/lib/supabase/admin-server";
-import { WORKSHOP_PROGRAMS, type WorkshopProgramId } from "@/lib/workshops/workshop-data";
-
+import { WORKSHOP_SLOT_IDS, type WorkshopSlotId } from "./workshop-data";
 import type {
   WorkshopConfiguration,
   WorkshopGlobalConfiguration,
   WorkshopGlobalConfigurationUpdate,
-  WorkshopRegistrationOption,
-  WorkshopRegistrationOptionUpdate,
+  WorkshopProgram,
+  WorkshopProgramUpdate,
   WorkshopRegistrationStatus,
 } from "./configuration";
-import { isWorkshopProgramId } from "./configuration-validation";
+import { isWorkshopSlotId } from "./configuration-validation";
 
 type GlobalRow = {
   registrations_enabled: boolean;
@@ -23,10 +22,25 @@ type GlobalRow = {
   updated_at: string;
 };
 
-type OptionRow = {
+type ProgramRow = {
   workshop_id: string;
-  status: WorkshopRegistrationStatus;
+  is_active: boolean;
+  display_order: number;
+  title: string;
+  description: string;
+  main_icon: WorkshopProgram["mainIcon"];
+  theme: WorkshopProgram["theme"];
+  focus_areas: WorkshopProgram["focusAreas"];
+  audience_enabled: boolean;
+  audience_values: WorkshopProgram["audiences"];
+  standards_enabled: boolean;
+  standards: number[];
+  age_enabled: boolean;
+  min_age: number | null;
+  max_age: number | null;
+  registration_status: WorkshopRegistrationStatus;
   registration_heading: string;
+  registration_icon: WorkshopProgram["registrationIcon"];
   google_form_url: string | null;
   button_label: string;
   full_message: string;
@@ -42,10 +56,25 @@ const GLOBAL_SELECT = `
   discount_expired_message,
   updated_at
 `;
-const OPTION_SELECT = `
+const PROGRAM_SELECT = `
   workshop_id,
-  status,
+  is_active,
+  display_order,
+  title,
+  description,
+  main_icon,
+  theme,
+  focus_areas,
+  audience_enabled,
+  audience_values,
+  standards_enabled,
+  standards,
+  age_enabled,
+  min_age,
+  max_age,
+  registration_status,
   registration_heading,
+  registration_icon,
   google_form_url,
   button_label,
   full_message,
@@ -64,15 +93,29 @@ function normalizeGlobal(row: GlobalRow): WorkshopGlobalConfiguration {
   };
 }
 
-function normalizeOption(row: OptionRow): WorkshopRegistrationOption {
-  if (!isWorkshopProgramId(row.workshop_id)) {
-    throw new Error("Workshop registration configuration contains an unknown Workshop ID.");
+function normalizeProgram(row: ProgramRow): WorkshopProgram {
+  if (!isWorkshopSlotId(row.workshop_id)) {
+    throw new Error("Workshop configuration contains an unknown slot ID.");
   }
-
   return {
     workshopId: row.workshop_id,
-    status: row.status,
+    isActive: row.is_active,
+    displayOrder: row.display_order,
+    title: row.title,
+    description: row.description,
+    mainIcon: row.main_icon,
+    theme: row.theme,
+    focusAreas: row.focus_areas,
+    audienceEnabled: row.audience_enabled,
+    audiences: row.audience_values,
+    standardsEnabled: row.standards_enabled,
+    standards: row.standards,
+    ageEnabled: row.age_enabled,
+    minAge: row.min_age,
+    maxAge: row.max_age,
+    registrationStatus: row.registration_status,
     registrationHeading: row.registration_heading,
+    registrationIcon: row.registration_icon,
     googleFormUrl: row.google_form_url,
     buttonLabel: row.button_label,
     fullMessage: row.full_message,
@@ -80,59 +123,42 @@ function normalizeOption(row: OptionRow): WorkshopRegistrationOption {
   };
 }
 
-function normalizeOptions(rows: OptionRow[]): WorkshopRegistrationOption[] {
-  const byId = new Map<WorkshopProgramId, WorkshopRegistrationOption>();
-
-  for (const row of rows) {
-    const option = normalizeOption(row);
-
-    if (byId.has(option.workshopId)) {
-      throw new Error("Workshop registration configuration contains a duplicate Workshop ID.");
-    }
-
-    byId.set(option.workshopId, option);
+function normalizePrograms(rows: ProgramRow[]): WorkshopProgram[] {
+  const programs = rows.map(normalizeProgram);
+  const ids = new Set(programs.map((program) => program.workshopId));
+  const orders = new Set(programs.map((program) => program.displayOrder));
+  if (
+    programs.length !== WORKSHOP_SLOT_IDS.length ||
+    ids.size !== WORKSHOP_SLOT_IDS.length ||
+    orders.size !== WORKSHOP_SLOT_IDS.length ||
+    WORKSHOP_SLOT_IDS.some((id) => !ids.has(id))
+  ) {
+    throw new Error("Workshop slot configuration is incomplete.");
   }
+  return programs.sort((a, b) => a.displayOrder - b.displayOrder);
+}
 
-  if (byId.size !== WORKSHOP_PROGRAMS.length) {
-    throw new Error("Workshop registration configuration is incomplete.");
-  }
-
-  return WORKSHOP_PROGRAMS.map((program) => {
-    const option = byId.get(program.id);
-
-    if (!option) {
-      throw new Error("Workshop registration configuration is incomplete.");
-    }
-
-    return option;
-  });
+async function getWorkshopPrograms(): Promise<WorkshopProgram[]> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("workshop_programs")
+    .select(PROGRAM_SELECT)
+    .order("display_order", { ascending: true });
+  if (error) throw new Error("Unable to load Workshop programs.", { cause: error });
+  return normalizePrograms((data ?? []) as ProgramRow[]);
 }
 
 export async function getWorkshopConfiguration(): Promise<WorkshopConfiguration> {
   const supabase = createAdminClient();
-  const [globalResult, optionsResult] = await Promise.all([
-    supabase
-      .from("workshop_settings")
-      .select(GLOBAL_SELECT)
-      .eq("id", 1)
-      .maybeSingle<GlobalRow>(),
-    supabase.from("workshop_registration_options").select(OPTION_SELECT),
+  const [globalResult, workshops] = await Promise.all([
+    supabase.from("workshop_settings").select(GLOBAL_SELECT).eq("id", 1).maybeSingle<GlobalRow>(),
+    getWorkshopPrograms(),
   ]);
-
-  if (globalResult.error || optionsResult.error) {
-    throw new Error("Unable to load Workshop configuration.", {
-      cause: globalResult.error ?? optionsResult.error,
-    });
+  if (globalResult.error) {
+    throw new Error("Unable to load Workshop configuration.", { cause: globalResult.error });
   }
-
-  if (!globalResult.data) {
-    throw new Error("Workshop settings singleton is not configured.");
-  }
-
-  return {
-    global: normalizeGlobal(globalResult.data),
-    options: normalizeOptions((optionsResult.data ?? []) as OptionRow[]),
-  };
+  if (!globalResult.data) throw new Error("Workshop settings singleton is not configured.");
+  return { global: normalizeGlobal(globalResult.data), workshops };
 }
 
 export async function updateWorkshopGlobalConfiguration(
@@ -153,44 +179,55 @@ export async function updateWorkshopGlobalConfiguration(
     .eq("id", 1)
     .select(GLOBAL_SELECT)
     .maybeSingle<GlobalRow>();
-
-  if (error) {
-    throw new Error("Unable to update Workshop global configuration.", { cause: error });
-  }
-
-  if (!data) {
-    throw new Error("Workshop settings singleton is not configured.");
-  }
-
+  if (error) throw new Error("Unable to update Workshop global configuration.", { cause: error });
+  if (!data) throw new Error("Workshop settings singleton is not configured.");
   return normalizeGlobal(data);
 }
 
-export async function updateWorkshopRegistrationOption(
-  workshopId: WorkshopProgramId,
-  update: WorkshopRegistrationOptionUpdate,
-): Promise<WorkshopRegistrationOption> {
+export async function updateWorkshopProgram(
+  workshopId: WorkshopSlotId,
+  update: WorkshopProgramUpdate,
+): Promise<WorkshopProgram> {
   const supabase = createAdminClient();
   const { data, error } = await supabase
-    .from("workshop_registration_options")
+    .from("workshop_programs")
     .update({
-      status: update.status,
+      is_active: update.isActive,
+      title: update.title,
+      description: update.description,
+      main_icon: update.mainIcon,
+      theme: update.theme,
+      focus_areas: update.focusAreas,
+      audience_enabled: update.audienceEnabled,
+      audience_values: update.audiences,
+      standards_enabled: update.standardsEnabled,
+      standards: update.standards,
+      age_enabled: update.ageEnabled,
+      min_age: update.minAge,
+      max_age: update.maxAge,
+      registration_status: update.registrationStatus,
       registration_heading: update.registrationHeading,
+      registration_icon: update.registrationIcon,
       google_form_url: update.googleFormUrl,
       button_label: update.buttonLabel,
       full_message: update.fullMessage,
       updated_at: new Date().toISOString(),
     })
     .eq("workshop_id", workshopId)
-    .select(OPTION_SELECT)
-    .maybeSingle<OptionRow>();
+    .select(PROGRAM_SELECT)
+    .maybeSingle<ProgramRow>();
+  if (error) throw new Error("Unable to update Workshop.", { cause: error });
+  if (!data) throw new Error("Workshop slot is not configured.");
+  return normalizeProgram(data);
+}
 
-  if (error) {
-    throw new Error("Unable to update Workshop registration option.", { cause: error });
-  }
-
-  if (!data) {
-    throw new Error("Workshop registration option is not configured.");
-  }
-
-  return normalizeOption(data);
+export async function reorderWorkshopPrograms(
+  workshopIds: WorkshopSlotId[],
+): Promise<WorkshopProgram[]> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.rpc("reorder_workshop_programs", {
+    workshop_ids: workshopIds,
+  });
+  if (error) throw new Error("Unable to reorder Workshops.", { cause: error });
+  return getWorkshopPrograms();
 }

@@ -1,205 +1,102 @@
-export type WorkshopDefinition = {
-  id: string;
-  title: string;
-  description: string;
-};
+export const WORKSHOP_SLOT_IDS = [
+  "workshop-1",
+  "workshop-2",
+  "workshop-3",
+  "workshop-4",
+] as const;
 
-export type WorkshopTrackDefinition = {
-  id: string;
-  title: string;
-  description: string;
-  workshops: readonly WorkshopDefinition[];
-};
+export type WorkshopSlotId = (typeof WORKSHOP_SLOT_IDS)[number];
 
-export type WorkshopProgramDefinition = {
-  id: string;
-  title: string;
-  description: string;
-  focusAreas: readonly string[];
-  philosophy?: string;
-};
+export const WORKSHOP_ICON_KEYS = [
+  "bot", "brain", "sparkles", "code", "terminal", "cpu",
+  "circuit-board", "graduation-cap", "briefcase", "workflow",
+  "lightbulb", "rocket", "book-open", "bug", "git-branch", "camera",
+  "radio", "palette", "message-square-text", "panels-top-left",
+  "scan-search", "blocks", "scan-eye",
+] as const;
 
-export const WORKSHOP_TRACKS = [
-  {
-    id: "ai-tools-prompting",
-    title: "AI Tools & Prompting",
-    description:
-      "Learn how to communicate with AI, use modern AI tools effectively, and build practical AI-powered workflows for study, work and everyday tasks.",
-    workshops: [
-      {
-        id: "ai-foundations-everyday-ai",
-        title: "AI Foundations & Everyday AI",
-        description:
-          "Understand modern AI tools, what they can do, where they are useful, and how to use them effectively in everyday life.",
-      },
-      {
-        id: "prompt-engineering-fundamentals",
-        title: "Prompt Engineering Fundamentals",
-        description:
-          "Learn how context, instructions, constraints and refinement help you get clearer and more useful results from AI.",
-      },
-      {
-        id: "ai-study-learning",
-        title: "AI for Study & Learning",
-        description:
-          "Use AI for understanding concepts, research, notes, brainstorming, presentations and smarter learning workflows.",
-      },
-      {
-        id: "ai-work-productivity",
-        title: "AI for Work & Productivity",
-        description:
-          "Use AI for emails, documents, planning, analysis, ideas and everyday professional workflows.",
-      },
-      {
-        id: "ai-content-creativity",
-        title: "AI for Content & Creativity",
-        description:
-          "Explore practical AI-assisted ideation, writing, presentations and creative workflows.",
-      },
-      {
-        id: "smart-ai-workflows",
-        title: "Smart AI Workflows",
-        description:
-          "Learn how prompts and different AI tools can work together to complete practical tasks more efficiently.",
-      },
-    ],
-  },
-  {
-    id: "ai-coding-developer-growth",
-    title: "AI for Coding & Developer Growth",
-    description:
-      "Use AI as a development partner while strengthening your understanding, problem-solving ability and software-engineering workflow.",
-    workshops: [
-      {
-        id: "ai-assisted-coding-foundations",
-        title: "AI-Assisted Coding Foundations",
-        description:
-          "Learn how to communicate coding requirements to AI, evaluate generated solutions and understand the code you work with.",
-      },
-      {
-        id: "build-applications-with-ai",
-        title: "Build Applications with AI",
-        description:
-          "Learn an AI-assisted approach for moving from an idea toward functioning websites and applications while understanding the implementation.",
-      },
-      {
-        id: "debugging-problem-solving-ai",
-        title: "Debugging & Problem Solving with AI",
-        description:
-          "Use AI to investigate errors, understand root causes and approach debugging systematically.",
-      },
-      {
-        id: "code-review-refactoring-ai",
-        title: "Code Review & Refactoring with AI",
-        description:
-          "Use AI to improve code readability, structure, maintainability and overall quality.",
-      },
-      {
-        id: "git-github-ai-workflow",
-        title: "Git, GitHub & AI Developer Workflow",
-        description:
-          "Learn how AI can assist during real development, version-control and project workflows.",
-      },
-      {
-        id: "ai-powered-software-engineering",
-        title: "AI-Powered Software Engineering",
-        description:
-          "Learn an AI-assisted workflow across planning, building, debugging, reviewing, testing, documenting and improving software.",
-      },
-    ],
-  },
-] as const satisfies readonly WorkshopTrackDefinition[];
+export type WorkshopIconKey = (typeof WORKSHOP_ICON_KEYS)[number];
 
-export const WORKSHOP_PROGRAMS = [
-  {
-    id: "ai-tools-prompting",
-    title: "AI Tools & Prompting",
-    description:
-      "Learn to use modern AI tools, write better prompts, and build practical workflows for learning, work and creativity.",
-    focusAreas: [
-      "AI Foundations",
-      "Prompt Engineering",
-      "Study & Research with AI",
-      "Work & Productivity",
-      "Content & Creativity",
-      "Smart AI Workflows",
-    ],
-  },
-  {
-    id: "ai-coding-developer-growth",
-    title: "AI for Coding & Developer Growth",
-    description:
-      "Use AI as a development partner to build, debug, review and improve software while strengthening your own understanding.",
-    focusAreas: [
-      "AI-Assisted Coding",
-      "Build Applications with AI",
-      "Debugging & Problem Solving",
-      "Code Review & Refactoring",
-      "Git & GitHub Workflow",
-      "AI-Powered Software Engineering",
-    ],
-    philosophy:
-      "Use AI to become a stronger developer — not to replace understanding.",
-  },
-  {
-    id: "ai-robotics",
-    title: "AI & Robotics",
-    description:
-      "Explore how artificial intelligence, electronics and automation come together to create intelligent robotic systems.",
-    focusAreas: [
-      "Robotics Foundations",
-      "Sensors & Actuators",
-      "Microcontrollers & Control",
-      "AI-Powered Decision Making",
-      "Computer Vision & Automation",
-      "Smart Robotics Projects",
-    ],
-  },
-] as const satisfies readonly WorkshopProgramDefinition[];
+export const WORKSHOP_ICON_OPTIONS: ReadonlyArray<{
+  value: WorkshopIconKey;
+  label: string;
+}> = [
+  { value: "bot", label: "Bot" },
+  { value: "brain", label: "Brain" },
+  { value: "sparkles", label: "Sparkles" },
+  { value: "code", label: "Code" },
+  { value: "terminal", label: "Terminal" },
+  { value: "cpu", label: "CPU" },
+  { value: "circuit-board", label: "Circuit Board" },
+  { value: "graduation-cap", label: "Graduation Cap" },
+  { value: "briefcase", label: "Briefcase" },
+  { value: "workflow", label: "Workflow" },
+  { value: "lightbulb", label: "Lightbulb" },
+  { value: "rocket", label: "Rocket" },
+  { value: "book-open", label: "Book Open" },
+  { value: "bug", label: "Bug" },
+  { value: "git-branch", label: "Git Branch" },
+  { value: "camera", label: "Camera" },
+  { value: "radio", label: "Radio" },
+  { value: "palette", label: "Palette" },
+  { value: "message-square-text", label: "Message" },
+  { value: "panels-top-left", label: "Application Panels" },
+  { value: "scan-search", label: "Scan Search" },
+  { value: "blocks", label: "Blocks" },
+  { value: "scan-eye", label: "Computer Vision" },
+];
 
-export type WorkshopProgramId = (typeof WORKSHOP_PROGRAMS)[number]["id"];
+export const WORKSHOP_THEMES = [
+  "cyan-blue", "blue-violet", "orange-cyan", "emerald-blue",
+] as const;
 
-export type WorkshopTrackId = (typeof WORKSHOP_TRACKS)[number]["id"];
-export type WorkshopId =
-  (typeof WORKSHOP_TRACKS)[number]["workshops"][number]["id"];
+export type WorkshopTheme = (typeof WORKSHOP_THEMES)[number];
 
-const EMPTY_WORKSHOPS: readonly WorkshopDefinition[] = [];
+export const WORKSHOP_THEME_OPTIONS: ReadonlyArray<{
+  value: WorkshopTheme;
+  label: string;
+}> = [
+  { value: "cyan-blue", label: "Cyan / Blue" },
+  { value: "blue-violet", label: "Blue / Violet" },
+  { value: "orange-cyan", label: "Orange / Cyan" },
+  { value: "emerald-blue", label: "Emerald / Blue" },
+];
 
-export function getWorkshopTrack(trackId: string) {
-  return WORKSHOP_TRACKS.find((track) => track.id === trackId);
+export const WORKSHOP_AUDIENCE_KEYS = [
+  "school-students", "college-students", "working-professionals",
+  "homemakers-career-restarters", "beginners-tech-enthusiasts",
+  "developers-engineers", "everyone",
+] as const;
+
+export type WorkshopAudienceKey = (typeof WORKSHOP_AUDIENCE_KEYS)[number];
+
+export const WORKSHOP_AUDIENCE_OPTIONS: ReadonlyArray<{
+  value: WorkshopAudienceKey;
+  label: string;
+}> = [
+  { value: "school-students", label: "School Students" },
+  { value: "college-students", label: "College Students" },
+  { value: "working-professionals", label: "Working Professionals" },
+  { value: "homemakers-career-restarters", label: "Homemakers & Career Restarters" },
+  { value: "beginners-tech-enthusiasts", label: "Beginners & Tech Enthusiasts" },
+  { value: "developers-engineers", label: "Developers & Engineers" },
+  { value: "everyone", label: "Everyone" },
+];
+
+export const WORKSHOP_STANDARDS = [5, 6, 7, 8, 9, 10, 11, 12] as const;
+
+export function isWorkshopSlotId(value: string): value is WorkshopSlotId {
+  return (WORKSHOP_SLOT_IDS as readonly string[]).includes(value);
 }
 
-export function getWorkshopsForTrack(
-  trackId: string,
-): readonly WorkshopDefinition[] {
-  return getWorkshopTrack(trackId)?.workshops ?? EMPTY_WORKSHOPS;
+export function isWorkshopIconKey(value: string): value is WorkshopIconKey {
+  return (WORKSHOP_ICON_KEYS as readonly string[]).includes(value);
 }
 
-export function getWorkshop(workshopId: string) {
-  for (const track of WORKSHOP_TRACKS) {
-    const workshop = track.workshops.find((item) => item.id === workshopId);
-
-    if (workshop) {
-      return workshop;
-    }
-  }
-
-  return undefined;
+export function isWorkshopTheme(value: string): value is WorkshopTheme {
+  return (WORKSHOP_THEMES as readonly string[]).includes(value);
 }
 
-export function isWorkshopTrackId(value: string): value is WorkshopTrackId {
-  return getWorkshopTrack(value) !== undefined;
-}
-
-export function isWorkshopId(value: string): value is WorkshopId {
-  return getWorkshop(value) !== undefined;
-}
-
-export function isWorkshopInTrack(
-  trackId: string,
-  workshopId: string,
-): boolean {
-  return getWorkshopsForTrack(trackId).some(
-    (workshop) => workshop.id === workshopId,
-  );
+export function isWorkshopAudienceKey(value: string): value is WorkshopAudienceKey {
+  return (WORKSHOP_AUDIENCE_KEYS as readonly string[]).includes(value);
 }

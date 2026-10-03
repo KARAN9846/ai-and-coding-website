@@ -101,6 +101,27 @@
   --program-title-end: #64deff;
 }
 
+.emeraldProgram {
+  --program-accent: #27d39b;
+  --program-accent-secondary: #438cff;
+  --program-title-start: #49dda9;
+  --program-title-end: #6097ff;
+}
+
+.countOne {
+  grid-template-columns: minmax(0, 500px);
+  justify-content: center;
+}
+
+.countTwo,
+.countFour {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.countThree {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .programHeader {
   display: grid;
   min-height: 68px;
@@ -138,15 +159,15 @@
 }
 
 .description {
-  min-height: 88px;
-  margin: 14px 0 0;
+  min-height: 66px;
+  margin: 12px 0 0;
   background: linear-gradient(100deg, color-mix(in srgb, var(--foreground) 76%, var(--program-accent)), color-mix(in srgb, var(--foreground-secondary) 74%, var(--program-accent-secondary)));
   background-clip: text;
   color: transparent;
-  font-size: 12.5px;
+  font-size: 13.25px;
   font-weight: 540;
   letter-spacing: 0.002em;
-  line-height: 1.62;
+  line-height: 1.56;
   -webkit-background-clip: text;
 }
 
@@ -158,7 +179,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 9px;
-  margin: 17px 0 0;
+  margin: 13px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -174,10 +195,18 @@
   border-radius: 11px;
   color: var(--foreground);
   background: color-mix(in srgb, var(--background) 38%, transparent);
-  font-size: 10px;
+  font-size: 10.75px;
   font-weight: 700;
   line-height: 1.3;
   transition: border-color 160ms ease, background 160ms ease;
+}
+
+.focusLabel {
+  min-width: 0;
+  overflow: hidden;
+  font: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .focusAreas li span {
@@ -193,10 +222,114 @@
   transition: background 160ms ease, color 160ms ease;
 }
 
+.targeting {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 9px;
+  min-height: 40px;
+  margin-top: 14px;
+  padding: 8px 8px 8px 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--orange) 36%, var(--cyan));
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 4% 50%, color-mix(in srgb, var(--orange) 18%, transparent), transparent 38%),
+    radial-gradient(circle at 96% 50%, color-mix(in srgb, var(--cyan) 13%, transparent), transparent 42%),
+    linear-gradient(110deg, color-mix(in srgb, var(--orange) 10%, var(--surface)), color-mix(in srgb, var(--cyan) 8%, var(--surface)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--orange) 15%, transparent),
+    0 7px 20px color-mix(in srgb, var(--orange) 8%, transparent);
+}
+
+.targeting::before {
+  position: absolute;
+  inset: 8px auto 8px 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(var(--orange), var(--cyan));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--orange) 32%, transparent);
+  content: "";
+}
+
+.targeting strong {
+  display: flex;
+  align-items: center;
+  padding: 6px 9px 6px 5px;
+  border-right: 1px solid color-mix(in srgb, var(--orange) 32%, var(--cyan));
+  background: linear-gradient(90deg, #ffad32, #66e9ff);
+  background-clip: text;
+  color: transparent;
+  font-size: 9px;
+  font-weight: 880;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  white-space: nowrap;
+  -webkit-background-clip: text;
+}
+
+.targetingValues {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.targetingValues span {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 29px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--orange) 42%, var(--border));
+  border-radius: 9px;
+  color: color-mix(in srgb, var(--foreground) 68%, #ffad32);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--orange) 18%, var(--surface)), color-mix(in srgb, var(--cyan) 7%, var(--surface)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 7%, transparent),
+    0 3px 10px color-mix(in srgb, var(--orange) 8%, transparent);
+  font-size: 9px;
+  font-weight: 780;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.targetingValues span:nth-child(even) {
+  border-color: color-mix(in srgb, var(--cyan) 40%, var(--border));
+  color: color-mix(in srgb, var(--foreground) 70%, var(--cyan));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--cyan) 16%, var(--surface)), color-mix(in srgb, var(--orange) 8%, var(--surface)));
+}
+
 .roboticsProgram .focusAreas li:nth-child(even) span {
-  color: var(--program-accent-secondary);
-  border-color: color-mix(in srgb, var(--program-accent-secondary) 17%, transparent);
-  background: color-mix(in srgb, var(--program-accent-secondary) 9%, transparent);
+  border-color: color-mix(in srgb, var(--orange) 35%, transparent);
+  color: #ff9f1a;
+  background: color-mix(in srgb, var(--orange) 16%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--orange) 10%, transparent);
+}
+
+.roboticsProgram .focusAreas li:nth-child(odd) {
+  border-color: color-mix(in srgb, var(--orange) 30%, var(--border));
+  color: color-mix(in srgb, var(--foreground) 76%, var(--orange));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--orange) 9%, var(--background)), color-mix(in srgb, var(--orange) 3%, var(--background)));
+}
+
+.roboticsProgram .focusAreas li:nth-child(odd) span {
+  border-color: color-mix(in srgb, var(--orange) 35%, transparent);
+  color: #ff9f1a;
+  background: color-mix(in srgb, var(--orange) 16%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--orange) 10%, transparent);
+}
+
+.roboticsProgram .focusAreas li:nth-child(even) {
+  border-color: color-mix(in srgb, var(--orange) 30%, var(--border));
+  color: color-mix(in srgb, var(--foreground) 76%, var(--orange));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--orange) 9%, var(--background)), color-mix(in srgb, var(--orange) 3%, var(--background)));
 }
 
 :global([data-theme="light"]) .program {
@@ -238,6 +371,45 @@
   background: color-mix(in srgb, white 93%, var(--program-accent-secondary));
 }
 
+:global([data-theme="light"]) .roboticsProgram .focusAreas li:nth-child(odd) {
+  border-color: color-mix(in srgb, var(--orange) 27%, var(--border));
+  color: color-mix(in srgb, #17213d 76%, #d97900);
+  background: color-mix(in srgb, white 91%, var(--orange));
+}
+
+:global([data-theme="light"]) .roboticsProgram .focusAreas li:nth-child(even) {
+  border-color: color-mix(in srgb, var(--orange) 27%, var(--border));
+  color: color-mix(in srgb, #17213d 76%, #d97900);
+  background: color-mix(in srgb, white 91%, var(--orange));
+}
+
+:global([data-theme="light"]) .targeting {
+  border-color: color-mix(in srgb, var(--orange) 33%, var(--cyan));
+  background:
+    radial-gradient(circle at 4% 50%, color-mix(in srgb, var(--orange) 12%, transparent), transparent 38%),
+    radial-gradient(circle at 96% 50%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 42%),
+    linear-gradient(110deg, color-mix(in srgb, white 89%, var(--orange)), color-mix(in srgb, white 91%, var(--cyan)));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 6px 16px color-mix(in srgb, var(--orange) 7%, transparent);
+}
+
+:global([data-theme="light"]) .targeting strong {
+  background-image: linear-gradient(90deg, #d97900, #008bb5);
+}
+
+:global([data-theme="light"]) .targetingValues span {
+  border-color: color-mix(in srgb, var(--orange) 33%, var(--border));
+  color: color-mix(in srgb, #17213d 72%, #d97900);
+  background: linear-gradient(135deg, color-mix(in srgb, white 82%, var(--orange)), color-mix(in srgb, white 94%, var(--cyan)));
+}
+
+:global([data-theme="light"]) .targetingValues span:nth-child(even) {
+  border-color: color-mix(in srgb, var(--cyan) 31%, var(--border));
+  color: color-mix(in srgb, #17213d 74%, #008bb5);
+  background: linear-gradient(135deg, color-mix(in srgb, white 84%, var(--cyan)), color-mix(in srgb, white 94%, var(--orange)));
+}
+
 @media (hover: hover) and (pointer: fine) {
   .program:hover {
     border-color: color-mix(in srgb, var(--program-accent) 32%, var(--border));
@@ -263,11 +435,15 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .countOne {
+    grid-template-columns: minmax(0, 500px);
+  }
+
   .program {
     min-height: 422px;
   }
 
-  .program:last-child:nth-child(odd) {
+  .countThree .program:last-child {
     width: calc(50% - 8px);
     grid-column: 1 / -1;
     justify-self: center;
@@ -296,14 +472,14 @@
     min-height: 353px;
   }
 
-  .program:last-child:nth-child(odd) {
+  .countThree .program:last-child {
     width: auto;
     grid-column: auto;
     justify-self: stretch;
   }
 
   .description {
-    min-height: 80px;
+    min-height: 0;
   }
 }
 
@@ -341,6 +517,22 @@
 
   .focusAreas li {
     padding-inline: 7px;
+  }
+
+  .targeting {
+    padding-inline: 7px;
+  }
+
+  .targeting strong {
+    padding-inline: 4px 7px;
+  }
+
+  .targetingValues {
+    gap: 5px;
+  }
+
+  .targetingValues span {
+    padding-inline: 6px;
   }
 }
 
