@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useWorkshopConfiguration } from "@/components/workshops/use-workshop-configuration";
+import type { PublicWorkshopConfiguration } from "@/lib/workshops/public-configuration";
 
 import styles from "./workshop-discount-countdown.module.css";
 
@@ -42,8 +43,12 @@ function isExpired(value: CountdownValue) {
   return Object.values(value).every((unit) => unit === 0);
 }
 
-export function WorkshopDiscountCountdown() {
-  const workshopConfiguration = useWorkshopConfiguration();
+export function WorkshopDiscountCountdown({
+  initialConfiguration,
+}: {
+  initialConfiguration: PublicWorkshopConfiguration | null;
+}) {
+  const workshopConfiguration = useWorkshopConfiguration(initialConfiguration);
   const [remaining, setRemaining] = useState<CountdownValue | null>(null);
   const discount =
     workshopConfiguration.phase === "ready"

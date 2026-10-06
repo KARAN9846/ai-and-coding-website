@@ -20,9 +20,10 @@ type Snapshot =
   | { phase: "ready"; configuration: PublicWorkshopConfiguration }
   | { phase: "unavailable"; configuration: null };
 type Listener = (snapshot: Snapshot) => void;
+type InitialConfiguration = PublicWorkshopConfiguration | null;
 
 let snapshot: Snapshot = { phase: "loading", configuration: null };
-let request: Promise<void> | null = null;
+let request: Promise<boolean> | null = null;
 const listeners = new Set<Listener>();
 
 function publish(next: Snapshot) {
@@ -133,7 +134,7 @@ function readConfiguration(value: unknown): PublicWorkshopConfiguration | null {
   };
 }
 
-export function revalidateWorkshopConfiguration() {
+export function revalidateWorkshopConfiguration(): Promise<boolean> {
   if (request) return request;
   request = (async () => {
     try {
@@ -141,22 +142,36 @@ export function revalidateWorkshopConfiguration() {
       const configuration = readConfiguration(await response.json().catch(() => null));
       if (!response.ok || !configuration) {
         if (snapshot.phase !== "ready") publish({ phase: "unavailable", configuration: null });
-        return;
+        return false;
       }
       publish({ phase: "ready", configuration });
+      return true;
     } catch {
       if (snapshot.phase !== "ready") publish({ phase: "unavailable", configuration: null });
+      return false;
     }
   })().finally(() => { request = null; });
   return request;
 }
 
-export function useWorkshopConfiguration() {
-  const [current, setCurrent] = useState(snapshot);
+export function useWorkshopConfiguration(initialConfiguration?: InitialConfiguration) {
+  const [current, setCurrent] = useState<Snapshot>(() =>
+    initialConfiguration
+      ? { phase: "ready", configuration: initialConfiguration }
+      : snapshot,
+  );
   useEffect(() => {
-    listeners.add(setCurrent);
-    void revalidateWorkshopConfiguration();
-    return () => { listeners.delete(setCurrent); };
-  }, []);
+    let revalidating = true;
+    const listener: Listener = (next) => {
+      if (!revalidating) setCurrent(next);
+    };
+    listeners.add(listener);
+    void revalidateWorkshopConfiguration().then((succeeded) => {
+      revalidating = false;
+      if (succeeded) setCurrent(snapshot);
+      else if (!initialConfiguration) setCurrent(snapshot);
+    });
+    return () => { revalidating = false; listeners.delete(listener); };
+  }, [initialConfiguration]);
   return current;
 }

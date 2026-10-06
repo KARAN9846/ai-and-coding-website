@@ -8,6 +8,8 @@ import { WorkshopDiscountCountdown } from "@/components/workshops/workshop-disco
 import { WorkshopHero } from "@/components/workshops/workshop-hero/workshop-hero";
 import { WorkshopRegistrationOptions } from "@/components/workshops/workshop-registration-intro/workshop-registration-options";
 import { WorkshopTracks } from "@/components/workshops/workshop-tracks/workshop-tracks";
+import { getWorkshopConfiguration } from "@/lib/workshops/configuration-server";
+import { toPublicWorkshopConfiguration, type PublicWorkshopConfiguration } from "@/lib/workshops/public-configuration";
 
 import styles from "./page.module.css";
 
@@ -17,16 +19,27 @@ export const metadata: Metadata = {
     "Practical offline AI workshops for students, professionals, beginners and developers — from AI tools and prompting to AI-assisted software development.",
 };
 
-export default function WorkshopsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function WorkshopsPage() {
+  let initialConfiguration: PublicWorkshopConfiguration | null = null;
+  try {
+    initialConfiguration = toPublicWorkshopConfiguration(
+      await getWorkshopConfiguration(),
+    );
+  } catch (error) {
+    console.error("Workshop page configuration load failed:", error);
+  }
+
   return (
     <main className={styles.page}>
       <AnnouncementBar />
       <Navbar />
-      <WorkshopHero />
-      <WorkshopDiscountCountdown />
+      <WorkshopHero initialConfiguration={initialConfiguration} />
+      <WorkshopDiscountCountdown initialConfiguration={initialConfiguration} />
       <AudiencePaths />
-      <WorkshopTracks />
-      <WorkshopRegistrationOptions />
+      <WorkshopTracks initialConfiguration={initialConfiguration} />
+      <WorkshopRegistrationOptions initialConfiguration={initialConfiguration} />
       <Footer />
     </main>
   );

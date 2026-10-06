@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorkshopConfiguration } from "@/components/workshops/use-workshop-configuration";
+import type { PublicWorkshopConfiguration } from "@/lib/workshops/public-configuration";
 import { WORKSHOP_ICON_MAP } from "@/components/workshops/workshop-icon";
 import {
   WORKSHOP_AUDIENCE_OPTIONS,
@@ -26,8 +27,12 @@ const audienceLabels = Object.fromEntries(
   WORKSHOP_AUDIENCE_OPTIONS.map((option) => [option.value, option.label]),
 ) as Record<WorkshopAudienceKey, string>;
 
-export function WorkshopTracks() {
-  const state = useWorkshopConfiguration();
+export function WorkshopTracks({
+  initialConfiguration,
+}: {
+  initialConfiguration: PublicWorkshopConfiguration | null;
+}) {
+  const state = useWorkshopConfiguration(initialConfiguration);
   if (state.phase !== "ready" || state.configuration.workshops.length === 0) {
     return null;
   }

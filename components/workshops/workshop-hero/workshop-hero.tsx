@@ -4,19 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 
-import { useWorkshopStatus } from "@/components/workshops/use-workshop-status";
+import { useWorkshopConfiguration } from "@/components/workshops/use-workshop-configuration";
+import type { PublicWorkshopConfiguration } from "@/lib/workshops/public-configuration";
 
 import styles from "./workshop-hero.module.css";
 
-export function WorkshopHero() {
-  const workshopStatus = useWorkshopStatus();
+export function WorkshopHero({
+  initialConfiguration,
+}: {
+  initialConfiguration: PublicWorkshopConfiguration | null;
+}) {
+  const workshopConfiguration = useWorkshopConfiguration(initialConfiguration);
   const registrationOpen =
-    workshopStatus.phase === "ready" &&
-    workshopStatus.status.registrationOpen;
+    workshopConfiguration.phase === "ready" &&
+    workshopConfiguration.configuration.registrationOpen;
   const statusLabel =
-    workshopStatus.phase === "loading"
+    workshopConfiguration.phase === "loading"
       ? "CHECKING REGISTRATION"
-      : workshopStatus.phase === "unavailable"
+      : workshopConfiguration.phase === "unavailable"
         ? "REGISTRATION UNAVAILABLE"
         : registrationOpen
           ? "REGISTRATION OPEN"

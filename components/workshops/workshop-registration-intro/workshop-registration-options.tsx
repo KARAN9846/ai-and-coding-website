@@ -5,6 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 
 import { contactDetails } from "@/components/contact-details";
 import { useWorkshopConfiguration } from "@/components/workshops/use-workshop-configuration";
+import type { PublicWorkshopConfiguration } from "@/lib/workshops/public-configuration";
 import { WORKSHOP_ICON_MAP } from "@/components/workshops/workshop-icon";
 import type { WorkshopTheme } from "@/lib/workshops/workshop-data";
 
@@ -28,8 +29,12 @@ function formatPhone(phone: string) {
   return `+91 ${phone.slice(0, 5)} ${phone.slice(5)}`;
 }
 
-export function WorkshopRegistrationOptions() {
-  const state = useWorkshopConfiguration();
+export function WorkshopRegistrationOptions({
+  initialConfiguration,
+}: {
+  initialConfiguration: PublicWorkshopConfiguration | null;
+}) {
+  const state = useWorkshopConfiguration(initialConfiguration);
   const configuration = state.phase === "ready" ? state.configuration : null;
   const visibleWorkshops = (configuration?.workshops ?? []).filter(
     (workshop) => workshop.registration !== null,
